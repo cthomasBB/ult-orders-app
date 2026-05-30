@@ -120,8 +120,34 @@ const segStyles = StyleSheet.create({
 
 function FollowingFeed({ header }: { header: React.ReactElement }) {
   const query = useFollowingFeed();
+  const pages = (query.data?.pages ?? []).flat();
+
+  // Empty state — not following anyone yet
+  if (!query.isLoading && !query.isError && pages.length === 0) {
+    return (
+      <View style={followingEmptyStyles.container}>
+        {header}
+        <View style={followingEmptyStyles.inner}>
+          <Text style={followingEmptyStyles.emoji}>🍽️</Text>
+          <Text style={followingEmptyStyles.title}>Your feed is empty</Text>
+          <Text style={followingEmptyStyles.body}>
+            Follow creators to see their ULT orders here. Check out Trending to find people to follow.
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
   return <FeedList query={query as any} feedType="following" ListHeaderComponent={header} />;
 }
+
+const followingEmptyStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: Colors.background },
+  inner: { flex: 1, alignItems: "center", justifyContent: "center", padding: 40, gap: 12 },
+  emoji: { fontSize: 48 },
+  title: { fontSize: 20, fontWeight: "700", color: Colors.ink },
+  body: { fontSize: 14, color: Colors.inkSecondary, textAlign: "center", lineHeight: 22 },
+});
 
 // ─── Trending feed wrapper ────────────────────────────────────────────────────
 

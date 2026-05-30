@@ -8,7 +8,8 @@ import type { FeedType, UltOrderFeedItem } from "@/types/feed";
 // ─── Config ───────────────────────────────────────────────────────────────────
 
 const PAGE_SIZE = 10;
-const USE_MOCK = true; // flip to false when Supabase tables are ready
+const USE_MOCK = false; // Near You only
+const USE_MOCK_FOLLOWING = false; // Following feed uses real Supabase data
 
 // ─── Supabase query helpers ───────────────────────────────────────────────────
 
@@ -25,12 +26,11 @@ const ULT_ORDER_SELECT = `
     id, name, address, city, cuisine_type, average_rating, cover_image_url
   ),
   media:ult_order_media (
-    id, media_type, url, thumbnail_url, width, height, duration_seconds, sort_order
+    id, media_type, url, thumbnail_url, sort_order
   ),
   items:ult_order_items (
-    id, name, quantity, unit_price, notes, dietary_tags
-  ),
-  tags:ult_order_tags ( tag:tags!tag_id ( name ) )
+    id, name, quantity, unit_price, notes, sort_order
+  )
 `;
 
 function normalise(row: any): UltOrderFeedItem {
@@ -52,8 +52,19 @@ function normalise(row: any): UltOrderFeedItem {
       average_rating: 0,
       cover_image_url: null,
     },
-    media: (row.media ?? []).sort((a: any, b: any) => a.sort_order - b.sort_order),
-    items: row.items ?? [],
+    media: (row.media ?? [])
+      .sort((a: any, b: any) => a.sort_order - b.sort_order)
+      .map((m: any) => ({
+        ...m,
+        width: m.width ?? null,
+        height: m.height ?? null,
+        duration_seconds: m.duration_seconds ?? null,
+      })),
+    items: (row.items ?? []).map((i: any) => ({
+      ...i,
+      notes: i.notes ?? null,
+      dietary_tags: i.dietary_tags ?? [],
+    })),
     tags: (row.tags ?? []).map((t: any) => t.tag?.name).filter(Boolean),
   };
 }
@@ -61,32 +72,44 @@ function normalise(row: any): UltOrderFeedItem {
 // ─── Feed fetchers ────────────────────────────────────────────────────────────
 
 async function fetchFollowingFeed(userId: string, page: number): Promise<UltOrderFeedItem[]> {
-  if (USE_MOCK) {
+  if (USE_MOCK_FOLLOWING) {
     await new Promise((r) => setTimeout(r, 600));
     return MOCK_FOLLOWING.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
   }
+
+  // Step 1 — get the list of user IDs the current user follows
+  const { data: followData, error: followError } = await supabase
+    .from("follows")
+    .select("following_id")
+    .eq("follower_id", userId);
+
+  if (followError) throw followError;
+
+  const followingIds = (followData ?? []).map((r: any) => r.following_id as string);
+  console.log("[following feed] followingIds:", followingIds);
+
+  if (followingIds.length === 0) return [];
+
+  // Step 2 — fetch published orders from those users
   const { data, error } = await supabase
     .from("ult_orders")
     .select(ULT_ORDER_SELECT)
     .eq("status", "published")
-    .in("user_id", supabase.from("follows").select("following_id").eq("follower_id", userId))
+    .in("user_id", followingIds)
     .order("created_at", { ascending: false })
     .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
+
+  console.log("[following feed] data count:", data?.length ?? 0);
+  console.log("[following feed] error:", error);
   if (error) throw error;
   return (data ?? []).map(normalise);
 }
 
 async function fetchTrendingFeed(page: number): Promise<UltOrderFeedItem[]> {
-  if (USE_MOCK) {
-    await new Promise((r) => setTimeout(r, 500));
-    return MOCK_TRENDING.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
-  }
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
   const { data, error } = await supabase
     .from("ult_orders")
     .select(ULT_ORDER_SELECT)
     .eq("status", "published")
-    .gte("created_at", sevenDaysAgo)
     .order("save_count", { ascending: false })
     .order("created_at", { ascending: false })
     .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
@@ -95,25 +118,14 @@ async function fetchTrendingFeed(page: number): Promise<UltOrderFeedItem[]> {
 }
 
 async function fetchNearbyFeed(lat: number, lng: number, page: number): Promise<UltOrderFeedItem[]> {
-  if (USE_MOCK) {
-    await new Promise((r) => setTimeout(r, 700));
-    return MOCK_NEARBY.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
-  }
-  const { data, error } = await supabase.rpc("ult_orders_near", {
-    p_latitude: lat,
-    p_longitude: lng,
-    p_radius_m: 5000,
-    p_limit: PAGE_SIZE,
-  });
-  if (error) throw error;
-  const ids = (data ?? []).map((r: any) => r.ult_order_id);
-  if (ids.length === 0) return [];
-  const { data: full, error: fullError } = await supabase
+  const { data, error } = await supabase
     .from("ult_orders")
     .select(ULT_ORDER_SELECT)
-    .in("id", ids);
-  if (fullError) throw fullError;
-  return (full ?? []).map(normalise);
+    .eq("status", "published")
+    .order("trending_score", { ascending: false })
+    .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
+  if (error) throw error;
+  return (data ?? []).map(normalise);
 }
 
 // ─── React Query hooks ────────────────────────────────────────────────────────
@@ -127,7 +139,7 @@ export function useFollowingFeed() {
       lastPage.length < PAGE_SIZE ? undefined : allPages.length,
     initialPageParam: 0,
     enabled: !!user?.id,
-    staleTime: 1000 * 60 * 2,
+    staleTime: 0,
   });
 }
 

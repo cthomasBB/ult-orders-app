@@ -8,6 +8,7 @@ import * as Sentry from "@sentry/react-native";
 import { supabase } from "@/services/supabase";
 import { analytics } from "@/services/analytics";
 import { useAuthStore } from "@/features/auth/authStore";
+import { useFollowStore, setFollowQueryClient } from "@/features/feed/followStore";
 import { useNotifications } from "@/hooks/useNotifications";
 
 // ─── Initialise analytics as early as possible ───────────────────────────────
@@ -18,6 +19,8 @@ SplashScreen.preventAutoHideAsync();
 
 // ─── React Query client ───────────────────────────────────────────────────────
 
+// Give the follow store access to the query client so it can
+// invalidate the Following feed when the user follows/unfollows someone
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -30,9 +33,13 @@ const queryClient = new QueryClient({
 
 // ─── Auth gate ────────────────────────────────────────────────────────────────
 
+// Register query client with follow store immediately
+setFollowQueryClient(queryClient);
+
 function AuthGate() {
   const { session, isLoading, setSession, fetchProfile, user, publicUser } =
     useAuthStore();
+  const { loadFollowing } = useFollowStore();
   const segments = useSegments();
   const router = useRouter();
 
@@ -41,13 +48,19 @@ function AuthGate() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
-      if (data.session?.user) fetchProfile(data.session.user.id);
+      if (data.session?.user) {
+        fetchProfile(data.session.user.id);
+        loadFollowing(data.session.user.id);
+      }
     });
 
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setSession(session);
-        if (session?.user) fetchProfile(session.user.id);
+        if (session?.user) {
+          fetchProfile(session.user.id);
+          loadFollowing(session.user.id);
+        }
       }
     );
 

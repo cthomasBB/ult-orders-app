@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dimensions,
   Image,
@@ -21,6 +21,7 @@ import {
 } from "@/features/feed/useFeed";
 import type { UltOrderFeedItem } from "@/types/feed";
 import { useFollowStore } from "@/features/feed/followStore";
+import { useAuthStore } from "@/features/auth/authStore";
 
 const { width: SCREEN_W } = Dimensions.get("window");
 const CARD_PADDING = 16;
@@ -233,7 +234,7 @@ function ItemsPreview({ item }: { item: UltOrderFeedItem }) {
               {truncate(orderItem.notes, 22)}
             </Text>
           ) : null}
-          {orderItem.dietary_tags.length > 0 ? (
+          {(orderItem.dietary_tags ?? []).length > 0 ? (
             <View style={itemsStyles.dietTag}>
               <Text style={itemsStyles.dietTagText}>
                 {orderItem.dietary_tags[0]}
@@ -371,13 +372,26 @@ const actionStyles = StyleSheet.create({
 
 // ─── Follow Button ───────────────────────────────────────────────────────────
 
-function FollowButton({ username }: { username: string }) {
-  const { isFollowing, toggleFollow } = useFollowStore();
-  const following = isFollowing(username);
+function FollowButton({ userId, username }: { userId: string; username: string }) {
+  const { isFollowing, toggleFollow, registerUser } = useFollowStore();
+  const { user } = useAuthStore();
+
+  // Register this user so isFollowing can resolve by username
+  useEffect(() => {
+    registerUser(username, userId);
+  }, [username, userId]);
+
+  const following = isFollowing(userId);
+
+  const handlePress = () => {
+    if (!user?.id) return;
+    toggleFollow(user.id, userId, username);
+  };
+
   return (
     <Pressable
       style={[followStyles.btn, following && followStyles.btnActive]}
-      onPress={() => toggleFollow(username)}
+      onPress={handlePress}
       hitSlop={8}
     >
       <Text style={[followStyles.text, following && followStyles.textActive]}>
@@ -417,6 +431,7 @@ type FeedCardProps = {
 
 export function FeedCard({ item, onPress }: FeedCardProps) {
   const router = useRouter();
+  const { user } = useAuthStore();
   const likeMutation = useToggleLike();
   const saveMutation = useToggleSave();
   const triedMutation = useToggleTried();
@@ -508,8 +523,10 @@ export function FeedCard({ item, onPress }: FeedCardProps) {
           </View>
         </Pressable>
 
-        {/* Follow button */}
-        <FollowButton username={item.author.username} />
+        {/* Follow button — hidden on your own posts */}
+        {item.author.id !== user?.id && (
+          <FollowButton userId={item.author.id} username={item.author.username} />
+        )}
       </View>
 
       {/* ── Media ── */}

@@ -10,35 +10,35 @@ function hoursAgo(h: number): string {
 
 const AUTHORS = {
   spice_oracle: {
-    id: "user-001",
+    id: "a1b2c3d4-0001-0001-0001-000000000001",
     username: "spice_oracle",
     display_name: "Spice Oracle",
     avatar_url: null,
     is_verified: true,
   },
   ramen_ronin: {
-    id: "user-002",
+    id: "a1b2c3d4-0002-0002-0002-000000000002",
     username: "ramen_ronin",
     display_name: "Ramen Ronin",
     avatar_url: null,
     is_verified: false,
   },
   plant_palate: {
-    id: "user-003",
+    id: "a1b2c3d4-0003-0003-0003-000000000003",
     username: "plant_palate",
     display_name: "Plant Palate",
     avatar_url: null,
     is_verified: false,
   },
   brunch_boss: {
-    id: "user-004",
+    id: "a1b2c3d4-0004-0004-0004-000000000004",
     username: "brunch_boss",
     display_name: "Brunch Boss",
     avatar_url: null,
     is_verified: true,
   },
   street_eats_sam: {
-    id: "user-005",
+    id: "a1b2c3d4-0005-0005-0005-000000000005",
     username: "street_eats_sam",
     display_name: "Street Eats Sam",
     avatar_url: null,
@@ -50,7 +50,7 @@ const AUTHORS = {
 
 const RESTAURANTS = {
   ippudo: {
-    id: "rest-001",
+    id: "b1c2d3e4-0001-0001-0001-000000000001",
     name: "Ippudo NY",
     address: "65 4th Ave, New York, NY",
     city: "New York",
@@ -59,7 +59,7 @@ const RESTAURANTS = {
     cover_image_url: null,
   },
   hmart: {
-    id: "rest-002",
+    id: "b1c2d3e4-0002-0002-0002-000000000002",
     name: "Bonchon Chicken",
     address: "325 5th Ave, New York, NY",
     city: "New York",
@@ -68,7 +68,7 @@ const RESTAURANTS = {
     cover_image_url: null,
   },
   by_chloe: {
-    id: "rest-003",
+    id: "b1c2d3e4-0003-0003-0003-000000000003",
     name: "PLNT Burger",
     address: "1140 3rd Ave, New York, NY",
     city: "New York",
@@ -77,7 +77,7 @@ const RESTAURANTS = {
     cover_image_url: null,
   },
   the_halal_guys: {
-    id: "rest-004",
+    id: "b1c2d3e4-0004-0004-0004-000000000004",
     name: "The Halal Guys",
     address: "W 53rd St & 6th Ave, New York, NY",
     city: "New York",
@@ -86,7 +86,7 @@ const RESTAURANTS = {
     cover_image_url: null,
   },
   balthazar: {
-    id: "rest-005",
+    id: "b1c2d3e4-0005-0005-0005-000000000005",
     name: "Balthazar",
     address: "80 Spring St, New York, NY",
     city: "New York",
@@ -101,9 +101,9 @@ const RESTAURANTS = {
 export const MOCK_FEED_ITEMS: UltOrderFeedItem[] = [
   // ── 1. Spice Oracle — Ippudo Ramen ────────────────────────────────────────
   {
-    id: "ult-001",
-    user_id: "user-001",
-    restaurant_id: "rest-001",
+    id: "c1d2e3f4-0001-0001-0001-000000000001",
+    user_id: "a1b2c3d4-0001-0001-0001-000000000001",
+    restaurant_id: "b1c2d3e4-0001-0001-0001-000000000001",
     title: "The Akamaru Modern is non-negotiable",
     caption:
       "Been coming here for 7 years and I still can't explain the broth. It's just built different. Pork chashu was falling apart today 🔥",
@@ -147,9 +147,9 @@ export const MOCK_FEED_ITEMS: UltOrderFeedItem[] = [
 
   // ── 2. Ramen Ronin — Bonchon ──────────────────────────────────────────────
   {
-    id: "ult-002",
-    user_id: "user-002",
-    restaurant_id: "rest-002",
+    id: "c1d2e3f4-0002-0002-0002-000000000002",
+    user_id: "a1b2c3d4-0002-0002-0002-000000000002",
+    restaurant_id: "b1c2d3e4-0002-0002-0002-000000000002",
     title: "Bonchon wings hit different at midnight",
     caption:
       "Half soy garlic, half spicy. Always. This is the build that ends debates.",
@@ -193,9 +193,9 @@ export const MOCK_FEED_ITEMS: UltOrderFeedItem[] = [
 
   // ── 3. Plant Palate — PLNT Burger ─────────────────────────────────────────
   {
-    id: "ult-003",
-    user_id: "user-003",
-    restaurant_id: "rest-003",
+    id: "c1d2e3f4-0003-0003-0003-000000000003",
+    user_id: "a1b2c3d4-0003-0003-0003-000000000003",
+    restaurant_id: "b1c2d3e4-0003-0003-0003-000000000003",
     title: "Finally a vegan burger that makes me forget meat",
     caption:
       "The PLNT Burger smash with special sauce is doing things. Mushroom fries are the surprise MVP.",
@@ -238,9 +238,9 @@ export const MOCK_FEED_ITEMS: UltOrderFeedItem[] = [
 
   // ── 4. Street Eats Sam — The Halal Guys ───────────────────────────────────
   {
-    id: "ult-004",
-    user_id: "user-005",
-    restaurant_id: "rest-004",
+    id: "c1d2e3f4-0004-0004-0004-000000000004",
+    user_id: "a1b2c3d4-0005-0005-0005-000000000005",
+    restaurant_id: "b1c2d3e4-0004-0004-0004-000000000004",
     title: "The OG cart. No competition.",
     caption:
       "White sauce. Hot sauce. Rice over chicken. That's the formula. That's always been the formula.",
@@ -283,9 +283,9 @@ export const MOCK_FEED_ITEMS: UltOrderFeedItem[] = [
 
   // ── 5. Brunch Boss — Balthazar ────────────────────────────────────────────
   {
-    id: "ult-005",
-    user_id: "user-004",
-    restaurant_id: "rest-005",
+    id: "c1d2e3f4-0005-0005-0005-000000000005",
+    user_id: "a1b2c3d4-0004-0004-0004-000000000004",
+    restaurant_id: "b1c2d3e4-0005-0005-0005-000000000005",
     title: "Sunday brunch at Balthazar is still the standard",
     caption:
       "The French onion soup then the steak frites. A ritual. The people-watching alone is worth the reservation.",
@@ -334,23 +334,23 @@ export const MOCK_FEED_ITEMS: UltOrderFeedItem[] = [
 
 export const MOCK_SAVED_ITEMS: UltOrderFeedItem[] = [
   {
-    id: "ult-006",
-    user_id: "user-006",
-    restaurant_id: "rest-006",
+    id: "mock-saved-001",
+    user_id: "a1b2c3d4-0006-0006-0006-000000000006",
+    restaurant_id: "b1c2d3e4-0006-0006-0006-000000000006",
     title: "The Truffle Burger is elite",
     caption: "Order it medium. Add the fried egg. Thank me later.",
     status: "published",
     total: 2850,
     currency: "USD",
     author: {
-      id: "user-006",
+      id: "a1b2c3d4-0006-0006-0006-000000000006",
       username: "burgerphd",
       display_name: "Burger PhD",
       avatar_url: null,
       is_verified: true,
     },
     restaurant: {
-      id: "rest-006",
+      id: "b1c2d3e4-0006-0006-0006-000000000006",
       name: "Gordon Ramsay Burger",
       address: "3667 Las Vegas Blvd S",
       city: "Las Vegas",
@@ -378,23 +378,23 @@ export const MOCK_SAVED_ITEMS: UltOrderFeedItem[] = [
     published_at: hoursAgo(5), created_at: hoursAgo(5.5), updated_at: hoursAgo(5),
   },
   {
-    id: "ult-007",
-    user_id: "user-007",
-    restaurant_id: "rest-007",
+    id: "mock-saved-002",
+    user_id: "a1b2c3d4-0007-0007-0007-000000000007",
+    restaurant_id: "b1c2d3e4-0007-0007-0007-000000000007",
     title: "Best omakase under $100 in Vegas",
     caption: "Ask for the chef's selection. Tell them you want the spicy tuna on crispy rice.",
     status: "published",
     total: 9500,
     currency: "USD",
     author: {
-      id: "user-007",
+      id: "a1b2c3d4-0007-0007-0007-000000000007",
       username: "sushi_sensei",
       display_name: "Sushi Sensei",
       avatar_url: null,
       is_verified: true,
     },
     restaurant: {
-      id: "rest-007",
+      id: "b1c2d3e4-0007-0007-0007-000000000007",
       name: "Kabuto Edomae Sushi",
       address: "5040 W Spring Mountain Rd",
       city: "Las Vegas",
@@ -422,23 +422,23 @@ export const MOCK_SAVED_ITEMS: UltOrderFeedItem[] = [
     published_at: hoursAgo(12), created_at: hoursAgo(12.5), updated_at: hoursAgo(12),
   },
   {
-    id: "ult-008",
-    user_id: "user-008",
-    restaurant_id: "rest-008",
+    id: "mock-saved-003",
+    user_id: "a1b2c3d4-0008-0008-0008-000000000008",
+    restaurant_id: "b1c2d3e4-0008-0008-0008-000000000008",
     title: "The Birria tacos changed my life",
     caption: "Get the consomme for dipping. Double meat. This is the move.",
     status: "published",
     total: 1895,
     currency: "USD",
     author: {
-      id: "user-008",
+      id: "a1b2c3d4-0008-0008-0008-000000000008",
       username: "taco_oracle",
       display_name: "Taco Oracle",
       avatar_url: null,
       is_verified: false,
     },
     restaurant: {
-      id: "rest-008",
+      id: "b1c2d3e4-0008-0008-0008-000000000008",
       name: "Tacos El Gordo",
       address: "3049 Las Vegas Blvd S",
       city: "Las Vegas",
@@ -467,23 +467,23 @@ export const MOCK_SAVED_ITEMS: UltOrderFeedItem[] = [
     published_at: hoursAgo(18), created_at: hoursAgo(18.5), updated_at: hoursAgo(18),
   },
   {
-    id: "ult-009",
-    user_id: "user-009",
-    restaurant_id: "rest-009",
+    id: "mock-saved-004",
+    user_id: "a1b2c3d4-0009-0009-0009-000000000009",
+    restaurant_id: "b1c2d3e4-0009-0009-0009-000000000009",
     title: "The Nashville Hot at Fried Chicken Joint",
     caption: "Level 3 heat. Pickles on everything. Milk tea to survive.",
     status: "published",
     total: 2299,
     currency: "USD",
     author: {
-      id: "user-009",
+      id: "a1b2c3d4-0009-0009-0009-000000000009",
       username: "heat_seeker",
       display_name: "Heat Seeker",
       avatar_url: null,
       is_verified: false,
     },
     restaurant: {
-      id: "rest-009",
+      id: "b1c2d3e4-0009-0009-0009-000000000009",
       name: "Hattie B's Hot Chicken",
       address: "450 Fremont St",
       city: "Las Vegas",
@@ -518,23 +518,23 @@ export const MOCK_SAVED_ITEMS: UltOrderFeedItem[] = [
 
 export const MOCK_MY_ORDERS: UltOrderFeedItem[] = [
   {
-    id: "ult-010",
-    user_id: "my-user",
-    restaurant_id: "rest-010",
+    id: "c1d2e3f4-0006-0006-0006-000000000006",
+    user_id: "90b38e09-07a1-4fc7-b04b-a1b368f63746",
+    restaurant_id: "b1c2d3e4-0006-0006-0006-000000000006",
     title: "The Vegas Strip steak that changed everything",
     caption: "Ask for the bone-in ribeye. Medium rare. The truffle butter is non-negotiable.",
     status: "published",
     total: 12800,
     currency: "USD",
     author: {
-      id: "my-user",
+      id: "90b38e09-07a1-4fc7-b04b-a1b368f63746",
       username: "chaz28hb",
       display_name: "Chaz",
       avatar_url: null,
       is_verified: false,
     },
     restaurant: {
-      id: "rest-010",
+      id: "b1c2d3e4-0006-0006-0006-000000000006",
       name: "Golden Steer Steakhouse",
       address: "308 W Sahara Ave",
       city: "Las Vegas",
@@ -563,23 +563,23 @@ export const MOCK_MY_ORDERS: UltOrderFeedItem[] = [
     published_at: hoursAgo(2), created_at: hoursAgo(2.5), updated_at: hoursAgo(2),
   },
   {
-    id: "ult-011",
-    user_id: "my-user",
-    restaurant_id: "rest-011",
+    id: "c1d2e3f4-0007-0007-0007-000000000007",
+    user_id: "90b38e09-07a1-4fc7-b04b-a1b368f63746",
+    restaurant_id: "b1c2d3e4-0007-0007-0007-000000000007",
     title: "Late night pizza at Evel Pie hits different",
     caption: "The Hot Lips pizza at 2am after a show. This is the move.",
     status: "published",
     total: 3200,
     currency: "USD",
     author: {
-      id: "my-user",
+      id: "90b38e09-07a1-4fc7-b04b-a1b368f63746",
       username: "chaz28hb",
       display_name: "Chaz",
       avatar_url: null,
       is_verified: false,
     },
     restaurant: {
-      id: "rest-011",
+      id: "b1c2d3e4-0007-0007-0007-000000000007",
       name: "Evel Pie",
       address: "508 Fremont St",
       city: "Las Vegas",
@@ -607,23 +607,23 @@ export const MOCK_MY_ORDERS: UltOrderFeedItem[] = [
     published_at: hoursAgo(48), created_at: hoursAgo(48.5), updated_at: hoursAgo(48),
   },
   {
-    id: "ult-012",
-    user_id: "my-user",
-    restaurant_id: "rest-012",
+    id: "c1d2e3f4-0008-0008-0008-000000000008",
+    user_id: "90b38e09-07a1-4fc7-b04b-a1b368f63746",
+    restaurant_id: "b1c2d3e4-0008-0008-0008-000000000008",
     title: "The breakfast burrito that cures everything",
     caption: "Green chile. Crispy potatoes. This is the only breakfast spot that matters.",
     status: "published",
     total: 1895,
     currency: "USD",
     author: {
-      id: "my-user",
+      id: "90b38e09-07a1-4fc7-b04b-a1b368f63746",
       username: "chaz28hb",
       display_name: "Chaz",
       avatar_url: null,
       is_verified: false,
     },
     restaurant: {
-      id: "rest-012",
+      id: "b1c2d3e4-0008-0008-0008-000000000008",
       name: "The Egg & I",
       address: "4533 W Sahara Ave",
       city: "Las Vegas",
@@ -652,23 +652,23 @@ export const MOCK_MY_ORDERS: UltOrderFeedItem[] = [
     published_at: hoursAgo(72), created_at: hoursAgo(72.5), updated_at: hoursAgo(72),
   },
   {
-    id: "ult-013",
-    user_id: "my-user",
-    restaurant_id: "rest-013",
+    id: "c1d2e3f4-0009-0009-0009-000000000009",
+    user_id: "90b38e09-07a1-4fc7-b04b-a1b368f63746",
+    restaurant_id: "b1c2d3e4-0009-0009-0009-000000000009",
     title: "Best ramen in Vegas and it's not even close",
     caption: "Tonkotsu with extra chashu. Add the spicy egg. Come hungry.",
     status: "published",
     total: 2650,
     currency: "USD",
     author: {
-      id: "my-user",
+      id: "90b38e09-07a1-4fc7-b04b-a1b368f63746",
       username: "chaz28hb",
       display_name: "Chaz",
       avatar_url: null,
       is_verified: false,
     },
     restaurant: {
-      id: "rest-013",
+      id: "b1c2d3e4-0009-0009-0009-000000000009",
       name: "Fukuburger Ramen",
       address: "1049 E Sahara Ave",
       city: "Las Vegas",

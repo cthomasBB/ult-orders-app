@@ -49,8 +49,9 @@ export function initPostHog(): PostHog | null {
   posthog = new PostHog(POSTHOG_API_KEY, {
     host: "https://us.i.posthog.com",
     // Disable in dev to avoid polluting production data
-    disabled: !IS_PROD && APP_ENV === "development",
+    disabled: true,
     captureMode: "form",
+    persistence: "memory",
   });
 
   return posthog;
