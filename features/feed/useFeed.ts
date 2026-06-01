@@ -86,7 +86,6 @@ async function fetchFollowingFeed(userId: string, page: number): Promise<UltOrde
   if (followError) throw followError;
 
   const followingIds = (followData ?? []).map((r: any) => r.following_id as string);
-  console.log("[following feed] followingIds:", followingIds);
 
   if (followingIds.length === 0) return [];
 
@@ -99,8 +98,6 @@ async function fetchFollowingFeed(userId: string, page: number): Promise<UltOrde
     .order("created_at", { ascending: false })
     .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
 
-  console.log("[following feed] data count:", data?.length ?? 0);
-  console.log("[following feed] error:", error);
   if (error) throw error;
   return (data ?? []).map(normalise);
 }

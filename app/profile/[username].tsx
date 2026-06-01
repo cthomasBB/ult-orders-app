@@ -16,7 +16,6 @@ async function fetchUserByUsername(username: string) {
     .select("id, username, display_name, avatar_url, is_verified, follower_count, following_count, ult_order_count, bio, taste_tags, is_active")
     .eq("username", username)
     .single();
-  console.log("[fetchUserByUsername] data:", data, "error:", error);
   if (error) return null;
   return data;
 }
@@ -118,8 +117,6 @@ export default function UserProfileScreen() {
       if (supabaseUser) {
         registerUser(supabaseUser.username, supabaseUser.id);
         const orders = await fetchUserOrders(supabaseUser.id);
-        console.log("[profile] user:", supabaseUser.username);
-        console.log("[profile] orders count:", orders.length);
         setProfileUser(supabaseUser);
         setUserPosts(orders);
         setIsLoading(false);
