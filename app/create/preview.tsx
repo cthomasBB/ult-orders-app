@@ -17,6 +17,7 @@ import { useCreateOrderStore } from "@/features/orders/createOrderStore";
 import { uploadMedia, BUCKETS } from "@/services/storage";
 import { analytics } from "@/services/analytics";
 import { supabase } from "@/services/supabase";
+import { resolveRestaurant } from "@/services/restaurant";
 import { Colors } from "@/constants/colors";
 import { FeedCard } from "@/components/feed/FeedCard";
 import type { UltOrderFeedItem } from "@/types/feed";
@@ -199,6 +200,11 @@ async function submitUltOrder(
   userId: string,
   onProgress?: (msg: string) => void
 ): Promise<string> {
+  // 0. Refresh session to ensure JWT is valid
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) throw new Error("Not logged in. Please sign in and try again.");
+  // Force token refresh if close to expiry
+  await supabase.auth.refreshSession();
   // 1. Upload media
   const uploadedMedia: Array<{
     url: string;
@@ -221,7 +227,7 @@ async function submitUltOrder(
     .from("ult_orders")
     .insert({
       user_id: userId,
-      restaurant_id: null,          // TODO: resolve/create restaurant in DB
+      restaurant_id: await resolveRestaurant(draft.restaurant!).catch(() => null),
       title: draft.title || null,
       caption: draft.caption || null,
       status: "published",
@@ -232,16 +238,7 @@ async function submitUltOrder(
         .reduce((sum, i) => sum + (parseFloat(i.price) || 0), 0) * 100
     ),
       currency: "USD",
-      order_export_json: JSON.stringify({
-        restaurant: draft.restaurant,
-        items: draft.items,
-      }),
-      metadata: JSON.stringify({
-        bestFor: draft.bestFor,
-        valueRating: draft.valueRating,
-        complexity: draft.complexity,
-        tags: draft.tags,
-      }),
+
     })
     .select("id")
     .single();
@@ -257,13 +254,16 @@ async function submitUltOrder(
         .map((item, idx) => ({
           ult_order_id: ultOrderId,
           name: item.name.trim(),
-          description: item.modifications || null,
+          notes: item.modifications || null,
           quantity: 1,
           unit_price: 0,
           sort_order: idx,
         }))
     );
-    if (itemErr) throw new Error(`Failed to insert items: ${itemErr.message}`);
+    if (itemErr) {
+      await supabase.from("ult_orders").delete().eq("id", ultOrderId);
+      throw new Error(`Failed to insert items: ${itemErr.message}`);
+    }
   }
 
   // 4. Insert media records

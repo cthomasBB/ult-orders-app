@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter, useFocusEffect } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { MOCK_FEED_ITEMS, MOCK_SAVED_ITEMS, MOCK_MY_ORDERS } from "@/features/feed/mockData";
@@ -107,7 +107,7 @@ export default function UserProfileScreen() {
 
   const usernameStr = String(username);
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     async function load() {
       setIsLoading(true);
 
@@ -148,7 +148,8 @@ export default function UserProfileScreen() {
     }
 
     load();
-  }, [usernameStr]);
+  }, [usernameStr]));
+
 
   const following = isFollowing(profileUser?.id ?? usernameStr);
 

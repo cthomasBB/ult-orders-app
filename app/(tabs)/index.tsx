@@ -203,7 +203,7 @@ const nearbyStyles = StyleSheet.create({
 export default function HomeScreen() {
   const router = useRouter();
   const { publicUser } = useAuthStore();
-  const [activeSegment, setActiveSegment] = useState<FeedType>("trending");
+  const [activeSegment, setActiveSegment] = useState<FeedType>("following");
 
   // Greeting
   const hour = new Date().getHours();

@@ -86,6 +86,8 @@ async function fetchFollowingFeed(userId: string, page: number): Promise<UltOrde
   if (followError) throw followError;
 
   const followingIds = (followData ?? []).map((r: any) => r.following_id as string);
+  // Always include your own posts in your Following feed
+  if (!followingIds.includes(userId)) followingIds.push(userId);
 
   if (followingIds.length === 0) return [];
 
