@@ -14,10 +14,10 @@ const SAVED_SELECT = `
     title, caption, status,
     total, currency,
     like_count, save_count, comment_count, try_count, view_count,
-    published_at, created_at, updated_at,
+    published_at, created_at,
     author:users!user_id (id, username, display_name, avatar_url, is_verified),
     restaurant:restaurants!restaurant_id (id, name, address, city, cuisine_type, average_rating, cover_image_url),
-    media:ult_order_media (id, media_type, url, thumbnail_url, width, height, duration_seconds, sort_order),
+    media:ult_order_media (id, media_type, url, thumbnail_url, sort_order),
     items:ult_order_items (id, name, quantity, unit_price, notes, sort_order)
   )
 `;
