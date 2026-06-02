@@ -45,7 +45,8 @@ async function fetchUserOrders(userId: string) {
     .eq("user_id", userId)
     .eq("status", "published")
     .order("published_at", { ascending: false });
-  if (error) return [];
+  if (error) { console.log("[fetchUserOrders] error:", error.message); return []; }
+  console.log("[fetchUserOrders] count:", data?.length, "ids:", data?.map((r:any) => r.id));
   return (data ?? []).map((row: any) => ({
     ...row,
     media: (row.media ?? []).sort((a: any, b: any) => a.sort_order - b.sort_order).map((m: any) => ({ ...m, width: null, height: null, duration_seconds: null })),
@@ -342,11 +343,11 @@ export default function UserProfileScreen() {
                   onPress={() => router.push(`/ult-order/${post.id}` as any)}
                 >
                   <View style={styles.postTop}>
-                    <Text style={styles.postRestaurant}>{post.restaurant.name}</Text>
+                    <Text style={styles.postRestaurant}>{post.restaurant?.name ?? "Restaurant"}</Text>
                     <Text style={styles.postPrice}>${(post.total / 100).toFixed(2)}</Text>
                   </View>
-                  <Text style={styles.postTitle} numberOfLines={1}>{post.title}</Text>
-                  {post.items.slice(0, 2).map((item: any) => (
+                  <Text style={styles.postTitle} numberOfLines={1}>{post.title ?? post.restaurant?.name ?? "ULT Order"}</Text>
+                  {(post.items ?? []).slice(0, 2).map((item: any) => (
                     <Text key={item.id} style={styles.postItem}>{item.quantity}x {item.name}</Text>
                   ))}
                   <View style={styles.postStats}>
