@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import {
-  ActivityIndicator, Alert, Image, ScrollView,
-  StyleSheet, Text, TouchableOpacity, View,
+  ActivityIndicator, Alert, Image, Modal, ScrollView,
+  StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,7 +14,7 @@ const TABS = ["Deck", "Orders", "Saved"];
 
 const ORDER_SELECT = `
   id, user_id, restaurant_id,
-  title, caption, status,
+  title, caption, status, is_deck,
   total, currency,
   like_count, save_count, comment_count, try_count, view_count,
   published_at, created_at,
@@ -138,8 +138,32 @@ export default function ProfileScreen() {
   const [myOrders, setMyOrders] = useState<any[]>([]);
   const [mySaves, setMySaves] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { user, publicUser, signOut } = useAuthStore();
+  const [editVisible, setEditVisible] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [editBio, setEditBio] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const { user, publicUser, signOut, setPublicUser } = useAuthStore();
 
+  const openEdit = () => {
+    setEditName(publicUser?.display_name ?? "");
+    setEditBio((publicUser as any)?.bio ?? "");
+    setEditVisible(true);
+  };
+  const saveProfile = async () => {
+    if (!user?.id) return;
+    setIsSaving(true);
+    const { error } = await supabase
+      .from("users")
+      .update({ display_name: editName.trim(), bio: editBio.trim() })
+      .eq("id", user.id);
+    setIsSaving(false);
+    if (error) {
+      Alert.alert("Error", "Could not save profile. Try again.");
+      return;
+    }
+    setPublicUser({ ...publicUser, display_name: editName.trim(), bio: editBio.trim() } as any);
+    setEditVisible(false);
+  };
   const toggleDeck = async (post: any) => {
     const deckPosts = myOrders.filter((p) => p.is_deck);
     if (!post.is_deck && deckPosts.length >= 5) {
@@ -225,7 +249,7 @@ export default function ProfileScreen() {
           <View style={styles.headerActions}>
             <TouchableOpacity
               style={styles.editBtn}
-              onPress={() => Alert.alert("Coming Soon", "Profile editing coming soon!")}
+              onPress={openEdit}
             >
               <Ionicons name="pencil-outline" size={13} color={Colors.accent} />
               <Text style={styles.editBtnText}>Edit</Text>
@@ -239,7 +263,7 @@ export default function ProfileScreen() {
         {/* Bio */}
         <TouchableOpacity
           style={styles.bioWrap}
-          onPress={() => Alert.alert("Coming Soon", "Add your bio soon!")}
+          onPress={openEdit}
         >
           <Text style={styles.bio}>
             {(publicUser as any)?.bio ?? "Tap to add your bio..."}
@@ -401,6 +425,64 @@ export default function ProfileScreen() {
           </View>
         )}
       </ScrollView>
+
+    {/* ── Edit Profile Modal ── */}
+    <Modal
+      visible={editVisible}
+      animationType="slide"
+      transparent
+      onRequestClose={() => setEditVisible(false)}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={editStyles.overlay}
+      >
+        <View style={editStyles.sheet}>
+          <View style={editStyles.handle} />
+          <Text style={editStyles.title}>Edit Profile</Text>
+          <Text style={editStyles.label}>Display Name</Text>
+          <TextInput
+            style={editStyles.input}
+            value={editName}
+            onChangeText={setEditName}
+            placeholder="Your name"
+            placeholderTextColor={Colors.inkDisabled}
+            maxLength={50}
+            autoCorrect={false}
+          />
+          <Text style={editStyles.label}>Bio</Text>
+          <TextInput
+            style={[editStyles.input, editStyles.bioInput]}
+            value={editBio}
+            onChangeText={setEditBio}
+            placeholder="Tell people about your taste..."
+            placeholderTextColor={Colors.inkDisabled}
+            maxLength={160}
+            multiline
+            autoCorrect={false}
+          />
+          <Text style={editStyles.charCount}>{editBio.length}/160</Text>
+          <TouchableOpacity
+            style={[editStyles.saveBtn, isSaving && { opacity: 0.6 }]}
+            onPress={saveProfile}
+            disabled={isSaving}
+          >
+            {isSaving ? (
+              <ActivityIndicator color={Colors.white} />
+            ) : (
+              <Text style={editStyles.saveBtnText}>Save Profile</Text>
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={editStyles.cancelBtn}
+            onPress={() => setEditVisible(false)}
+          >
+            <Text style={editStyles.cancelBtnText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </Modal>
+
     </SafeAreaView>
   );
 }
@@ -465,4 +547,18 @@ const styles = StyleSheet.create({
   createBtn: { backgroundColor: Colors.accent, borderRadius: 12, paddingHorizontal: 20, paddingVertical: 12 },
   createBtnText: { color: "#fff", fontWeight: "700", fontSize: 14 },
   emptySubDeck: { fontSize: 13, color: Colors.inkSecondary, textAlign: "center", paddingHorizontal: 20 },
+});
+const editStyles = StyleSheet.create({
+  overlay: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(0,0,0,0.45)" },
+  sheet: { backgroundColor: Colors.card, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 24, paddingBottom: 40, gap: 8 },
+  handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: Colors.border, alignSelf: "center", marginBottom: 16 },
+  title: { fontSize: 18, fontWeight: "700", color: Colors.ink, marginBottom: 8 },
+  label: { fontSize: 12, fontWeight: "600", color: Colors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.5, marginTop: 8 },
+  input: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: 12, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15, color: Colors.ink },
+  bioInput: { height: 90, textAlignVertical: "top" },
+  charCount: { fontSize: 11, color: Colors.inkDisabled, textAlign: "right" },
+  saveBtn: { backgroundColor: Colors.accent, borderRadius: 14, paddingVertical: 14, alignItems: "center", marginTop: 8 },
+  saveBtnText: { fontSize: 16, fontWeight: "700", color: Colors.white },
+  cancelBtn: { paddingVertical: 12, alignItems: "center" },
+  cancelBtnText: { fontSize: 15, color: Colors.inkSecondary, fontWeight: "500" },
 });

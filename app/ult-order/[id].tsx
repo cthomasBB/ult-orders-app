@@ -1,13 +1,16 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { MOCK_FEED_ITEMS, MOCK_SAVED_ITEMS, MOCK_MY_ORDERS } from "@/features/feed/mockData";
 import { useFollowStore } from "@/features/feed/followStore";
 import { useAuthStore } from "@/features/auth/authStore";
 import { supabase } from "@/services/supabase";
+import { MediaCarousel } from "@/components/feed/MediaCarousel";
 
+const { width: SCREEN_W } = Dimensions.get("window");
+const PHOTO_H = Math.round(SCREEN_W * 3 / 4);
 const formatPrice = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
 // ─── Fetch order from Supabase ────────────────────────────────────────────────
@@ -169,18 +172,14 @@ export default function OrderDetailScreen() {
           <OrderDetailFollowButton post={post} />
         </View>
         <View style={styles.photoArea}>
-          {post.media && post.media.length > 0 ? (
-            <Image
-              source={{ uri: post.media[0].url }}
-              style={StyleSheet.absoluteFillObject}
-              resizeMode="cover"
-            />
-          ) : (
-            <>
-              <Text style={styles.photoEmoji}>🍽️</Text>
-              <Text style={styles.photoLabel}>{post.restaurant.name}</Text>
-            </>
-          )}
+          <MediaCarousel
+            media={post.media ?? []}
+            width={SCREEN_W}
+            height={PHOTO_H}
+            borderRadius={0}
+            restaurantName={post.restaurant.name}
+            showRestaurantPill
+          />
         </View>
         <View style={styles.body}>
           <Text style={styles.title}>{post.title}</Text>

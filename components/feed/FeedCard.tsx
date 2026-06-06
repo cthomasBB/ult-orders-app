@@ -24,6 +24,7 @@ import type { UltOrderFeedItem } from "@/types/feed";
 import { useFollowStore } from "@/features/feed/followStore";
 import { useAuthStore } from "@/features/auth/authStore";
 import { supabase } from "@/services/supabase";
+import { MediaCarousel } from "./MediaCarousel";
 
 const { width: SCREEN_W } = Dimensions.get("window");
 const CARD_PADDING = 16;
@@ -581,7 +582,12 @@ export function FeedCard({ item, onPress, onDelete }: FeedCardProps) {
       </View>
 
       {/* ── Media ── */}
-      <MediaBlock item={item} onPress={handleCardPress} />
+      <MediaCarousel
+        media={item.media}
+        restaurantName={item.restaurant.name}
+        showRestaurantPill
+        onPress={handleCardPress}
+      />
 
       {/* ── Body ── */}
       <View style={styles.body}>
