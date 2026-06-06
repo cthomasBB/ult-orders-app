@@ -1,4 +1,5 @@
 import { useRouter } from "expo-router";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -271,7 +272,6 @@ async function submitUltOrder(
     const { error: mediaErr } = await supabase.from("ult_order_media").insert(
       uploadedMedia.map((m) => ({
         ult_order_id: ultOrderId,
-        user_id: userId,
         media_type: m.type,
         url: m.url,
         thumbnail_url: m.url,
@@ -312,6 +312,7 @@ export default function Step5PreviewScreen() {
   const { draft, reset, setSubmitting, setSubmitError, setSubmittedId, goToStep } =
     useCreateOrderStore();
 
+  const queryClient = useQueryClient();
   const [progressMsg, setProgressMsg] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [posted, setPosted] = useState(false);
@@ -346,6 +347,7 @@ export default function Step5PreviewScreen() {
         has_media: draft.media.length > 0,
         tag_count: draft.tags.length,
       });
+      queryClient.invalidateQueries({ queryKey: ["feed", "following"] });
       setShowConfetti(true);
       setPosted(true);
 

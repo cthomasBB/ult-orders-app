@@ -1,5 +1,7 @@
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system/legacy";
 import { supabase } from "./supabase";
+import { decode } from "base64-arraybuffer";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -39,19 +41,15 @@ export async function uploadMedia(
   const fileName = `${userId}/${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`;
   const mimeType = getMimeType(asset, ext);
 
-  // Fetch the local file as a Blob
-  const response = await fetch(asset.uri);
-  if (!response.ok) {
-    throw new Error(`Failed to read local file: ${asset.uri}`);
-  }
-  const blob = await response.blob();
-
-  // Report approximate start (fetch API doesn't expose progress)
-  onProgress?.({ loaded: 0, total: blob.size });
+  // Read file as base64 using expo-file-system (required for React Native local URIs)
+  const base64 = await FileSystem.readAsStringAsync(asset.uri, {
+    encoding: 'base64',
+  });
+  onProgress?.({ loaded: 0, total: 1 });
 
   const { data, error } = await supabase.storage
     .from(BUCKETS.ultOrderMedia)
-    .upload(fileName, blob, {
+    .upload(fileName, decode(base64), {
       contentType: mimeType,
       upsert: false,
       cacheControl: "3600",
@@ -59,7 +57,7 @@ export async function uploadMedia(
 
   if (error) throw new Error(`Upload failed: ${error.message}`);
 
-  onProgress?.({ loaded: blob.size, total: blob.size });
+  onProgress?.({ loaded: 1, total: 1 });
 
   const { data: urlData } = supabase.storage
     .from(BUCKETS.ultOrderMedia)
@@ -101,12 +99,13 @@ export async function uploadAvatar(
   const fileName = `${userId}/avatar.${ext}`;
   const mimeType = getMimeType(asset, ext);
 
-  const response = await fetch(asset.uri);
-  const blob = await response.blob();
+  const base64 = await FileSystem.readAsStringAsync(asset.uri, {
+    encoding: 'base64',
+  });
 
   const { data, error } = await supabase.storage
     .from(BUCKETS.avatars)
-    .upload(fileName, blob, {
+    .upload(fileName, decode(base64), {
       contentType: mimeType,
       upsert: true, // overwrite existing avatar
     });
