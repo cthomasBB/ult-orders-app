@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/colors";
 import { FeedCard } from "@/components/feed/FeedCard";
+import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/services/supabase";
 import { useAuthStore } from "@/features/auth/authStore";
 
@@ -44,6 +45,7 @@ async function fetchSavedOrders(userId: string) {
 }
 
 export default function SavedScreen() {
+  const queryClient = useQueryClient();
   const [items, setItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuthStore();
@@ -81,7 +83,17 @@ export default function SavedScreen() {
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.list}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <FeedCard item={item} />}
+          renderItem={({ item }) => (
+              <FeedCard
+                item={item}
+                onDelete={(id) => {
+                  queryClient.invalidateQueries({ queryKey: ["feed", "following"] });
+                  queryClient.invalidateQueries({ queryKey: ["feed", "trending"] });
+                  queryClient.invalidateQueries({ queryKey: ["feed", "nearby"] });
+                  setItems((prev) => prev.filter((i) => i.id !== id));
+                }}
+              />
+            )}
           ListEmptyComponent={
             <View style={styles.empty}>
               <Text style={styles.emptyIcon}>🔖</Text>

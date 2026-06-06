@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useQueryClient } from "@tanstack/react-query";
 import type { UseInfiniteQueryResult } from "@tanstack/react-query";
 import { Colors } from "@/constants/colors";
 import { FeedCard } from "./FeedCard";
@@ -21,6 +22,7 @@ type FeedListProps = {
   query: UseInfiniteQueryResult<{ pages: UltOrderFeedItem[][] }, Error>;
   feedType: FeedType;
   ListHeaderComponent?: React.ReactElement;
+  onDelete?: (id: string) => void;
 };
 
 // ─── Empty states per feed type ───────────────────────────────────────────────
@@ -78,7 +80,8 @@ const errorStyles = StyleSheet.create({
 
 // ─── FeedList ─────────────────────────────────────────────────────────────────
 
-export function FeedList({ query, feedType, ListHeaderComponent }: FeedListProps) {
+export function FeedList({ query, feedType, ListHeaderComponent, onDelete }: FeedListProps) {
+  const queryClient = useQueryClient();
   const {
     data,
     isLoading,
@@ -93,6 +96,13 @@ export function FeedList({ query, feedType, ListHeaderComponent }: FeedListProps
   // Flatten pages into a single array
   const items: UltOrderFeedItem[] = data?.pages.flatMap((page) => page) ?? [];
 
+  const handleDelete = useCallback((id: string) => {
+    queryClient.invalidateQueries({ queryKey: ["feed", "following"] });
+    queryClient.invalidateQueries({ queryKey: ["feed", "trending"] });
+    queryClient.invalidateQueries({ queryKey: ["feed", "nearby"] });
+    onDelete?.(id);
+  }, [queryClient, onDelete]);
+
   const handleEndReached = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -102,7 +112,7 @@ export function FeedList({ query, feedType, ListHeaderComponent }: FeedListProps
   const renderItem = useCallback(
     ({ item }: { item: UltOrderFeedItem }) => (
       <View style={listStyles.itemWrapper}>
-        <FeedCard item={item} />
+        <FeedCard item={item} onDelete={handleDelete} />
       </View>
     ),
     []

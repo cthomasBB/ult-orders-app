@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import { useState, useEffect } from "react";
 import {
+  Alert,
   Dimensions,
   Image,
   Platform,
@@ -22,6 +23,7 @@ import {
 import type { UltOrderFeedItem } from "@/types/feed";
 import { useFollowStore } from "@/features/feed/followStore";
 import { useAuthStore } from "@/features/auth/authStore";
+import { supabase } from "@/services/supabase";
 
 const { width: SCREEN_W } = Dimensions.get("window");
 const CARD_PADDING = 16;
@@ -427,9 +429,10 @@ const followStyles = StyleSheet.create({
 type FeedCardProps = {
   item: UltOrderFeedItem;
   onPress?: () => void;
+  onDelete?: (id: string) => void;
 };
 
-export function FeedCard({ item, onPress }: FeedCardProps) {
+export function FeedCard({ item, onPress, onDelete }: FeedCardProps) {
   const router = useRouter();
   const { user } = useAuthStore();
   const likeMutation = useToggleLike();
@@ -488,6 +491,48 @@ export function FeedCard({ item, onPress }: FeedCardProps) {
   const handleRestaurantPress = () => {
     router.push(`/restaurant/${item.restaurant_id}`);
   };
+  const handleOptions = () => {
+    Alert.alert(
+      "Post Options",
+      undefined,
+      [
+        {
+          text: "Edit (Coming Soon)",
+          onPress: () => {},
+        },
+        {
+          text: "Delete Post",
+          style: "destructive",
+          onPress: () => {
+            Alert.alert(
+              "Delete Post",
+              "Are you sure? This cannot be undone.",
+              [
+                { text: "Cancel", style: "cancel" },
+                {
+                  text: "Delete",
+                  style: "destructive",
+                  onPress: async () => {
+                    try {
+                      const { error } = await supabase
+                        .from("ult_orders")
+                        .delete()
+                        .eq("id", item.id);
+                      if (error) throw error;
+                      onDelete?.(item.id);
+                    } catch (e: any) {
+                      Alert.alert("Error", e.message ?? "Failed to delete post.");
+                    }
+                  },
+                },
+              ]
+            );
+          },
+        },
+        { text: "Cancel", style: "cancel" },
+      ]
+    );
+  };
   if (notForMe) {
     return (
       <View style={styles.notForMeCard}>
@@ -526,6 +571,12 @@ export function FeedCard({ item, onPress }: FeedCardProps) {
         {/* Follow button — hidden on your own posts */}
         {item.author.id !== user?.id && (
           <FollowButton userId={item.author.id} username={item.author.username} />
+        )}
+        {/* Options menu — only on your own posts */}
+        {item.author.id === user?.id && (
+          <Pressable style={styles.moreBtn} onPress={handleOptions} hitSlop={8}>
+            <Ionicons name="ellipsis-horizontal" size={20} color={Colors.inkSecondary} />
+          </Pressable>
         )}
       </View>
 
