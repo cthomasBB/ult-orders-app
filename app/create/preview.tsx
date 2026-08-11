@@ -348,6 +348,8 @@ export default function Step5PreviewScreen() {
         tag_count: draft.tags.length,
       });
       queryClient.invalidateQueries({ queryKey: ["feed", "following"] });
+      queryClient.invalidateQueries({ queryKey: ["feed", "trending"] });
+      queryClient.invalidateQueries({ queryKey: ["feed", "nearby"] });
       setShowConfetti(true);
       setPosted(true);
 
