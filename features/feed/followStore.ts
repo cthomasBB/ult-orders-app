@@ -84,6 +84,8 @@ export const useFollowStore = create<FollowStore>((set, get) => ({
       }
       // Refresh the Following feed so new posts appear immediately
       _queryClient?.invalidateQueries({ queryKey: ["feed", "following"] });
+      // Refresh the target's follower/following counts on their profile
+      _queryClient?.invalidateQueries({ queryKey: ["user-profile", targetUsername] });
     } catch (e) {
       // Roll back optimistic update
       console.warn("followStore.toggleFollow error:", e);

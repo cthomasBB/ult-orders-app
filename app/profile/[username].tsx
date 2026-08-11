@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { MOCK_FEED_ITEMS, MOCK_SAVED_ITEMS, MOCK_MY_ORDERS } from "@/features/feed/mockData";
 import { useFollowStore } from "@/features/feed/followStore";
 import { useAuthStore } from "@/features/auth/authStore";
+import { useUserProfile } from "@/features/profile/useProfile";
 import { supabase } from "@/services/supabase";
 
 // ─── Supabase fetch ───────────────────────────────────────────────────────────
@@ -13,7 +14,7 @@ import { supabase } from "@/services/supabase";
 async function fetchUserByUsername(username: string) {
   const { data, error } = await supabase
     .from("users")
-    .select("id, username, display_name, avatar_url, is_verified, follower_count, following_count, ult_order_count, bio, taste_tags, is_active")
+    .select("id, username, display_name, avatar_url, is_verified, ult_order_count, bio, taste_tags, is_active")
     .eq("username", username)
     .single();
   if (error) return null;
@@ -107,6 +108,7 @@ export default function UserProfileScreen() {
   const [isLoading, setIsLoading] = useState(true);
 
   const usernameStr = String(username);
+  const { data: profileStats } = useUserProfile(usernameStr);
 
   useFocusEffect(useCallback(() => {
     async function load() {
@@ -247,8 +249,13 @@ export default function UserProfileScreen() {
           </View>
           <View style={styles.statDivider} />
           <View style={styles.stat}>
-            <Text style={styles.statNum}>{profileUser.follower_count ?? 0}</Text>
+            <Text style={styles.statNum}>{profileStats?.follower_count ?? 0}</Text>
             <Text style={styles.statLabel}>Followers</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.stat}>
+            <Text style={styles.statNum}>{profileStats?.following_count ?? 0}</Text>
+            <Text style={styles.statLabel}>Following</Text>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.stat}>

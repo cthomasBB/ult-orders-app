@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useFocusEffect } from "expo-router";
 import { useAuthStore } from "@/features/auth/authStore";
+import { useUserProfile } from "@/features/profile/useProfile";
 import { supabase } from "@/services/supabase";
 import { Colors } from "@/constants/colors";
 
@@ -191,7 +192,7 @@ export default function ProfileScreen() {
   const displayName = publicUser?.display_name ?? publicUser?.username ?? user?.email?.split("@")[0] ?? "You";
   const username = publicUser?.username ?? user?.email?.split("@")[0] ?? "you";
   const avatarLetter = displayName[0]?.toUpperCase() ?? "U";
-  const totalLikes = myOrders.reduce((sum, p) => sum + (p.like_count ?? 0), 0);
+  const { data: profileStats } = useUserProfile(username);
 
   useFocusEffect(
     useCallback(() => {
@@ -294,8 +295,13 @@ export default function ProfileScreen() {
           </View>
           <View style={styles.statDivider} />
           <View style={styles.stat}>
-            <Text style={styles.statNum}>{totalLikes}</Text>
-            <Text style={styles.statLabel}>Likes</Text>
+            <Text style={styles.statNum}>{profileStats?.follower_count ?? 0}</Text>
+            <Text style={styles.statLabel}>Followers</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.stat}>
+            <Text style={styles.statNum}>{profileStats?.following_count ?? 0}</Text>
+            <Text style={styles.statLabel}>Following</Text>
           </View>
         </View>
 
@@ -388,7 +394,6 @@ export default function ProfileScreen() {
             </View>
           );
         })()}
-        )}
 
         {/* Orders tab */}
         {activeTab === "Orders" && (
