@@ -26,7 +26,7 @@ async function fetchUserOrders(userId: string) {
     .from("ult_orders")
     .select(`
       id, user_id, restaurant_id,
-      title, caption, status,
+      title, caption, status, is_deck,
       total, currency,
       like_count, save_count, comment_count, try_count, view_count,
       published_at, created_at,
@@ -158,6 +158,7 @@ export default function UserProfileScreen() {
 
   const totalSaves = userPosts.reduce((sum, p) => sum + p.save_count, 0);
   const totalLikes = userPosts.reduce((sum, p) => sum + p.like_count, 0);
+  const deckPosts = userPosts.filter((p) => p.is_deck).slice(0, 5);
 
   const isOwnProfile = currentUser && profileUser && currentUser.id === profileUser.id;
 
@@ -280,49 +281,36 @@ export default function UserProfileScreen() {
         {/* Deck tab */}
         {activeTab === "Deck" && (
           <View style={styles.grid}>
-            {userPosts.length === 0 ? (
-              <Text style={styles.empty}>No orders yet.</Text>
+            {deckPosts.length === 0 ? (
+              <Text style={styles.empty}>
+                {isOwnProfile ? "Your deck is empty." : "No deck posts yet."}
+              </Text>
             ) : (
               <>
-                {/* Row 1: first two posts side by side */}
-                {userPosts.length >= 1 && (
-                  <View style={styles.gridRow}>
-                    {userPosts.slice(0, 2).map((post) => (
-                      <View key={post.id} style={styles.gridCell}>
-                        <DeckCard
-                          item={post}
-                          onPress={() => router.push(`/ult-order/${post.id}` as any)}
-                        />
-                      </View>
-                    ))}
-                  </View>
-                )}
+                {/* Row 1: first two deck posts side by side */}
+                <View style={styles.gridRow}>
+                  {deckPosts.slice(0, 2).map((post) => (
+                    <View key={post.id} style={styles.gridCell}>
+                      <DeckCard
+                        item={post}
+                        onPress={() => router.push(`/ult-order/${post.id}` as any)}
+                      />
+                    </View>
+                  ))}
+                </View>
                 {/* Row 2: wide single post */}
-                {userPosts.length >= 3 && (
+                {deckPosts.length >= 3 && (
                   <View style={styles.gridWide}>
                     <DeckCard
-                      item={userPosts[2]}
-                      onPress={() => router.push(`/ult-order/${userPosts[2].id}` as any)}
+                      item={deckPosts[2]}
+                      onPress={() => router.push(`/ult-order/${deckPosts[2].id}` as any)}
                     />
                   </View>
                 )}
-                {/* Row 3: next two posts side by side */}
-                {userPosts.length >= 4 && (
+                {/* Row 3: last two deck posts side by side */}
+                {deckPosts.length >= 4 && (
                   <View style={styles.gridRow}>
-                    {userPosts.slice(3, 5).map((post) => (
-                      <View key={post.id} style={styles.gridCell}>
-                        <DeckCard
-                          item={post}
-                          onPress={() => router.push(`/ult-order/${post.id}` as any)}
-                        />
-                      </View>
-                    ))}
-                  </View>
-                )}
-                {/* Row 4: any remaining posts */}
-                {userPosts.length >= 6 && (
-                  <View style={styles.gridRow}>
-                    {userPosts.slice(5, 7).map((post) => (
+                    {deckPosts.slice(3, 5).map((post) => (
                       <View key={post.id} style={styles.gridCell}>
                         <DeckCard
                           item={post}
