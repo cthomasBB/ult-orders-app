@@ -6,7 +6,6 @@ import { getStatusLevel } from "@/types/profile";
 import type {
   UserProfile,
   UserBadge,
-  DeckCard,
   ViewerRelation,
 } from "@/types/profile";
 
@@ -60,35 +59,6 @@ async function fetchUserBadges(userId: string): Promise<UserBadge[]> {
   }));
 }
 
-async function fetchDeckCards(userId: string): Promise<DeckCard[]> {
-  const { data } = await supabase
-    .from("ult_orders")
-    .select(`
-      id, pin_order, title, save_count,
-      restaurant:restaurants!restaurant_id (id, name, cuisine_type, cover_image_url),
-      media:ult_order_media (thumbnail_url, sort_order)
-    `)
-    .eq("user_id", userId)
-    .eq("is_pinned", true)
-    .eq("status", "published")
-    .order("pin_order", { ascending: true })
-    .limit(5);
-
-  return (data ?? []).map((row: any) => ({
-    id: row.id,
-    pin_order: row.pin_order ?? 1,
-    title: row.title ?? null,
-    save_count: row.save_count ?? 0,
-    restaurant_name: row.restaurant?.name ?? "Restaurant",
-    restaurant_id: row.restaurant?.id ?? "",
-    cuisine_type: row.restaurant?.cuisine_type ?? [],
-    cover_url:
-      (row.media ?? [])
-        .sort((a: any, b: any) => a.sort_order - b.sort_order)[0]
-        ?.thumbnail_url ?? null,
-  }));
-}
-
 async function fetchViewerRelation(
   viewerUserId: string,
   targetUserId: string
@@ -136,15 +106,6 @@ export function useUserBadges(userId: string | undefined) {
     queryFn: () => fetchUserBadges(userId!),
     enabled: !!userId,
     staleTime: 1000 * 60 * 10,
-  });
-}
-
-export function useDeckCards(userId: string | undefined) {
-  return useQuery({
-    queryKey: ["deck-cards", userId],
-    queryFn: () => fetchDeckCards(userId!),
-    enabled: !!userId,
-    staleTime: 1000 * 60 * 5,
   });
 }
 

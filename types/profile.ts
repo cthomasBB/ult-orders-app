@@ -56,19 +56,6 @@ export type UserBadge = {
   awarded_at: string;
 };
 
-// ─── Deck card (pinned ult_order) ─────────────────────────────────────────────
-
-export type DeckCard = {
-  id: string;              // ult_order_id
-  pin_order: number;       // 1-5
-  title: string | null;
-  save_count: number;
-  restaurant_name: string;
-  restaurant_id: string;
-  cover_url: string | null;  // first media thumbnail
-  cuisine_type: string[];
-};
-
 // ─── Orders grouped by restaurant ────────────────────────────────────────────
 
 export type RestaurantOrderGroup = {
