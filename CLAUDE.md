@@ -84,12 +84,21 @@ Concretely: `003_triggers.sql` defines the trigger that maintains `users.followe
 
 **Before trusting or building on any migration file, verify the corresponding table/column/trigger/function actually exists in the live DB** — query `information_schema.columns`, `information_schema.triggers`, or `pg_proc` directly. Don't assume a `.sql` file in the repo reflects what's deployed.
 
+**The live DB is the source of truth, full stop — the repo's `.sql` files describe intent and may lag or diverge from it.** This has now caused two separate bugs, both confirmed 2026-08-21:
+1. `components/profile/ProfileScreen.tsx` + `SignatureOrderDeck.tsx` (deleted) queried `ult_orders.is_pinned`/`pin_order`, which `001_initial_schema.sql` describes but which were **never deployed**. The query failed silently and returned `[]` every time — masked because the component was also never wired into any route.
+2. The public profile's Deck tab (`app/profile/[username].tsx`) rendered the user's 7 most recent orders unfiltered, styled as a curated Deck, because it was written against the same never-deployed pin model and never updated when the real mechanism (`ult_orders.is_deck`, a plain boolean, undocumented in any migration file) shipped separately in commit `fb60cea`. Live for ~2.5 months before being caught.
+
+Root cause both times: trusting what a migration file or an existing query *implied* about the schema instead of checking `information_schema` directly. Query the live DB before writing or debugging anything that touches a table you haven't verified this session.
+
 ### Known-missing schema (as of 2026-08-11)
 These tables, referenced by `supabase/migrations/003_triggers.sql`, do **not** exist in the live DB: `comments`, `collections`, `collection_items`, `tags`, `ult_order_tags`, `reviews`, `menu_items`, `order_items`, `orders`, `notifications`. Two columns referenced by that same file are also missing: `restaurants.save_count`, `restaurants.ult_order_count`.
 
 As a result, the following trigger logic from that file was **not** applied and is not active: comment_count maintenance, collection item counts, tag usage counts, restaurant review stats (avg rating / total reviews), order-item price snapshotting + order totals, and all in-database notification fanout (likes/follows/comments/tries/order-status). Only the sections targeting tables that do exist were applied: like/save/try counters on `ult_orders`, follow counters on `users`, `users.ult_order_count`, trending score (minus its comments-sourced trigger), and the `published_at` stamp.
 
 If any of the deferred features these sections belong to (comments, collections, tags, reviews, in-app ordering, notifications) get built, the matching trigger logic needs to be applied at the same time the tables are created — it won't happen automatically just because it's sitting in the migration file.
+
+### Correction (2026-08-21): `ult_orders` pin/deck columns
+`001_initial_schema.sql` describes `is_pinned boolean` + `pin_order smallint` (1–6) for pinning orders to a profile. **These columns do not exist in the live DB and never have.** The live table instead has a single undocumented column, `is_deck boolean` (default `false`, not null, added by hand outside any tracked migration) — no ordering column, just membership. Don't write code against `is_pinned`/`pin_order`; they will silently no-op or error. See Section 9 for how `is_deck` is actually used and capped.
 
 ---
 
@@ -164,15 +173,17 @@ ULT Order · Signature Order Deck · go-to orders · Verified Tried It · Hidden
 ### Working
 - Auth + route guards
 - Full post creation: Google Places → `resolveRestaurant()` → base64 media upload → writes to `ult_orders`, `ult_order_items`, `ult_order_media`
-- All three feed tabs (Following, Trending, Near You)
+- All three feed tabs (Following, Trending, Near You), cache-invalidated on every post (all three tabs, not just Following)
 - Follow system with real-time feed invalidation
 - Me tab with three sub-tabs (Deck / Orders / Saved); Deck capped at 5
 - Delete post, edit profile/bio, MediaCarousel with multi-photo support
 - Follower/following counts on both profile screens (Me tab + public profile), backed by live DB triggers on `follows` (verified 2026-08-11, see Section 4)
-
-### Remaining before MVP close-out
-- Feed cache invalidation after posting
-- Add-to-deck in the create flow
+- **Signature Order Deck**, end to end (verified 2026-08-21, see Section 4 for the schema correction this replaced):
+  - Mechanism: `ult_orders.is_deck` (plain boolean, no ordering column — see Section 4). Toggled from Me tab → Orders sub-tab (`app/(tabs)/profile.tsx`), and offered directly in the create flow's publish step (`app/create/preview.tsx`) via an "Add to Signature Deck" toggle, default off.
+  - **5-cap enforced at the DB layer**, not just client-side: trigger `trg_enforce_deck_cap` / function `fn_enforce_deck_cap()` (`supabase/migrations/005_deck_cap_trigger.sql`) fires `BEFORE INSERT OR UPDATE OF is_deck` on `ult_orders` and rejects any write that would push a user past 5. Covers both existing write paths (Me tab toggle = UPDATE, publish-time add = INSERT).
+  - **Swap picker**: if the deck is full when publishing, the user is shown their 5 current deck orders (with save counts) and must explicitly pick one to demote before the swap is staged — never a silent replacement. The demoted order stays on the profile; it only loses `is_deck`.
+  - Publishing a post and adding it to the deck are decoupled: the post always gets created first; the deck update is best-effort afterward, so a cap-trigger rejection (e.g. a race) degrades to a warning, never a lost post.
+  - Public profile Deck tab (`app/profile/[username].tsx`) now correctly filters on `is_deck` and caps at 5, matching the Me tab — previously showed the 7 most recent orders unfiltered (see Section 4).
 
 ### Deferred (post-MVP, in order)
 1. Visual design pass (dark mode, premium motion)
