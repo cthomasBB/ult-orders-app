@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { useAuthStore } from "@/features/auth/authStore";
 import { saveTasteTags } from "@/services/supabase";
 
@@ -174,7 +174,7 @@ export default function TasteTagsScreen() {
           disabled={isSaving}
         >
           {isSaving ? (
-            <ActivityIndicator color={Colors.white} />
+            <ActivityIndicator color={LegacyColors.white} />
           ) : (
             <Text style={styles.ctaBtnText}>
               {remaining > 0
@@ -189,7 +189,7 @@ export default function TasteTagsScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
   header: {
     paddingHorizontal: 24,
     paddingTop: 20,
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   step: {
     fontSize: 12,
     fontWeight: "700",
-    color: Colors.accent,
+    color: LegacyColors.accent,
     textTransform: "uppercase",
     letterSpacing: 0.8,
     marginBottom: 4,
@@ -207,20 +207,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: "800",
-    color: Colors.ink,
+    color: LegacyColors.ink,
     letterSpacing: -0.3,
   },
-  subtitle: { fontSize: 14, color: Colors.inkSecondary, lineHeight: 20 },
+  subtitle: { fontSize: 14, color: LegacyColors.inkSecondary, lineHeight: 20 },
   progressTrack: {
     height: 4,
-    backgroundColor: Colors.border,
+    backgroundColor: LegacyColors.border,
     borderRadius: 2,
     marginTop: 12,
     overflow: "hidden",
   },
   progressFill: {
     height: 4,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     borderRadius: 2,
   },
   scroll: { paddingHorizontal: 24, paddingTop: 8, paddingBottom: 24, gap: 20 },
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   sectionLabel: {
     fontSize: 12,
     fontWeight: "700",
-    color: Colors.inkSecondary,
+    color: LegacyColors.inkSecondary,
     textTransform: "uppercase",
     letterSpacing: 0.6,
   },
@@ -241,47 +241,47 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 24,
     borderWidth: 1.5,
-    borderColor: Colors.border,
-    backgroundColor: Colors.card,
+    borderColor: LegacyColors.border,
+    backgroundColor: LegacyColors.card,
   },
   pillSelected: {
-    backgroundColor: Colors.accentLight,
-    borderColor: Colors.accent,
+    backgroundColor: LegacyColors.accentLight,
+    borderColor: LegacyColors.accent,
   },
   pillEmoji: { fontSize: 15 },
-  pillLabel: { fontSize: 14, fontWeight: "500", color: Colors.ink },
-  pillLabelSelected: { color: Colors.accent, fontWeight: "700" },
+  pillLabel: { fontSize: 14, fontWeight: "500", color: LegacyColors.ink },
+  pillLabelSelected: { color: LegacyColors.accent, fontWeight: "700" },
   footer: {
     paddingHorizontal: 24,
     paddingBottom: 32,
     paddingTop: 12,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: Colors.border,
+    borderTopColor: LegacyColors.border,
     gap: 8,
-    backgroundColor: Colors.surface,
+    backgroundColor: LegacyColors.surface,
   },
   errorText: {
     fontSize: 13,
-    color: Colors.danger,
+    color: LegacyColors.danger,
     textAlign: "center",
   },
   ctaBtn: {
     height: 54,
     borderRadius: 14,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: Colors.accent,
+    shadowColor: LegacyColors.accent,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.28,
     shadowRadius: 8,
     elevation: 4,
   },
   ctaBtnDisabled: {
-    backgroundColor: Colors.inkDisabled,
+    backgroundColor: LegacyColors.inkDisabled,
     shadowOpacity: 0,
     elevation: 0,
   },
-  ctaBtnPressed: { backgroundColor: Colors.accentDark },
-  ctaBtnText: { fontSize: 16, fontWeight: "700", color: Colors.white },
+  ctaBtnPressed: { backgroundColor: LegacyColors.accentDark },
+  ctaBtnText: { fontSize: 16, fontWeight: "700", color: LegacyColors.white },
 });

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { formatPrice } from "@/utils";
 import type { OrderItem } from "@/types";
 
@@ -20,10 +20,10 @@ export function OrderItemRow({ item }: { item: OrderItem }) {
 
 const styles = StyleSheet.create({
   row: { flexDirection: "row", alignItems: "center", gap: 10, paddingVertical: 6 },
-  qty: { width: 32, height: 32, borderRadius: 8, backgroundColor: Colors.accentLight, alignItems: "center", justifyContent: "center" },
-  qtyText: { fontSize: 13, fontWeight: "700", color: Colors.accent },
+  qty: { width: 32, height: 32, borderRadius: 8, backgroundColor: LegacyColors.accentLight, alignItems: "center", justifyContent: "center" },
+  qtyText: { fontSize: 13, fontWeight: "700", color: LegacyColors.accent },
   info: { flex: 1 },
-  name: { fontSize: 14, fontWeight: "600", color: Colors.ink },
-  notes: { fontSize: 12, color: Colors.inkDisabled, marginTop: 2, fontStyle: "italic" },
-  price: { fontSize: 14, fontWeight: "600", color: Colors.ink },
+  name: { fontSize: 14, fontWeight: "600", color: LegacyColors.ink },
+  notes: { fontSize: 12, color: LegacyColors.inkDisabled, marginTop: 2, fontStyle: "italic" },
+  price: { fontSize: 14, fontWeight: "600", color: LegacyColors.ink },
 });

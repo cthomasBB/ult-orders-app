@@ -1,7 +1,7 @@
 /**
  * ULT Orders — brand design tokens
  */
-export const Colors = {
+export const LegacyColors = {
   // Primary brand
   accent: "#C8472B",      // ember red — CTAs, active states
   accentLight: "#F5E9E6", // ember red tint — hover / pressed backgrounds
@@ -45,4 +45,4 @@ export const Colors = {
   tabBarBorder: "#EBEBEA",
 } as const;
 
-export type ColorKey = keyof typeof Colors;
+export type ColorKey = keyof typeof LegacyColors;

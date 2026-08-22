@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { useAuthStore } from "@/features/auth/authStore";
 
 export default function LoginScreen() {
@@ -45,7 +45,7 @@ export default function LoginScreen() {
         <View style={styles.container}>
           {/* Back */}
           <Pressable style={styles.back} onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={22} color={Colors.ink} />
+            <Ionicons name="arrow-back" size={22} color={LegacyColors.ink} />
           </Pressable>
 
           {/* Header */}
@@ -57,7 +57,7 @@ export default function LoginScreen() {
           {/* Error */}
           {error && (
             <View style={styles.errorBanner}>
-              <Ionicons name="alert-circle" size={15} color={Colors.danger} />
+              <Ionicons name="alert-circle" size={15} color={LegacyColors.danger} />
               <Text style={styles.errorText}>{error}</Text>
             </View>
           )}
@@ -70,7 +70,7 @@ export default function LoginScreen() {
               value={email}
               onChangeText={setEmail}
               placeholder="you@example.com"
-              placeholderTextColor={Colors.inkDisabled}
+              placeholderTextColor={LegacyColors.inkDisabled}
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="email"
@@ -92,7 +92,7 @@ export default function LoginScreen() {
                 value={password}
                 onChangeText={setPassword}
                 placeholder="Your password"
-                placeholderTextColor={Colors.inkDisabled}
+                placeholderTextColor={LegacyColors.inkDisabled}
                 secureTextEntry={!showPassword}
                 autoComplete="password"
                 autoCorrect={false}
@@ -104,7 +104,7 @@ export default function LoginScreen() {
                 <Ionicons
                   name={showPassword ? "eye-off-outline" : "eye-outline"}
                   size={20}
-                  color={Colors.inkSecondary}
+                  color={LegacyColors.inkSecondary}
                 />
               </Pressable>
             </View>
@@ -120,7 +120,7 @@ export default function LoginScreen() {
             disabled={isLoading}
           >
             {isLoading ? (
-              <ActivityIndicator color={Colors.white} />
+              <ActivityIndicator color={LegacyColors.white} />
             ) : (
               <Text style={styles.submitBtnText}>Sign In</Text>
             )}
@@ -150,7 +150,7 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
   flex: { flex: 1 },
   container: {
     flex: 1,
@@ -163,25 +163,25 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "800",
-    color: Colors.ink,
+    color: LegacyColors.ink,
     letterSpacing: -0.3,
   },
-  subtitle: { fontSize: 15, color: Colors.inkSecondary },
+  subtitle: { fontSize: 15, color: LegacyColors.inkSecondary },
   errorBanner: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     borderRadius: 10,
     padding: 12,
     marginBottom: 16,
   },
-  errorText: { flex: 1, fontSize: 13, color: Colors.danger },
+  errorText: { flex: 1, fontSize: 13, color: LegacyColors.danger },
   fieldGroup: { marginBottom: 16, gap: 6 },
   fieldLabel: {
     fontSize: 13,
     fontWeight: "600",
-    color: Colors.inkSecondary,
+    color: LegacyColors.inkSecondary,
   },
   passwordRow: {
     flexDirection: "row",
@@ -190,47 +190,47 @@ const styles = StyleSheet.create({
   },
   forgotLink: {
     fontSize: 13,
-    color: Colors.accent,
+    color: LegacyColors.accent,
     fontWeight: "600",
   },
   input: {
     height: 52,
     borderWidth: 1.5,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     borderRadius: 12,
     paddingHorizontal: 14,
     fontSize: 15,
-    color: Colors.ink,
-    backgroundColor: Colors.card,
+    color: LegacyColors.ink,
+    backgroundColor: LegacyColors.card,
   },
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
     height: 52,
     borderWidth: 1.5,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     borderRadius: 12,
     paddingHorizontal: 14,
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
   },
-  inputFlex: { flex: 1, fontSize: 15, color: Colors.ink },
-  inputError: { borderColor: Colors.danger },
+  inputFlex: { flex: 1, fontSize: 15, color: LegacyColors.ink },
+  inputError: { borderColor: LegacyColors.danger },
   submitBtn: {
     height: 54,
     borderRadius: 14,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 8,
     marginBottom: 20,
-    shadowColor: Colors.accent,
+    shadowColor: LegacyColors.accent,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 4,
   },
-  submitBtnPressed: { backgroundColor: Colors.accentDark },
-  submitBtnText: { fontSize: 16, fontWeight: "700", color: Colors.white },
+  submitBtnPressed: { backgroundColor: LegacyColors.accentDark },
+  submitBtnText: { fontSize: 16, fontWeight: "700", color: LegacyColors.white },
   divider: {
     flexDirection: "row",
     alignItems: "center",
@@ -240,22 +240,22 @@ const styles = StyleSheet.create({
   dividerLine: {
     flex: 1,
     height: StyleSheet.hairlineWidth,
-    backgroundColor: Colors.border,
+    backgroundColor: LegacyColors.border,
   },
-  dividerText: { fontSize: 13, color: Colors.inkSecondary },
+  dividerText: { fontSize: 13, color: LegacyColors.inkSecondary },
   createBtn: {
     height: 52,
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
   },
-  createBtnPressed: { backgroundColor: Colors.surface },
+  createBtnPressed: { backgroundColor: LegacyColors.surface },
   createBtnText: {
     fontSize: 15,
     fontWeight: "600",
-    color: Colors.ink,
+    color: LegacyColors.ink,
   },
 });

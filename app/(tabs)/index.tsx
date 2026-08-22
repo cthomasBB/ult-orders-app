@@ -10,7 +10,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { useAuthStore } from "@/features/auth/authStore";
 import { useLocation } from "@/hooks/useLocation";
 import {
@@ -61,7 +61,7 @@ function SegmentedControl({
             <Ionicons
               name={seg.icon}
               size={15}
-              color={isActive ? Colors.accent : Colors.inkSecondary}
+              color={isActive ? LegacyColors.accent : LegacyColors.inkSecondary}
               style={segStyles.tabIcon}
             />
             <Text
@@ -83,9 +83,9 @@ function SegmentedControl({
 const segStyles = StyleSheet.create({
   bar: {
     flexDirection: "row",
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.border,
+    borderBottomColor: LegacyColors.border,
   },
   tab: {
     flex: 1,
@@ -102,9 +102,9 @@ const segStyles = StyleSheet.create({
   tabLabel: {
     fontSize: 13,
     fontWeight: "600",
-    color: Colors.inkSecondary,
+    color: LegacyColors.inkSecondary,
   },
-  tabLabelActive: { color: Colors.accent },
+  tabLabelActive: { color: LegacyColors.accent },
   activeBar: {
     position: "absolute",
     bottom: 0,
@@ -112,7 +112,7 @@ const segStyles = StyleSheet.create({
     right: 12,
     height: 2.5,
     borderRadius: 2,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
   },
 });
 
@@ -142,11 +142,11 @@ function FollowingFeed({ header }: { header: React.ReactElement }) {
 }
 
 const followingEmptyStyles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colors.background },
+  container: { flex: 1, backgroundColor: LegacyColors.background },
   inner: { flex: 1, alignItems: "center", justifyContent: "center", padding: 40, gap: 12 },
   emoji: { fontSize: 48 },
-  title: { fontSize: 20, fontWeight: "700", color: Colors.ink },
-  body: { fontSize: 14, color: Colors.inkSecondary, textAlign: "center", lineHeight: 22 },
+  title: { fontSize: 20, fontWeight: "700", color: LegacyColors.ink },
+  body: { fontSize: 14, color: LegacyColors.inkSecondary, textAlign: "center", lineHeight: 22 },
 });
 
 // ─── Trending feed wrapper ────────────────────────────────────────────────────
@@ -165,7 +165,7 @@ function NearbyFeed({ header }: { header: React.ReactElement }) {
   if (isLoading && !coords) {
     return (
       <View style={nearbyStyles.locating}>
-        <Ionicons name="locate" size={32} color={Colors.accent} />
+        <Ionicons name="locate" size={32} color={LegacyColors.accent} />
         <Text style={nearbyStyles.locatingText}>Finding your location…</Text>
       </View>
     );
@@ -174,7 +174,7 @@ function NearbyFeed({ header }: { header: React.ReactElement }) {
   if (!coords) {
     return (
       <View style={nearbyStyles.locating}>
-        <Ionicons name="location-outline" size={40} color={Colors.inkDisabled} />
+        <Ionicons name="location-outline" size={40} color={LegacyColors.inkDisabled} />
         <Text style={nearbyStyles.noLocTitle}>Location unavailable</Text>
         <Text style={nearbyStyles.noLocBody}>
           Enable location access to see orders near you.
@@ -191,11 +191,11 @@ function NearbyFeed({ header }: { header: React.ReactElement }) {
 
 const nearbyStyles = StyleSheet.create({
   locating: { flex: 1, alignItems: "center", justifyContent: "center", gap: 12, padding: 40 },
-  locatingText: { fontSize: 15, color: Colors.inkSecondary },
-  noLocTitle: { fontSize: 18, fontWeight: "700", color: Colors.ink },
-  noLocBody: { fontSize: 14, color: Colors.inkSecondary, textAlign: "center", lineHeight: 20 },
-  retryBtn: { marginTop: 4, paddingHorizontal: 24, paddingVertical: 10, backgroundColor: Colors.accent, borderRadius: 10 },
-  retryText: { fontSize: 15, fontWeight: "700", color: Colors.white },
+  locatingText: { fontSize: 15, color: LegacyColors.inkSecondary },
+  noLocTitle: { fontSize: 18, fontWeight: "700", color: LegacyColors.ink },
+  noLocBody: { fontSize: 14, color: LegacyColors.inkSecondary, textAlign: "center", lineHeight: 20 },
+  retryBtn: { marginTop: 4, paddingHorizontal: 24, paddingVertical: 10, backgroundColor: LegacyColors.accent, borderRadius: 10 },
+  retryText: { fontSize: 15, fontWeight: "700", color: LegacyColors.white },
 });
 
 // ─── Home screen ─────────────────────────────────────────────────────────────
@@ -226,10 +226,10 @@ export default function HomeScreen() {
             style={styles.iconBtn}
             onPress={() => router.push("/create/restaurant" as any)}
           >
-            <Ionicons name="add" size={22} color={Colors.ink} />
+            <Ionicons name="add" size={22} color={LegacyColors.ink} />
           </Pressable>
           <Pressable style={styles.iconBtn}>
-            <Ionicons name="notifications-outline" size={22} color={Colors.ink} />
+            <Ionicons name="notifications-outline" size={22} color={LegacyColors.ink} />
           </Pressable>
         </View>
       </View>
@@ -249,11 +249,11 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
   headerContainer: {
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.border,
+    borderBottomColor: LegacyColors.border,
     marginBottom: 0,
   },
   topBar: {
@@ -265,11 +265,11 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   topBarLeft: { gap: 1 },
-  greetingText: { fontSize: 12, color: Colors.inkSecondary },
+  greetingText: { fontSize: 12, color: LegacyColors.inkSecondary },
   nameText: {
     fontSize: 20,
     fontWeight: "800",
-    color: Colors.ink,
+    color: LegacyColors.ink,
     letterSpacing: -0.3,
   },
   topBarRight: { flexDirection: "row", gap: 6 },
@@ -277,9 +277,9 @@ const styles = StyleSheet.create({
     width: 38,
     height: 38,
     borderRadius: 11,
-    backgroundColor: Colors.surface,
+    backgroundColor: LegacyColors.surface,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     alignItems: "center",
     justifyContent: "center",
   },

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import type { PublicUser } from "@/services/supabase";
 
 type Props = { user: PublicUser; size?: number };
@@ -18,6 +18,6 @@ export function ProfileAvatar({ user, size = 64 }: Props) {
 }
 
 const styles = StyleSheet.create({
-  avatar: { backgroundColor: Colors.accent, alignItems: "center", justifyContent: "center" },
-  initial: { color: Colors.white, fontWeight: "800" },
+  avatar: { backgroundColor: LegacyColors.accent, alignItems: "center", justifyContent: "center" },
+  initial: { color: LegacyColors.white, fontWeight: "800" },
 });

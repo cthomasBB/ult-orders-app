@@ -11,7 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useQueryClient } from "@tanstack/react-query";
 import type { UseInfiniteQueryResult } from "@tanstack/react-query";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { FeedCard } from "./FeedCard";
 import { FeedSkeletonList } from "./FeedSkeleton";
 import type { UltOrderFeedItem, FeedType } from "@/types/feed";
@@ -53,7 +53,7 @@ const EMPTY_STATES: Record<
 function ErrorState({ onRetry }: { onRetry: () => void }) {
   return (
     <View style={errorStyles.container}>
-      <Ionicons name="cloud-offline-outline" size={48} color={Colors.inkDisabled} />
+      <Ionicons name="cloud-offline-outline" size={48} color={LegacyColors.inkDisabled} />
       <Text style={errorStyles.title}>Couldn't load feed</Text>
       <Text style={errorStyles.subtitle}>Check your connection and try again.</Text>
       <Pressable
@@ -71,11 +71,11 @@ function ErrorState({ onRetry }: { onRetry: () => void }) {
 
 const errorStyles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center", padding: 40, gap: 10 },
-  title: { fontSize: 18, fontWeight: "700", color: Colors.ink },
-  subtitle: { fontSize: 14, color: Colors.inkSecondary, textAlign: "center", lineHeight: 20 },
-  btn: { marginTop: 8, paddingHorizontal: 24, paddingVertical: 10, backgroundColor: Colors.accent, borderRadius: 10 },
-  btnPressed: { backgroundColor: Colors.accentDark },
-  btnText: { fontSize: 15, fontWeight: "700", color: Colors.white },
+  title: { fontSize: 18, fontWeight: "700", color: LegacyColors.ink },
+  subtitle: { fontSize: 14, color: LegacyColors.inkSecondary, textAlign: "center", lineHeight: 20 },
+  btn: { marginTop: 8, paddingHorizontal: 24, paddingVertical: 10, backgroundColor: LegacyColors.accent, borderRadius: 10 },
+  btnPressed: { backgroundColor: LegacyColors.accentDark },
+  btnText: { fontSize: 15, fontWeight: "700", color: LegacyColors.white },
 });
 
 // ─── FeedList ─────────────────────────────────────────────────────────────────
@@ -127,7 +127,7 @@ export function FeedList({ query, feedType, ListHeaderComponent, onDelete }: Fee
     if (isFetchingNextPage) {
       return (
         <View style={listStyles.footer}>
-          <ActivityIndicator size="small" color={Colors.accent} />
+          <ActivityIndicator size="small" color={LegacyColors.accent} />
         </View>
       );
     }
@@ -178,7 +178,7 @@ export function FeedList({ query, feedType, ListHeaderComponent, onDelete }: Fee
           <RefreshControl
             refreshing={isRefetching}
             onRefresh={refetch}
-            tintColor={Colors.accent}
+            tintColor={LegacyColors.accent}
           />
         }
       />
@@ -198,8 +198,8 @@ export function FeedList({ query, feedType, ListHeaderComponent, onDelete }: Fee
         <RefreshControl
           refreshing={isRefetching}
           onRefresh={refetch}
-          tintColor={Colors.accent}
-          colors={[Colors.accent]}
+          tintColor={LegacyColors.accent}
+          colors={[LegacyColors.accent]}
         />
       }
       // Infinite scroll
@@ -236,17 +236,17 @@ export function FeedList({ query, feedType, ListHeaderComponent, onDelete }: Fee
 }
 
 const listStyles = StyleSheet.create({
-  list: { flex: 1, backgroundColor: Colors.surface },
+  list: { flex: 1, backgroundColor: LegacyColors.surface },
   content: { paddingTop: 10, paddingBottom: 24 },
   contentFlex: { flexGrow: 1, paddingTop: 10 },
   itemWrapper: { marginBottom: 14 },
   skeletonContainer: { paddingTop: 10 },
   refreshIndicator: { marginBottom: 14 },
   footer: { alignItems: "center", paddingVertical: 24 },
-  footerText: { fontSize: 13, color: Colors.inkSecondary },
+  footerText: { fontSize: 13, color: LegacyColors.inkSecondary },
   bottomPad: { height: 24 },
   emptyContainer: { flex: 1, alignItems: "center", justifyContent: "center", padding: 40, gap: 8 },
   emptyEmoji: { fontSize: 52, marginBottom: 4 },
-  emptyTitle: { fontSize: 20, fontWeight: "700", color: Colors.ink },
-  emptySubtitle: { fontSize: 14, color: Colors.inkSecondary, textAlign: "center", lineHeight: 20 },
+  emptyTitle: { fontSize: 20, fontWeight: "700", color: LegacyColors.ink },
+  emptySubtitle: { fontSize: 14, color: LegacyColors.inkSecondary, textAlign: "center", lineHeight: 20 },
 });

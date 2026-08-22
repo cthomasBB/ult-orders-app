@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "@/services/supabase";
 import { useAuthStore } from "@/features/auth/authStore";
 import { useOrdersStore } from "@/features/orders/store";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { formatPrice } from "@/utils";
 import type { Order } from "@/types";
 
@@ -51,14 +51,14 @@ export default function Step5ConfirmScreen() {
     return (
       <SafeAreaView style={styles.safe}>
         <View style={styles.successContainer}>
-          <View style={styles.successIcon}><Ionicons name="checkmark" size={56} color={Colors.white} /></View>
+          <View style={styles.successIcon}><Ionicons name="checkmark" size={56} color={LegacyColors.white} /></View>
           <Text style={styles.successTitle}>Order Placed! 🎉</Text>
           <Text style={styles.successSubtitle}>
             Your order is being processed. We'll notify you when it's ready.
           </Text>
           <Pressable style={({ pressed }) => [styles.trackBtn, pressed && styles.trackBtnPressed]}
             onPress={() => { router.dismissAll(); router.push(`/order/${createdOrder.id}`); }}>
-            <Ionicons name="navigate-outline" size={18} color={Colors.white} />
+            <Ionicons name="navigate-outline" size={18} color={LegacyColors.white} />
             <Text style={styles.trackBtnText}>Track Order</Text>
           </Pressable>
           <Pressable style={styles.homeBtn}
@@ -74,7 +74,7 @@ export default function Step5ConfirmScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
-        <Pressable onPress={() => router.back()} disabled={isLoading} hitSlop={10}><Ionicons name="arrow-back" size={22} color={Colors.ink} /></Pressable>
+        <Pressable onPress={() => router.back()} disabled={isLoading} hitSlop={10}><Ionicons name="arrow-back" size={22} color={LegacyColors.ink} /></Pressable>
         <View style={styles.headerCenter}>
           <Text style={styles.stepLabel}>Step 5 of 5</Text>
           <Text style={styles.title}>Confirm & Pay</Text>
@@ -86,14 +86,14 @@ export default function Step5ConfirmScreen() {
       <View style={styles.content}>
         {error && (
           <View style={styles.errorBanner}>
-            <Ionicons name="alert-circle" size={16} color={Colors.danger} />
+            <Ionicons name="alert-circle" size={16} color={LegacyColors.danger} />
             <Text style={styles.errorText}>{error}</Text>
           </View>
         )}
 
         {/* Payment placeholder */}
         <View style={styles.paymentCard}>
-          <View style={styles.paymentIconWrap}><Ionicons name="card" size={22} color={Colors.inkSecondary} /></View>
+          <View style={styles.paymentIconWrap}><Ionicons name="card" size={22} color={LegacyColors.inkSecondary} /></View>
           <View style={styles.paymentInfo}>
             <Text style={styles.paymentLabel}>Payment Method</Text>
             <Text style={styles.paymentValue}>•••• •••• •••• 4242</Text>
@@ -126,8 +126,8 @@ export default function Step5ConfirmScreen() {
 
       <View style={styles.footer}>
         <Pressable style={[styles.confirmBtn, isLoading && styles.confirmBtnDisabled]} onPress={handleConfirm} disabled={isLoading}>
-          {isLoading ? <ActivityIndicator color={Colors.white} /> : (
-            <><Ionicons name="checkmark-circle" size={20} color={Colors.white} /><Text style={styles.confirmBtnText}>Place Order</Text></>
+          {isLoading ? <ActivityIndicator color={LegacyColors.white} /> : (
+            <><Ionicons name="checkmark-circle" size={20} color={LegacyColors.white} /><Text style={styles.confirmBtnText}>Place Order</Text></>
           )}
         </Pressable>
       </View>
@@ -136,43 +136,43 @@ export default function Step5ConfirmScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
   header: { flexDirection: "row", alignItems: "center", paddingHorizontal: 20, paddingVertical: 14, gap: 12 },
   headerCenter: { flex: 1 },
-  stepLabel: { fontSize: 12, fontWeight: "700", color: Colors.accent, textTransform: "uppercase", letterSpacing: 0.6 },
-  title: { fontSize: 20, fontWeight: "800", color: Colors.ink },
-  progressTrack: { height: 4, backgroundColor: Colors.border, marginHorizontal: 20, borderRadius: 2, marginBottom: 24, overflow: "hidden" },
-  progressFill: { height: 4, backgroundColor: Colors.accent, borderRadius: 2 },
+  stepLabel: { fontSize: 12, fontWeight: "700", color: LegacyColors.accent, textTransform: "uppercase", letterSpacing: 0.6 },
+  title: { fontSize: 20, fontWeight: "800", color: LegacyColors.ink },
+  progressTrack: { height: 4, backgroundColor: LegacyColors.border, marginHorizontal: 20, borderRadius: 2, marginBottom: 24, overflow: "hidden" },
+  progressFill: { height: 4, backgroundColor: LegacyColors.accent, borderRadius: 2 },
   content: { flex: 1, paddingHorizontal: 16, gap: 14 },
-  errorBanner: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: Colors.accentLight, borderRadius: 10, padding: 12 },
-  errorText: { flex: 1, fontSize: 13, color: Colors.danger },
-  paymentCard: { flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: Colors.card, borderRadius: 14, padding: 16, borderWidth: 1, borderColor: Colors.border },
-  paymentIconWrap: { width: 40, height: 40, borderRadius: 10, backgroundColor: Colors.surface, alignItems: "center", justifyContent: "center" },
+  errorBanner: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: LegacyColors.accentLight, borderRadius: 10, padding: 12 },
+  errorText: { flex: 1, fontSize: 13, color: LegacyColors.danger },
+  paymentCard: { flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: LegacyColors.card, borderRadius: 14, padding: 16, borderWidth: 1, borderColor: LegacyColors.border },
+  paymentIconWrap: { width: 40, height: 40, borderRadius: 10, backgroundColor: LegacyColors.surface, alignItems: "center", justifyContent: "center" },
   paymentInfo: { flex: 1 },
-  paymentLabel: { fontSize: 12, color: Colors.inkSecondary },
-  paymentValue: { fontSize: 15, fontWeight: "600", color: Colors.ink, marginTop: 2 },
-  changeText: { fontSize: 13, color: Colors.accent, fontWeight: "600" },
-  summaryCard: { backgroundColor: Colors.card, borderRadius: 14, padding: 16, borderWidth: 1, borderColor: Colors.border, gap: 10 },
-  summaryTitle: { fontSize: 11, fontWeight: "700", color: Colors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.6 },
+  paymentLabel: { fontSize: 12, color: LegacyColors.inkSecondary },
+  paymentValue: { fontSize: 15, fontWeight: "600", color: LegacyColors.ink, marginTop: 2 },
+  changeText: { fontSize: 13, color: LegacyColors.accent, fontWeight: "600" },
+  summaryCard: { backgroundColor: LegacyColors.card, borderRadius: 14, padding: 16, borderWidth: 1, borderColor: LegacyColors.border, gap: 10 },
+  summaryTitle: { fontSize: 11, fontWeight: "700", color: LegacyColors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.6 },
   summaryRow: { flexDirection: "row", justifyContent: "space-between" },
-  summaryLabel: { fontSize: 14, color: Colors.inkSecondary },
-  summaryValue: { fontSize: 14, color: Colors.ink },
-  summaryDivider: { height: StyleSheet.hairlineWidth, backgroundColor: Colors.border },
-  summaryGrandLabel: { fontSize: 16, fontWeight: "800", color: Colors.ink },
-  summaryGrandValue: { fontSize: 16, fontWeight: "800", color: Colors.accent },
-  disclaimer: { fontSize: 12, color: Colors.inkDisabled, lineHeight: 18, textAlign: "center" },
-  footer: { padding: 16, paddingBottom: 32, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.border, backgroundColor: Colors.card },
-  confirmBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 56, backgroundColor: Colors.accent, borderRadius: 14, gap: 10, shadowColor: Colors.accent, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8, elevation: 4 },
+  summaryLabel: { fontSize: 14, color: LegacyColors.inkSecondary },
+  summaryValue: { fontSize: 14, color: LegacyColors.ink },
+  summaryDivider: { height: StyleSheet.hairlineWidth, backgroundColor: LegacyColors.border },
+  summaryGrandLabel: { fontSize: 16, fontWeight: "800", color: LegacyColors.ink },
+  summaryGrandValue: { fontSize: 16, fontWeight: "800", color: LegacyColors.accent },
+  disclaimer: { fontSize: 12, color: LegacyColors.inkDisabled, lineHeight: 18, textAlign: "center" },
+  footer: { padding: 16, paddingBottom: 32, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: LegacyColors.border, backgroundColor: LegacyColors.card },
+  confirmBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 56, backgroundColor: LegacyColors.accent, borderRadius: 14, gap: 10, shadowColor: LegacyColors.accent, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8, elevation: 4 },
   confirmBtnDisabled: { opacity: 0.6 },
-  confirmBtnText: { fontSize: 17, fontWeight: "800", color: Colors.white },
+  confirmBtnText: { fontSize: 17, fontWeight: "800", color: LegacyColors.white },
   // Success
   successContainer: { flex: 1, alignItems: "center", justifyContent: "center", padding: 32, gap: 14 },
-  successIcon: { width: 96, height: 96, borderRadius: 48, backgroundColor: Colors.accent, alignItems: "center", justifyContent: "center", shadowColor: Colors.accent, shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.35, shadowRadius: 12, elevation: 8, marginBottom: 8 },
-  successTitle: { fontSize: 28, fontWeight: "800", color: Colors.ink },
-  successSubtitle: { fontSize: 15, color: Colors.inkSecondary, textAlign: "center", lineHeight: 22 },
-  trackBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", width: "100%", height: 54, backgroundColor: Colors.accent, borderRadius: 14, gap: 8, marginTop: 8 },
-  trackBtnPressed: { backgroundColor: Colors.accentDark },
-  trackBtnText: { color: Colors.white, fontSize: 16, fontWeight: "700" },
-  homeBtn: { width: "100%", height: 50, borderRadius: 14, borderWidth: 1.5, borderColor: Colors.border, alignItems: "center", justifyContent: "center" },
-  homeBtnText: { fontSize: 15, fontWeight: "600", color: Colors.inkSecondary },
+  successIcon: { width: 96, height: 96, borderRadius: 48, backgroundColor: LegacyColors.accent, alignItems: "center", justifyContent: "center", shadowColor: LegacyColors.accent, shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.35, shadowRadius: 12, elevation: 8, marginBottom: 8 },
+  successTitle: { fontSize: 28, fontWeight: "800", color: LegacyColors.ink },
+  successSubtitle: { fontSize: 15, color: LegacyColors.inkSecondary, textAlign: "center", lineHeight: 22 },
+  trackBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", width: "100%", height: 54, backgroundColor: LegacyColors.accent, borderRadius: 14, gap: 8, marginTop: 8 },
+  trackBtnPressed: { backgroundColor: LegacyColors.accentDark },
+  trackBtnText: { color: LegacyColors.white, fontSize: 16, fontWeight: "700" },
+  homeBtn: { width: "100%", height: 50, borderRadius: 14, borderWidth: 1.5, borderColor: LegacyColors.border, alignItems: "center", justifyContent: "center" },
+  homeBtnText: { fontSize: 15, fontWeight: "600", color: LegacyColors.inkSecondary },
 });

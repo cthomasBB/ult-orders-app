@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { useAuthStore } from "@/features/auth/authStore";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -69,7 +69,7 @@ function Field({
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
-          placeholderTextColor={Colors.inkDisabled}
+          placeholderTextColor={LegacyColors.inkDisabled}
           secureTextEntry={secure}
           autoCapitalize={autoCapitalize}
           keyboardType={keyboardType}
@@ -83,19 +83,19 @@ function Field({
 
 const fieldStyles = StyleSheet.create({
   wrapper: { gap: 4 },
-  label: { fontSize: 13, fontWeight: "600", color: Colors.inkSecondary },
+  label: { fontSize: 13, fontWeight: "600", color: LegacyColors.inkSecondary },
   row: {
     flexDirection: "row",
     alignItems: "center",
     height: 52,
     borderWidth: 1.5,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     borderRadius: 12,
     paddingHorizontal: 14,
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
   },
-  rowError: { borderColor: Colors.danger },
-  input: { flex: 1, fontSize: 15, color: Colors.ink },
+  rowError: { borderColor: LegacyColors.danger },
+  input: { flex: 1, fontSize: 15, color: LegacyColors.ink },
 });
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
@@ -145,7 +145,7 @@ export default function SignupScreen() {
       <Ionicons
         name={visible ? "eye-off-outline" : "eye-outline"}
         size={20}
-        color={Colors.inkSecondary}
+        color={LegacyColors.inkSecondary}
       />
     </Pressable>
   );
@@ -163,7 +163,7 @@ export default function SignupScreen() {
         >
           {/* Back */}
           <Pressable style={styles.back} onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={22} color={Colors.ink} />
+            <Ionicons name="arrow-back" size={22} color={LegacyColors.ink} />
           </Pressable>
 
           {/* Header */}
@@ -177,7 +177,7 @@ export default function SignupScreen() {
           {/* Error */}
           {error && (
             <View style={styles.errorBanner}>
-              <Ionicons name="alert-circle" size={15} color={Colors.danger} />
+              <Ionicons name="alert-circle" size={15} color={LegacyColors.danger} />
               <Text style={styles.errorText}>{error}</Text>
             </View>
           )}
@@ -246,7 +246,7 @@ export default function SignupScreen() {
             disabled={isLoading}
           >
             {isLoading ? (
-              <ActivityIndicator color={Colors.white} />
+              <ActivityIndicator color={LegacyColors.white} />
             ) : (
               <Text style={styles.submitBtnText}>Create Account</Text>
             )}
@@ -269,7 +269,7 @@ export default function SignupScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
   flex: { flex: 1 },
   scroll: {
     flexGrow: 1,
@@ -280,35 +280,35 @@ const styles = StyleSheet.create({
   },
   back: { marginBottom: 20, alignSelf: "flex-start" },
   header: { marginBottom: 24, gap: 4 },
-  title: { fontSize: 28, fontWeight: "800", color: Colors.ink, letterSpacing: -0.3 },
-  subtitle: { fontSize: 15, color: Colors.inkSecondary },
+  title: { fontSize: 28, fontWeight: "800", color: LegacyColors.ink, letterSpacing: -0.3 },
+  subtitle: { fontSize: 15, color: LegacyColors.inkSecondary },
   errorBanner: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     borderRadius: 10,
     padding: 12,
     marginBottom: 16,
   },
-  errorText: { flex: 1, fontSize: 13, color: Colors.danger },
+  errorText: { flex: 1, fontSize: 13, color: LegacyColors.danger },
   fields: { gap: 14, marginBottom: 24 },
   submitBtn: {
     height: 54,
     borderRadius: 14,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: Colors.accent,
+    shadowColor: LegacyColors.accent,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 4,
     marginBottom: 16,
   },
-  submitBtnPressed: { backgroundColor: Colors.accentDark },
-  submitBtnText: { fontSize: 16, fontWeight: "700", color: Colors.white },
+  submitBtnPressed: { backgroundColor: LegacyColors.accentDark },
+  submitBtnText: { fontSize: 16, fontWeight: "700", color: LegacyColors.white },
   signinLink: { alignItems: "center", paddingVertical: 4 },
-  signinText: { fontSize: 14, color: Colors.inkSecondary },
-  signinAccent: { color: Colors.accent, fontWeight: "700" },
+  signinText: { fontSize: 14, color: LegacyColors.inkSecondary },
+  signinAccent: { color: LegacyColors.accent, fontWeight: "700" },
 });

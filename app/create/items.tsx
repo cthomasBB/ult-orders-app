@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useCreateOrderStore } from "@/features/orders/createOrderStore";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 const MAX_ITEMS = 8;
 
@@ -53,7 +53,7 @@ function ItemRow({
             value={name}
             onChangeText={onChangeName}
             placeholder="Item name…"
-            placeholderTextColor={Colors.inkDisabled}
+            placeholderTextColor={LegacyColors.inkDisabled}
             returnKeyType="next"
             onSubmitEditing={() => modsRef.current?.focus()}
             blurOnSubmit={false}
@@ -69,7 +69,7 @@ function ItemRow({
                 onChangePrice(clean);
               }}
               placeholder="0.00"
-              placeholderTextColor={Colors.inkDisabled}
+              placeholderTextColor={LegacyColors.inkDisabled}
               keyboardType="decimal-pad"
               returnKeyType="next"
               onSubmitEditing={() => modsRef.current?.focus()}
@@ -84,7 +84,7 @@ function ItemRow({
           value={modifications}
           onChangeText={onChangeMods}
           placeholder="Modifications, notes…"
-          placeholderTextColor={Colors.inkDisabled}
+          placeholderTextColor={LegacyColors.inkDisabled}
           returnKeyType="done"
           onSubmitEditing={onModsReturn}
           blurOnSubmit={false}
@@ -92,7 +92,7 @@ function ItemRow({
       </View>
       {!isOnly && (
         <Pressable style={rowStyles.removeBtn} onPress={onRemove} hitSlop={10}>
-          <Ionicons name="close-circle" size={20} color={Colors.inkDisabled} />
+          <Ionicons name="close-circle" size={20} color={LegacyColors.inkDisabled} />
         </Pressable>
       )}
     </View>
@@ -103,32 +103,32 @@ const rowStyles = StyleSheet.create({
   card: {
     flexDirection: "row",
     alignItems: "flex-start",
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     paddingVertical: 12,
     paddingLeft: 14,
     paddingRight: 10,
     gap: 10,
-    shadowColor: Colors.black,
+    shadowColor: LegacyColors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.04,
     shadowRadius: 3,
     elevation: 1,
   },
   dotCol: { paddingTop: 4, width: 14, alignItems: "center" },
-  dot: { width: 14, height: 14, borderRadius: 7, borderWidth: 2, borderColor: Colors.border, alignItems: "center", justifyContent: "center" },
-  dotActive: { borderColor: Colors.accent },
-  dotInner: { width: 6, height: 6, borderRadius: 3, backgroundColor: Colors.accent },
+  dot: { width: 14, height: 14, borderRadius: 7, borderWidth: 2, borderColor: LegacyColors.border, alignItems: "center", justifyContent: "center" },
+  dotActive: { borderColor: LegacyColors.accent },
+  dotInner: { width: 6, height: 6, borderRadius: 3, backgroundColor: LegacyColors.accent },
   fields: { flex: 1 },
   nameRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  nameInput: { flex: 1, fontSize: 15, fontWeight: "600", color: Colors.ink, paddingVertical: 0, minHeight: 22 },
+  nameInput: { flex: 1, fontSize: 15, fontWeight: "600", color: LegacyColors.ink, paddingVertical: 0, minHeight: 22 },
   priceWrap: { flexDirection: "row", alignItems: "center", marginLeft: 8 },
-  dollarSign: { fontSize: 14, color: Colors.inkSecondary, fontWeight: "600" },
-  priceInput: { fontSize: 14, fontWeight: "700", color: Colors.ink, paddingVertical: 0, minWidth: 56, textAlign: "right" },
-  separator: { height: StyleSheet.hairlineWidth, backgroundColor: Colors.border, marginVertical: 8 },
-  modsInput: { fontSize: 13, color: Colors.inkSecondary, paddingVertical: 0, minHeight: 20 },
+  dollarSign: { fontSize: 14, color: LegacyColors.inkSecondary, fontWeight: "600" },
+  priceInput: { fontSize: 14, fontWeight: "700", color: LegacyColors.ink, paddingVertical: 0, minWidth: 56, textAlign: "right" },
+  separator: { height: StyleSheet.hairlineWidth, backgroundColor: LegacyColors.border, marginVertical: 8 },
+  modsInput: { fontSize: 13, color: LegacyColors.inkSecondary, paddingVertical: 0, minHeight: 20 },
   removeBtn: { paddingTop: 2 },
 });
 
@@ -197,7 +197,7 @@ export default function Step2ItemsScreen() {
     >
       <View style={styles.header}>
         <Pressable style={styles.backBtn} onPress={handleBack} hitSlop={12}>
-          <Ionicons name="arrow-back" size={20} color={Colors.ink} />
+          <Ionicons name="arrow-back" size={20} color={LegacyColors.ink} />
         </Pressable>
         <View style={styles.headerCenter}>
           <Text style={styles.headerRestaurant} numberOfLines={1}>
@@ -257,7 +257,7 @@ export default function Step2ItemsScreen() {
                 }, 50);
               }}
             >
-              <Ionicons name="add" size={18} color={Colors.accent} />
+              <Ionicons name="add" size={18} color={LegacyColors.accent} />
               <Text style={styles.addBtnText}>Add item</Text>
             </Pressable>
           ) : (
@@ -279,7 +279,7 @@ export default function Step2ItemsScreen() {
           disabled={!canAdvance}
         >
           <Text style={styles.nextBtnText}>Next: Media</Text>
-          <Ionicons name="arrow-forward" size={18} color={Colors.white} />
+          <Ionicons name="arrow-forward" size={18} color={LegacyColors.white} />
         </Pressable>
       </View>
     </KeyboardAvoidingView>
@@ -287,25 +287,25 @@ export default function Step2ItemsScreen() {
 }
 
 const styles = StyleSheet.create({
-  flex: { flex: 1, backgroundColor: Colors.surface },
-  header: { flexDirection: "row", alignItems: "center", paddingHorizontal: 16, paddingVertical: 13, backgroundColor: Colors.card, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border, gap: 10 },
-  backBtn: { width: 38, height: 38, borderRadius: 10, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, alignItems: "center", justifyContent: "center" },
+  flex: { flex: 1, backgroundColor: LegacyColors.surface },
+  header: { flexDirection: "row", alignItems: "center", paddingHorizontal: 16, paddingVertical: 13, backgroundColor: LegacyColors.card, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: LegacyColors.border, gap: 10 },
+  backBtn: { width: 38, height: 38, borderRadius: 10, backgroundColor: LegacyColors.surface, borderWidth: 1, borderColor: LegacyColors.border, alignItems: "center", justifyContent: "center" },
   headerCenter: { flex: 1 },
-  headerRestaurant: { fontSize: 15, fontWeight: "700", color: Colors.ink },
-  headerSub: { fontSize: 12, color: Colors.inkSecondary, marginTop: 1 },
-  totalBadge: { backgroundColor: Colors.accentLight, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 5 },
-  totalBadgeText: { fontSize: 13, fontWeight: "700", color: Colors.accent },
+  headerRestaurant: { fontSize: 15, fontWeight: "700", color: LegacyColors.ink },
+  headerSub: { fontSize: 12, color: LegacyColors.inkSecondary, marginTop: 1 },
+  totalBadge: { backgroundColor: LegacyColors.accentLight, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 5 },
+  totalBadgeText: { fontSize: 13, fontWeight: "700", color: LegacyColors.accent },
   list: { paddingHorizontal: 16, paddingTop: 14, paddingBottom: 24 },
-  sectionHint: { fontSize: 12, color: Colors.inkSecondary, marginBottom: 12, textAlign: "center" },
-  addBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6, paddingVertical: 13, borderRadius: 12, borderWidth: 1.5, borderColor: Colors.accentLight, borderStyle: "dashed", marginTop: 4 },
-  addBtnPressed: { backgroundColor: Colors.accentLight },
-  addBtnText: { fontSize: 14, fontWeight: "600", color: Colors.accent },
-  maxNote: { textAlign: "center", fontSize: 12, color: Colors.inkDisabled, marginTop: 8 },
-  footer: { padding: 16, paddingBottom: Platform.OS === "ios" ? 32 : 16, backgroundColor: Colors.card, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.border, gap: 10 },
+  sectionHint: { fontSize: 12, color: LegacyColors.inkSecondary, marginBottom: 12, textAlign: "center" },
+  addBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6, paddingVertical: 13, borderRadius: 12, borderWidth: 1.5, borderColor: LegacyColors.accentLight, borderStyle: "dashed", marginTop: 4 },
+  addBtnPressed: { backgroundColor: LegacyColors.accentLight },
+  addBtnText: { fontSize: 14, fontWeight: "600", color: LegacyColors.accent },
+  maxNote: { textAlign: "center", fontSize: 12, color: LegacyColors.inkDisabled, marginTop: 8 },
+  footer: { padding: 16, paddingBottom: Platform.OS === "ios" ? 32 : 16, backgroundColor: LegacyColors.card, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: LegacyColors.border, gap: 10 },
   totalRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 4 },
-  totalLabel: { fontSize: 14, color: Colors.inkSecondary, fontWeight: "600" },
-  totalAmount: { fontSize: 18, fontWeight: "800", color: Colors.ink },
-  nextBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 54, backgroundColor: Colors.accent, borderRadius: 14, gap: 8, shadowColor: Colors.accent, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.28, shadowRadius: 8, elevation: 4 },
-  nextBtnDisabled: { backgroundColor: Colors.inkDisabled, shadowOpacity: 0, elevation: 0 },
-  nextBtnText: { fontSize: 16, fontWeight: "700", color: Colors.white },
+  totalLabel: { fontSize: 14, color: LegacyColors.inkSecondary, fontWeight: "600" },
+  totalAmount: { fontSize: 18, fontWeight: "800", color: LegacyColors.ink },
+  nextBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 54, backgroundColor: LegacyColors.accent, borderRadius: 14, gap: 8, shadowColor: LegacyColors.accent, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.28, shadowRadius: 8, elevation: 4 },
+  nextBtnDisabled: { backgroundColor: LegacyColors.inkDisabled, shadowOpacity: 0, elevation: 0 },
+  nextBtnText: { fontSize: 16, fontWeight: "700", color: LegacyColors.white },
 });

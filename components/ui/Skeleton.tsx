@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Animated, StyleSheet, type ViewStyle } from "react-native";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 type Props = {
   width?: number | \`\${number}%\`;
@@ -37,5 +37,5 @@ export function CardSkeleton() {
 }
 
 const styles = StyleSheet.create({
-  base: { backgroundColor: Colors.border },
+  base: { backgroundColor: LegacyColors.border },
 });

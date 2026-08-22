@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import type { StatusLevel } from "@/types/profile";
 
 // ─── Ring config ──────────────────────────────────────────────────────────────
@@ -21,19 +21,19 @@ const RING_CONFIG: Record<StatusLevel, RingConfig> = {
   },
   regular: {
     rings: 1,
-    colors: [Colors.ringGold], // gold
+    colors: [LegacyColors.ringGold], // gold
     animated: false,
     gap: 2,
   },
   curator: {
     rings: 2,
-    colors: [Colors.ringGold, Colors.ringGoldLight], // double gold
+    colors: [LegacyColors.ringGold, LegacyColors.ringGoldLight], // double gold
     animated: false,
     gap: 2,
   },
   legend: {
     rings: 1,
-    colors: [Colors.accent, Colors.ringGold, Colors.triedPurple],
+    colors: [LegacyColors.accent, LegacyColors.ringGold, LegacyColors.triedPurple],
     animated: true,
     gap: 3,
   },
@@ -108,16 +108,16 @@ const legendStyles = StyleSheet.create({
     position: "absolute",
     // Simulated multi-color ring via background with border trick
     borderWidth: 3,
-    borderColor: Colors.accent,
+    borderColor: LegacyColors.accent,
     // Top half ember, bottom half gold — approximation without LinearGradient
   },
   shimmer: {
     position: "absolute",
     borderWidth: 3,
-    borderTopColor: Colors.ringGold,
-    borderRightColor: Colors.triedPurple,
-    borderBottomColor: Colors.accent,
-    borderLeftColor: Colors.ringGold,
+    borderTopColor: LegacyColors.ringGold,
+    borderRightColor: LegacyColors.triedPurple,
+    borderBottomColor: LegacyColors.accent,
+    borderLeftColor: LegacyColors.ringGold,
   },
 });
 

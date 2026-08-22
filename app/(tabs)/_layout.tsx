@@ -1,7 +1,7 @@
 import { Tabs, useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type IoniconsName = React.ComponentProps<typeof Ionicons>["name"];
@@ -16,7 +16,7 @@ function TabIcon({
   focused: boolean;
   label: string;
 }) {
-  const color = focused ? Colors.tabActive : Colors.tabInactive;
+  const color = focused ? LegacyColors.tabActive : LegacyColors.tabInactive;
   return (
     <View style={iconStyles.wrapper}>
       <Ionicons
@@ -50,7 +50,7 @@ function PostTabButton({ onPress }: { onPress: () => void }) {
       accessibilityRole="button"
     >
       <View style={fabStyles.fab}>
-        <Ionicons name="add" size={30} color={Colors.white} />
+        <Ionicons name="add" size={30} color={LegacyColors.white} />
       </View>
     </Pressable>
   );
@@ -67,10 +67,10 @@ const fabStyles = StyleSheet.create({
     width: 58,
     height: 58,
     borderRadius: 29,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: Colors.accent,
+    shadowColor: LegacyColors.accent,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.4,
     shadowRadius: 10,
@@ -88,8 +88,8 @@ export default function TabsLayout() {
         headerShown: false,
         // Hide the default label — each TabIcon renders its own
         tabBarShowLabel: false,
-        tabBarActiveTintColor: Colors.tabActive,
-        tabBarInactiveTintColor: Colors.tabInactive,
+        tabBarActiveTintColor: LegacyColors.tabActive,
+        tabBarInactiveTintColor: LegacyColors.tabInactive,
             tabBarStyle: { height: 60 }, tabBarLabelStyle: { fontSize: 10 },
       }}
     >

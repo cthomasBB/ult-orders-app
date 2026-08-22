@@ -1,7 +1,7 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { formatCount } from "@/features/feed/useFeed";
 import { STATUS_LABELS } from "@/types/profile";
 import { StatusRing } from "./StatusRing";
@@ -34,11 +34,11 @@ const avatarStyles = StyleSheet.create({
   placeholder: {
     width: AVATAR_SIZE,
     height: AVATAR_SIZE,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     alignItems: "center",
     justifyContent: "center",
   },
-  initial: { fontSize: 34, fontWeight: "800", color: Colors.white },
+  initial: { fontSize: 34, fontWeight: "800", color: LegacyColors.white },
 });
 
 // ─── Stat item ────────────────────────────────────────────────────────────────
@@ -62,8 +62,8 @@ function StatItem({
 
 const statStyles = StyleSheet.create({
   item: { alignItems: "center", flex: 1 },
-  value: { fontSize: 19, fontWeight: "800", color: Colors.ink, letterSpacing: -0.3 },
-  label: { fontSize: 12, color: Colors.inkSecondary, marginTop: 1 },
+  value: { fontSize: 19, fontWeight: "800", color: LegacyColors.ink, letterSpacing: -0.3 },
+  label: { fontSize: 12, color: LegacyColors.inkSecondary, marginTop: 1 },
 });
 
 // ─── Badge row ────────────────────────────────────────────────────────────────
@@ -107,9 +107,9 @@ const badgeStyles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 10,
-    backgroundColor: Colors.surface,
+    backgroundColor: LegacyColors.surface,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -118,11 +118,11 @@ const badgeStyles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 10,
-    backgroundColor: Colors.surface,
+    backgroundColor: LegacyColors.surface,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
   },
-  moreText: { fontSize: 11, fontWeight: "700", color: Colors.inkSecondary },
+  moreText: { fontSize: 11, fontWeight: "700", color: LegacyColors.inkSecondary },
 });
 
 // ─── Taste tag pills ──────────────────────────────────────────────────────────
@@ -146,11 +146,11 @@ const tasteStyles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 20,
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     borderWidth: 1,
-    borderColor: Colors.accent + "60",
+    borderColor: LegacyColors.accent + "60",
   },
-  pillText: { fontSize: 12, fontWeight: "600", color: Colors.accent },
+  pillText: { fontSize: 12, fontWeight: "600", color: LegacyColors.accent },
 });
 
 // ─── Action buttons ───────────────────────────────────────────────────────────
@@ -177,7 +177,7 @@ function ActionButtons({
           style={({ pressed }) => [actionStyles.btn, actionStyles.btnOutline, pressed && actionStyles.btnPressed]}
           onPress={onEdit}
         >
-          <Ionicons name="pencil-outline" size={16} color={Colors.ink} />
+          <Ionicons name="pencil-outline" size={16} color={LegacyColors.ink} />
           <Text style={actionStyles.btnOutlineText}>Edit Profile</Text>
         </Pressable>
       </View>
@@ -197,7 +197,7 @@ function ActionButtons({
       >
         {isFollowing ? (
           <>
-            <Ionicons name="checkmark" size={16} color={Colors.inkSecondary} />
+            <Ionicons name="checkmark" size={16} color={LegacyColors.inkSecondary} />
             <Text style={actionStyles.btnOutlineText}>Following</Text>
           </>
         ) : (
@@ -210,7 +210,7 @@ function ActionButtons({
           pressed && actionStyles.btnPressed,
         ]}
       >
-        <Ionicons name="chatbubble-outline" size={18} color={Colors.ink} />
+        <Ionicons name="chatbubble-outline" size={18} color={LegacyColors.ink} />
       </Pressable>
     </View>
   );
@@ -227,18 +227,18 @@ const actionStyles = StyleSheet.create({
     paddingHorizontal: 16,
     gap: 6,
   },
-  btnFill: { backgroundColor: Colors.accent },
-  btnOutline: { borderWidth: 1.5, borderColor: Colors.border, backgroundColor: Colors.card },
+  btnFill: { backgroundColor: LegacyColors.accent },
+  btnOutline: { borderWidth: 1.5, borderColor: LegacyColors.border, backgroundColor: LegacyColors.card },
   btnPressed: { opacity: 0.65 },
-  btnFillText: { fontSize: 14, fontWeight: "700", color: Colors.white },
-  btnOutlineText: { fontSize: 14, fontWeight: "600", color: Colors.ink },
+  btnFillText: { fontSize: 14, fontWeight: "700", color: LegacyColors.white },
+  btnOutlineText: { fontSize: 14, fontWeight: "600", color: LegacyColors.ink },
   iconBtn: {
     width: 38,
     height: 38,
     borderRadius: 10,
     borderWidth: 1.5,
-    borderColor: Colors.border,
-    backgroundColor: Colors.card,
+    borderColor: LegacyColors.border,
+    backgroundColor: LegacyColors.card,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -312,7 +312,7 @@ export function ProfileHeader({
           </Text>
           {profile.is_verified && (
             <View style={styles.verifiedBadge}>
-              <Ionicons name="checkmark" size={10} color={Colors.white} />
+              <Ionicons name="checkmark" size={10} color={LegacyColors.white} />
             </View>
           )}
         </View>
@@ -321,7 +321,7 @@ export function ProfileHeader({
           {profile.city && (
             <>
               <Text style={styles.bullet}>·</Text>
-              <Ionicons name="location-outline" size={12} color={Colors.inkSecondary} />
+              <Ionicons name="location-outline" size={12} color={LegacyColors.inkSecondary} />
               <Text style={styles.city}>{profile.city}</Text>
             </>
           )}
@@ -363,51 +363,51 @@ export function ProfileHeader({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     paddingHorizontal: 18,
     paddingTop: 16,
     paddingBottom: 18,
     gap: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.border,
+    borderBottomColor: LegacyColors.border,
   },
   topRow: { flexDirection: "row", alignItems: "flex-start", gap: 14 },
   topRight: { flex: 1, gap: 10, paddingTop: 4 },
   statusBadge: { flexDirection: "row", alignItems: "center", gap: 5, alignSelf: "flex-start" },
   statusDot: { width: 7, height: 7, borderRadius: 3.5 },
-  statusDotRookie:  { backgroundColor: Colors.inkDisabled },
-  statusDotRegular: { backgroundColor: Colors.ringGold },
-  statusDotCurator: { backgroundColor: Colors.ringGold },
-  statusDotLegend:  { backgroundColor: Colors.accent },
-  statusText: { fontSize: 11, fontWeight: "700", color: Colors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.4 },
+  statusDotRookie:  { backgroundColor: LegacyColors.inkDisabled },
+  statusDotRegular: { backgroundColor: LegacyColors.ringGold },
+  statusDotCurator: { backgroundColor: LegacyColors.ringGold },
+  statusDotLegend:  { backgroundColor: LegacyColors.accent },
+  statusText: { fontSize: 11, fontWeight: "700", color: LegacyColors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.4 },
   nameBlock: { gap: 3 },
   nameRow: { flexDirection: "row", alignItems: "center", gap: 6 },
-  displayName: { fontSize: 20, fontWeight: "800", color: Colors.ink, letterSpacing: -0.3 },
+  displayName: { fontSize: 20, fontWeight: "800", color: LegacyColors.ink, letterSpacing: -0.3 },
   verifiedBadge: {
     width: 18,
     height: 18,
     borderRadius: 9,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     alignItems: "center",
     justifyContent: "center",
   },
   handleRow: { flexDirection: "row", alignItems: "center", gap: 4 },
-  handle: { fontSize: 14, color: Colors.inkSecondary },
-  bullet: { fontSize: 12, color: Colors.inkDisabled },
-  city: { fontSize: 13, color: Colors.inkSecondary },
-  bio: { fontSize: 14, color: Colors.inkSecondary, lineHeight: 20 },
+  handle: { fontSize: 14, color: LegacyColors.inkSecondary },
+  bullet: { fontSize: 12, color: LegacyColors.inkDisabled },
+  city: { fontSize: 13, color: LegacyColors.inkSecondary },
+  bio: { fontSize: 14, color: LegacyColors.inkSecondary, lineHeight: 20 },
   statsRow: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: Colors.surface,
+    backgroundColor: LegacyColors.surface,
     borderRadius: 14,
     paddingVertical: 12,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
   },
   statDivider: {
     width: StyleSheet.hairlineWidth,
     height: 28,
-    backgroundColor: Colors.border,
+    backgroundColor: LegacyColors.border,
   },
 });

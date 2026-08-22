@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "@/services/supabase";
 import { useAuthStore } from "@/features/auth/authStore";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { formatPrice, formatDate } from "@/utils";
 import type { Order, OrderStatus } from "@/types";
 
@@ -25,8 +25,8 @@ const STATUS_META: Record<OrderStatus, { label: string; color: string; bg: strin
   preparing: { label: "Preparing",  color: "#6A1B9A", bg: "#F3E5F5", icon: "restaurant-outline"     },
   ready:     { label: "Ready",      color: "#2E7D32", bg: "#E8F5E9", icon: "bag-handle-outline"     },
   picked_up: { label: "Picked up",  color: "#00695C", bg: "#E0F2F1", icon: "bicycle-outline"        },
-  delivered: { label: "Delivered",  color: Colors.saveGreen, bg: Colors.saveGreenLight, icon: "checkmark-done-circle-outline" },
-  cancelled: { label: "Cancelled",  color: Colors.danger, bg: Colors.accentLight, icon: "close-circle-outline" },
+  delivered: { label: "Delivered",  color: LegacyColors.saveGreen, bg: LegacyColors.saveGreenLight, icon: "checkmark-done-circle-outline" },
+  cancelled: { label: "Cancelled",  color: LegacyColors.danger, bg: LegacyColors.accentLight, icon: "close-circle-outline" },
 };
 
 // ─── Order card ───────────────────────────────────────────────────────────────
@@ -71,20 +71,20 @@ function OrderCard({ order }: { order: Order }) {
 
 const cardStyles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     borderRadius: 16,
     padding: 16,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     gap: 6,
-    shadowColor: Colors.black,
+    shadowColor: LegacyColors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
     elevation: 1,
   },
   top: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  restaurantName: { fontSize: 16, fontWeight: "700", color: Colors.ink, flex: 1, marginRight: 8 },
+  restaurantName: { fontSize: 16, fontWeight: "700", color: LegacyColors.ink, flex: 1, marginRight: 8 },
   badge: {
     flexDirection: "row",
     alignItems: "center",
@@ -94,10 +94,10 @@ const cardStyles = StyleSheet.create({
     borderRadius: 20,
   },
   badgeText: { fontSize: 12, fontWeight: "600" },
-  date: { fontSize: 13, color: Colors.inkSecondary },
+  date: { fontSize: 13, color: LegacyColors.inkSecondary },
   bottom: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 4 },
-  items: { fontSize: 14, color: Colors.inkSecondary },
-  total: { fontSize: 16, fontWeight: "700", color: Colors.ink },
+  items: { fontSize: 14, color: LegacyColors.inkSecondary },
+  total: { fontSize: 16, fontWeight: "700", color: LegacyColors.ink },
   activePill: {
     flexDirection: "row",
     alignItems: "center",
@@ -105,15 +105,15 @@ const cardStyles = StyleSheet.create({
     marginTop: 6,
     paddingTop: 10,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: Colors.border,
+    borderTopColor: LegacyColors.border,
   },
   activeDot: {
     width: 7,
     height: 7,
     borderRadius: 3.5,
-    backgroundColor: Colors.saveGreen,
+    backgroundColor: LegacyColors.saveGreen,
   },
-  activeText: { fontSize: 12, color: Colors.saveGreen, fontWeight: "600" },
+  activeText: { fontSize: 12, color: LegacyColors.saveGreen, fontWeight: "600" },
 });
 
 // ─── Fetch ────────────────────────────────────────────────────────────────────
@@ -159,7 +159,7 @@ export default function OrdersScreen() {
           <RefreshControl
             refreshing={isRefetching}
             onRefresh={refetch}
-            tintColor={Colors.accent}
+            tintColor={LegacyColors.accent}
           />
         }
         ListHeaderComponent={
@@ -169,7 +169,7 @@ export default function OrdersScreen() {
             </View>
 
             {isLoading ? (
-              <ActivityIndicator color={Colors.accent} style={styles.loader} />
+              <ActivityIndicator color={LegacyColors.accent} style={styles.loader} />
             ) : (
               <>
                 {/* Active orders */}
@@ -213,30 +213,30 @@ export default function OrdersScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
   list: { padding: 16, gap: 10, paddingBottom: 40 },
   header: { marginBottom: 16 },
-  title: { fontSize: 28, fontWeight: "800", color: Colors.ink, letterSpacing: -0.3 },
+  title: { fontSize: 28, fontWeight: "800", color: LegacyColors.ink, letterSpacing: -0.3 },
   loader: { marginTop: 40 },
   section: { gap: 10, marginBottom: 20 },
   sectionLabel: {
     fontSize: 11,
     fontWeight: "700",
-    color: Colors.inkSecondary,
+    color: LegacyColors.inkSecondary,
     textTransform: "uppercase",
     letterSpacing: 0.6,
     marginBottom: 10,
   },
   empty: { alignItems: "center", paddingTop: 60, gap: 8 },
   emptyEmoji: { fontSize: 48 },
-  emptyTitle: { fontSize: 20, fontWeight: "700", color: Colors.ink },
-  emptySubtitle: { fontSize: 14, color: Colors.inkSecondary },
+  emptyTitle: { fontSize: 20, fontWeight: "700", color: LegacyColors.ink },
+  emptySubtitle: { fontSize: 14, color: LegacyColors.inkSecondary },
   startBtn: {
     marginTop: 8,
     paddingHorizontal: 24,
     paddingVertical: 12,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     borderRadius: 12,
   },
-  startBtnText: { fontSize: 15, fontWeight: "700", color: Colors.white },
+  startBtnText: { fontSize: 15, fontWeight: "700", color: LegacyColors.white },
 });

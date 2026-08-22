@@ -2,7 +2,7 @@ import { Stack, usePathname } from "expo-router";
 import { Animated, Platform, StyleSheet, Text, View, useRef } from "react-native";
 import { useEffect, useRef as useReactRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { useCreateOrderStore } from "@/features/orders/createOrderStore";
 
 const STEPS = [
@@ -63,20 +63,20 @@ const barStyles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 10,
     paddingBottom: 8,
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.border,
+    borderBottomColor: LegacyColors.border,
   },
   track: {
     height: 3,
-    backgroundColor: Colors.border,
+    backgroundColor: LegacyColors.border,
     borderRadius: 2,
     overflow: "hidden",
     marginBottom: 10,
   },
   fill: {
     height: "100%",
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     borderRadius: 2,
   },
   labels: {
@@ -88,18 +88,18 @@ const barStyles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: Colors.border,
+    backgroundColor: LegacyColors.border,
   },
-  dotDone: { backgroundColor: Colors.accent },
+  dotDone: { backgroundColor: LegacyColors.accent },
   labelText: {
     fontSize: 9,
     fontWeight: "600",
-    color: Colors.inkDisabled,
+    color: LegacyColors.inkDisabled,
     textTransform: "uppercase",
     letterSpacing: 0.4,
   },
-  labelActive: { color: Colors.accent },
-  labelDone:   { color: Colors.inkSecondary },
+  labelActive: { color: LegacyColors.accent },
+  labelDone:   { color: LegacyColors.inkSecondary },
 });
 
 // ─── Layout ───────────────────────────────────────────────────────────────────
@@ -113,7 +113,7 @@ export default function CreateLayout() {
       <Stack
         screenOptions={{
           headerShown: false,
-          contentStyle: { backgroundColor: Colors.surface },
+          contentStyle: { backgroundColor: LegacyColors.surface },
           animation: "slide_from_right",
           gestureEnabled: false, // nav handled by store
         }}
@@ -136,5 +136,5 @@ export default function CreateLayout() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
 });

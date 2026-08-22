@@ -7,7 +7,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -31,33 +31,33 @@ export type ButtonProps = Omit<PressableProps, "style"> & {
 // ─── Design tokens per variant ────────────────────────────────────────────────
 
 const BG: Record<ButtonVariant, string> = {
-  primary:   Colors.accent,
-  secondary: Colors.surface,
-  ghost:     Colors.transparent,
-  save:      Colors.saveGreen,
-  danger:    Colors.danger,
+  primary:   LegacyColors.accent,
+  secondary: LegacyColors.surface,
+  ghost:     LegacyColors.transparent,
+  save:      LegacyColors.saveGreen,
+  danger:    LegacyColors.danger,
 };
 
 const PRESSED_BG: Record<ButtonVariant, string> = {
-  primary:   Colors.accentDark,
-  secondary: Colors.border,
-  ghost:     Colors.accentLight,
+  primary:   LegacyColors.accentDark,
+  secondary: LegacyColors.border,
+  ghost:     LegacyColors.accentLight,
   save:      "#3a6347",
   danger:    "#9B1B1B",
 };
 
 const TEXT_COLOR: Record<ButtonVariant, string> = {
-  primary:   Colors.white,
-  secondary: Colors.ink,
-  ghost:     Colors.accent,
-  save:      Colors.white,
-  danger:    Colors.white,
+  primary:   LegacyColors.white,
+  secondary: LegacyColors.ink,
+  ghost:     LegacyColors.accent,
+  save:      LegacyColors.white,
+  danger:    LegacyColors.white,
 };
 
 const BORDER_COLOR: Record<ButtonVariant, string | undefined> = {
   primary:   undefined,
-  secondary: Colors.border,
-  ghost:     Colors.accent,
+  secondary: LegacyColors.border,
+  ghost:     LegacyColors.accent,
   save:      undefined,
   danger:    undefined,
 };

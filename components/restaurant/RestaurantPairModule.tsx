@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { formatCount } from "@/features/feed/useFeed";
 import { timeAgo } from "@/utils";
 import type { RestaurantOrderGroup } from "@/types/profile";
@@ -57,12 +57,12 @@ function MiniOrderCard({
         )}
         {firstMedia?.media_type === "video" && (
           <View style={cardStyles.videoPin}>
-            <Ionicons name="play" size={12} color={Colors.white} />
+            <Ionicons name="play" size={12} color={LegacyColors.white} />
           </View>
         )}
         {/* Save count chip */}
         <View style={cardStyles.saveChip}>
-          <Ionicons name="bookmark" size={10} color={Colors.saveGreen} />
+          <Ionicons name="bookmark" size={10} color={LegacyColors.saveGreen} />
           <Text style={cardStyles.saveCount}>{formatCount(order.save_count)}</Text>
         </View>
       </View>
@@ -86,11 +86,11 @@ function MiniOrderCard({
         {/* Engagement micro-row */}
         <View style={cardStyles.engRow}>
           <View style={cardStyles.engItem}>
-            <Ionicons name="heart" size={11} color={Colors.accent} />
+            <Ionicons name="heart" size={11} color={LegacyColors.accent} />
             <Text style={cardStyles.engCount}>{formatCount(order.like_count)}</Text>
           </View>
           <View style={cardStyles.engItem}>
-            <Ionicons name="checkmark-circle" size={11} color={Colors.triedPurple} />
+            <Ionicons name="checkmark-circle" size={11} color={LegacyColors.triedPurple} />
             <Text style={cardStyles.engCount}>{formatCount(order.try_count)}</Text>
           </View>
         </View>
@@ -101,12 +101,12 @@ function MiniOrderCard({
 
 const cardStyles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     borderRadius: 14,
     overflow: "hidden",
     borderWidth: 1,
-    borderColor: Colors.border,
-    shadowColor: Colors.black,
+    borderColor: LegacyColors.border,
+    shadowColor: LegacyColors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
@@ -114,11 +114,11 @@ const cardStyles = StyleSheet.create({
   },
   cardPressed: { opacity: 0.85, transform: [{ scale: 0.98 }] },
   media: {
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     position: "relative",
   },
   mediaPlaceholder: {
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -147,7 +147,7 @@ const cardStyles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 3,
   },
-  saveCount: { fontSize: 11, fontWeight: "700", color: Colors.white },
+  saveCount: { fontSize: 11, fontWeight: "700", color: LegacyColors.white },
   body: {
     padding: 9,
     gap: 4,
@@ -155,15 +155,15 @@ const cardStyles = StyleSheet.create({
   title: {
     fontSize: 13,
     fontWeight: "700",
-    color: Colors.ink,
+    color: LegacyColors.ink,
     lineHeight: 17,
   },
   meta: { gap: 2 },
-  time: { fontSize: 11, color: Colors.inkDisabled },
-  itemPreview: { fontSize: 11, color: Colors.inkSecondary },
+  time: { fontSize: 11, color: LegacyColors.inkDisabled },
+  itemPreview: { fontSize: 11, color: LegacyColors.inkSecondary },
   engRow: { flexDirection: "row", gap: 8, marginTop: 2 },
   engItem: { flexDirection: "row", alignItems: "center", gap: 3 },
-  engCount: { fontSize: 11, color: Colors.inkSecondary },
+  engCount: { fontSize: 11, color: LegacyColors.inkSecondary },
 });
 
 // ─── RestaurantPairModule ─────────────────────────────────────────────────────
@@ -213,7 +213,7 @@ export function RestaurantPairModule({ group }: RestaurantPairModuleProps) {
           <Text style={moduleStyles.orderCount}>
             {group.orders.length} order{group.orders.length !== 1 ? "s" : ""}
           </Text>
-          <Ionicons name="chevron-forward" size={15} color={Colors.inkDisabled} />
+          <Ionicons name="chevron-forward" size={15} color={LegacyColors.inkDisabled} />
         </View>
       </Pressable>
 
@@ -235,7 +235,7 @@ export function RestaurantPairModule({ group }: RestaurantPairModuleProps) {
           <Text style={moduleStyles.moreText}>
             +{remaining} more order{remaining !== 1 ? "s" : ""} at {group.restaurant_name}
           </Text>
-          <Ionicons name="chevron-forward" size={13} color={Colors.accent} />
+          <Ionicons name="chevron-forward" size={13} color={LegacyColors.accent} />
         </Pressable>
       )}
     </View>
@@ -252,27 +252,27 @@ const moduleStyles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: H_PAD,
     paddingVertical: 10,
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.border,
+    borderBottomColor: LegacyColors.border,
   },
-  headerPressed: { backgroundColor: Colors.surface },
+  headerPressed: { backgroundColor: LegacyColors.surface },
   headerLeft: { flexDirection: "row", alignItems: "center", gap: 10, flex: 1 },
   restaurantIcon: {
     width: 36,
     height: 36,
     borderRadius: 10,
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
   },
   restaurantEmoji: { fontSize: 18 },
   headerText: { flex: 1 },
-  restaurantName: { fontSize: 15, fontWeight: "700", color: Colors.ink },
-  cuisineType: { fontSize: 12, color: Colors.inkSecondary, marginTop: 1 },
+  restaurantName: { fontSize: 15, fontWeight: "700", color: LegacyColors.ink },
+  cuisineType: { fontSize: 12, color: LegacyColors.inkSecondary, marginTop: 1 },
   headerRight: { flexDirection: "row", alignItems: "center", gap: 4 },
-  orderCount: { fontSize: 12, color: Colors.inkSecondary },
+  orderCount: { fontSize: 12, color: LegacyColors.inkSecondary },
   cards: {
     flexDirection: "row",
     paddingHorizontal: H_PAD,
@@ -287,5 +287,5 @@ const moduleStyles = StyleSheet.create({
     paddingTop: 8,
   },
   moreBtnPressed: { opacity: 0.6 },
-  moreText: { fontSize: 13, color: Colors.accent, fontWeight: "600" },
+  moreText: { fontSize: 13, color: LegacyColors.accent, fontWeight: "600" },
 });

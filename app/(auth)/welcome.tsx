@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { useAuthStore } from "@/features/auth/authStore";
 
 // ─── Social button ────────────────────────────────────────────────────────────
@@ -34,7 +34,7 @@ function SocialButton({ label, icon, onPress, isLoading, style }: SocialBtnProps
       disabled={isLoading}
     >
       {isLoading ? (
-        <ActivityIndicator size="small" color={Colors.ink} />
+        <ActivityIndicator size="small" color={LegacyColors.ink} />
       ) : (
         <>
           <View style={styles.socialIcon}>{icon}</View>
@@ -76,7 +76,7 @@ export default function WelcomeScreen() {
       <View style={styles.actions}>
         {error ? (
           <View style={styles.errorBanner}>
-            <Ionicons name="alert-circle" size={16} color={Colors.danger} />
+            <Ionicons name="alert-circle" size={16} color={LegacyColors.danger} />
             <Text style={styles.errorText}>{error}</Text>
           </View>
         ) : null}
@@ -85,7 +85,7 @@ export default function WelcomeScreen() {
         {Platform.OS === "ios" && (
           <SocialButton
             label="Sign in with Apple"
-            icon={<Ionicons name="logo-apple" size={20} color={Colors.ink} />}
+            icon={<Ionicons name="logo-apple" size={20} color={LegacyColors.ink} />}
             onPress={signInWithApple}
             isLoading={isLoading}
             style={styles.appleBtn}
@@ -115,7 +115,7 @@ export default function WelcomeScreen() {
           ]}
           onPress={() => router.push("/(auth)/signup")}
         >
-          <Ionicons name="mail-outline" size={20} color={Colors.white} />
+          <Ionicons name="mail-outline" size={20} color={LegacyColors.white} />
           <Text style={styles.emailBtnText}>Continue with Email</Text>
         </Pressable>
 
@@ -137,7 +137,7 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: Colors.surface,
+    backgroundColor: LegacyColors.surface,
     paddingHorizontal: 24,
     paddingBottom: 16,
   },
@@ -147,11 +147,11 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 20,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 16,
-    shadowColor: Colors.accent,
+    shadowColor: LegacyColors.accent,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.35,
     shadowRadius: 12,
@@ -161,12 +161,12 @@ const styles = StyleSheet.create({
   wordmark: {
     fontSize: 34,
     fontWeight: "800",
-    color: Colors.ink,
+    color: LegacyColors.ink,
     letterSpacing: -0.5,
   },
   tagline: {
     fontSize: 15,
-    color: Colors.inkSecondary,
+    color: LegacyColors.inkSecondary,
     textAlign: "center",
     lineHeight: 22,
     marginTop: 8,
@@ -189,11 +189,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     borderRadius: 10,
     padding: 12,
   },
-  errorText: { flex: 1, fontSize: 13, color: Colors.danger },
+  errorText: { flex: 1, fontSize: 13, color: LegacyColors.danger },
   // Social buttons
   socialBtn: {
     flexDirection: "row",
@@ -201,23 +201,23 @@ const styles = StyleSheet.create({
     height: 52,
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: Colors.border,
-    backgroundColor: Colors.card,
+    borderColor: LegacyColors.border,
+    backgroundColor: LegacyColors.card,
     paddingHorizontal: 16,
   },
-  socialBtnPressed: { backgroundColor: Colors.surface },
+  socialBtnPressed: { backgroundColor: LegacyColors.surface },
   appleBtn: {
-    backgroundColor: Colors.ink,
-    borderColor: Colors.ink,
+    backgroundColor: LegacyColors.ink,
+    borderColor: LegacyColors.ink,
   },
   socialIcon: { width: 28, alignItems: "center" },
-  socialLabel: { flex: 1, textAlign: "center", fontSize: 15, fontWeight: "600", color: Colors.ink },
+  socialLabel: { flex: 1, textAlign: "center", fontSize: 15, fontWeight: "600", color: LegacyColors.ink },
   socialSpacer: { width: 28 },
   googleG: { fontSize: 18, fontWeight: "800", color: "#4285F4" },
   // Divider
   divider: { flexDirection: "row", alignItems: "center", gap: 10, marginVertical: 2 },
-  dividerLine: { flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: Colors.border },
-  dividerText: { fontSize: 13, color: Colors.inkSecondary },
+  dividerLine: { flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: LegacyColors.border },
+  dividerText: { fontSize: 13, color: LegacyColors.inkSecondary },
   // Email CTA
   emailBtn: {
     flexDirection: "row",
@@ -225,18 +225,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 52,
     borderRadius: 12,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     gap: 10,
-    shadowColor: Colors.accent,
+    shadowColor: LegacyColors.accent,
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 4,
   },
-  emailBtnPressed: { backgroundColor: Colors.accentDark },
-  emailBtnText: { fontSize: 16, fontWeight: "700", color: Colors.white },
+  emailBtnPressed: { backgroundColor: LegacyColors.accentDark },
+  emailBtnText: { fontSize: 16, fontWeight: "700", color: LegacyColors.white },
   // Sign in link
   signinLink: { alignItems: "center", paddingVertical: 4 },
-  signinLinkText: { fontSize: 14, color: Colors.inkSecondary },
-  signinLinkAccent: { color: Colors.accent, fontWeight: "700" },
+  signinLinkText: { fontSize: 14, color: LegacyColors.inkSecondary },
+  signinLinkAccent: { color: LegacyColors.accent, fontWeight: "700" },
 });

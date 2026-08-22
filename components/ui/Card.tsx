@@ -6,7 +6,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -31,10 +31,10 @@ export type PressableCardProps = CardProps &
 // ─── Design tokens per variant ────────────────────────────────────────────────
 
 const BG: Record<CardVariant, string> = {
-  default:  Colors.card,
-  outlined: Colors.card,
-  flat:     Colors.surface,
-  accent:   Colors.accentLight,
+  default:  LegacyColors.card,
+  outlined: LegacyColors.card,
+  flat:     LegacyColors.surface,
+  accent:   LegacyColors.accentLight,
 };
 
 const BORDER_WIDTH: Record<CardVariant, number> = {
@@ -45,23 +45,23 @@ const BORDER_WIDTH: Record<CardVariant, number> = {
 };
 
 const BORDER_COLOR: Record<CardVariant, string> = {
-  default:  Colors.transparent,
-  outlined: Colors.border,
-  flat:     Colors.transparent,
-  accent:   Colors.accentLight,
+  default:  LegacyColors.transparent,
+  outlined: LegacyColors.border,
+  flat:     LegacyColors.transparent,
+  accent:   LegacyColors.accentLight,
 };
 
 // Shadow tokens (iOS)
 const SHADOW = {
   default: {
-    shadowColor: Colors.black,
+    shadowColor: LegacyColors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.07,
     shadowRadius: 8,
     elevation: 2,
   },
   flat: {
-    shadowColor: Colors.transparent,
+    shadowColor: LegacyColors.transparent,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0,
     shadowRadius: 0,
@@ -121,7 +121,7 @@ export function PressableCard({
       style={({ pressed }) => [
         styles.base,
         {
-          backgroundColor: pressed ? Colors.surface : BG[variant],
+          backgroundColor: pressed ? LegacyColors.surface : BG[variant],
           borderWidth: BORDER_WIDTH[variant],
           borderColor: BORDER_COLOR[variant],
           borderRadius: radius,
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
 const dividerStyles = StyleSheet.create({
   line: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: Colors.border,
+    backgroundColor: LegacyColors.border,
     marginVertical: 12,
   },
 });

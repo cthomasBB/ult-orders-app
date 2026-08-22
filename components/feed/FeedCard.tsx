@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { timeAgo, formatPrice, truncate } from "@/utils";
 import {
   formatCount,
@@ -69,13 +69,13 @@ function Avatar({
 }
 
 const avatarStyles = StyleSheet.create({
-  img: { backgroundColor: Colors.border },
+  img: { backgroundColor: LegacyColors.border },
   placeholder: {
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     alignItems: "center",
     justifyContent: "center",
   },
-  initial: { color: Colors.white, fontWeight: "800" },
+  initial: { color: LegacyColors.white, fontWeight: "800" },
 });
 
 // ─── Status dot ───────────────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ function StatusDot({ isVerified }: { isVerified: boolean }) {
   if (!isVerified) return null;
   return (
     <View style={dotStyles.dot}>
-      <Ionicons name="checkmark" size={8} color={Colors.white} />
+      <Ionicons name="checkmark" size={8} color={LegacyColors.white} />
     </View>
   );
 }
@@ -94,12 +94,12 @@ const dotStyles = StyleSheet.create({
     width: 14,
     height: 14,
     borderRadius: 7,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 4,
     borderWidth: 1.5,
-    borderColor: Colors.card,
+    borderColor: LegacyColors.card,
   },
 });
 
@@ -133,7 +133,7 @@ function MediaBlock({
       {firstMedia?.media_type === "video" && (
         <View style={mediaStyles.playOverlay}>
           <View style={mediaStyles.playButton}>
-            <Ionicons name="play" size={22} color={Colors.white} />
+            <Ionicons name="play" size={22} color={LegacyColors.white} />
           </View>
         </View>
       )}
@@ -141,7 +141,7 @@ function MediaBlock({
       {/* Multi-photo indicator */}
       {item.media.length > 1 && (
         <View style={mediaStyles.multiIndicator}>
-          <Ionicons name="copy-outline" size={14} color={Colors.white} />
+          <Ionicons name="copy-outline" size={14} color={LegacyColors.white} />
         </View>
       )}
 
@@ -161,13 +161,13 @@ const mediaStyles = StyleSheet.create({
     height: MEDIA_HEIGHT,
     borderRadius: 14,
     overflow: "hidden",
-    backgroundColor: Colors.surface,
+    backgroundColor: LegacyColors.surface,
   },
   image: { width: "100%", height: "100%" },
   imagePlaceholder: {
     width: "100%",
     height: "100%",
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -209,7 +209,7 @@ const mediaStyles = StyleSheet.create({
     maxWidth: MEDIA_WIDTH * 0.65,
   },
   restaurantPillText: {
-    color: Colors.white,
+    color: LegacyColors.white,
     fontSize: 12,
     fontWeight: "700",
     letterSpacing: 0.1,
@@ -265,24 +265,24 @@ const itemsStyles = StyleSheet.create({
   qty: {
     fontSize: 12,
     fontWeight: "700",
-    color: Colors.accent,
+    color: LegacyColors.accent,
     width: 22,
     flexShrink: 0,
   },
   name: {
     fontSize: 13,
-    color: Colors.ink,
+    color: LegacyColors.ink,
     fontWeight: "500",
     flex: 1,
   },
   mod: {
     fontSize: 12,
-    color: Colors.inkSecondary,
+    color: LegacyColors.inkSecondary,
     fontStyle: "italic",
     flexShrink: 1,
   },
   dietTag: {
-    backgroundColor: Colors.saveGreenLight,
+    backgroundColor: LegacyColors.saveGreenLight,
     borderRadius: 4,
     paddingHorizontal: 5,
     paddingVertical: 1,
@@ -290,12 +290,12 @@ const itemsStyles = StyleSheet.create({
   },
   dietTagText: {
     fontSize: 10,
-    color: Colors.saveGreen,
+    color: LegacyColors.saveGreen,
     fontWeight: "700",
   },
   more: {
     fontSize: 12,
-    color: Colors.accent,
+    color: LegacyColors.accent,
     fontWeight: "600",
     marginTop: 2,
   },
@@ -334,7 +334,7 @@ function ActionBtn({
       <Ionicons
         name={isActive ? activeIcon : icon}
         size={isLarge ? 22 : 18}
-        color={isActive ? activeColor : Colors.inkSecondary}
+        color={isActive ? activeColor : LegacyColors.inkSecondary}
       />
       <Text
         style={[
@@ -364,7 +364,7 @@ const actionStyles = StyleSheet.create({
   btnPressed: { opacity: 0.6 },
   count: {
     fontSize: 13,
-    color: Colors.inkSecondary,
+    color: LegacyColors.inkSecondary,
     fontWeight: "500",
   },
   countLarge: {
@@ -576,7 +576,7 @@ export function FeedCard({ item, onPress, onDelete }: FeedCardProps) {
         {/* Options menu — only on your own posts */}
         {item.author.id === user?.id && (
           <Pressable style={styles.moreBtn} onPress={handleOptions} hitSlop={8}>
-            <Ionicons name="ellipsis-horizontal" size={20} color={Colors.inkSecondary} />
+            <Ionicons name="ellipsis-horizontal" size={20} color={LegacyColors.inkSecondary} />
           </Pressable>
         )}
       </View>
@@ -611,7 +611,7 @@ export function FeedCard({ item, onPress, onDelete }: FeedCardProps) {
         {/* Total */}
         <View style={styles.totalRow}>
           <Pressable onPress={handleRestaurantPress} style={styles.restaurantLink}>
-            <Ionicons name="location-outline" size={12} color={Colors.inkSecondary} />
+            <Ionicons name="location-outline" size={12} color={LegacyColors.inkSecondary} />
             <Text style={styles.restaurantLinkText} numberOfLines={1}>
               {item.restaurant.name}
             </Text>
@@ -627,7 +627,7 @@ export function FeedCard({ item, onPress, onDelete }: FeedCardProps) {
             activeIcon="bookmark"
             count={saveCount}
             isActive={saved}
-            activeColor={Colors.saveGreen}
+            activeColor={LegacyColors.saveGreen}
             onPress={handleSave}
             size="large"
           />
@@ -638,7 +638,7 @@ export function FeedCard({ item, onPress, onDelete }: FeedCardProps) {
             activeIcon="checkmark-circle"
             count={tryCount}
             isActive={tried}
-            activeColor={Colors.triedPurple}
+            activeColor={LegacyColors.triedPurple}
             onPress={handleTried}
           />
 
@@ -648,12 +648,12 @@ export function FeedCard({ item, onPress, onDelete }: FeedCardProps) {
             activeIcon="heart"
             count={likeCount}
             isActive={liked}
-            activeColor={Colors.accent}
+            activeColor={LegacyColors.accent}
             onPress={handleLike}
           />
           {/* Not For Me */}
           <Pressable style={actionStyles.btn} onPress={handleNotForMe} hitSlop={8}>
-            <Ionicons name="thumbs-down-outline" size={18} color={Colors.inkSecondary} />
+            <Ionicons name="thumbs-down-outline" size={18} color={LegacyColors.inkSecondary} />
           </Pressable>
 
           {/* Spacer */}
@@ -664,7 +664,7 @@ export function FeedCard({ item, onPress, onDelete }: FeedCardProps) {
             <Ionicons
               name="arrow-redo-outline"
               size={18}
-              color={Colors.inkSecondary}
+              color={LegacyColors.inkSecondary}
             />
           </Pressable>
         </View>
@@ -695,13 +695,13 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   card: {
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     marginHorizontal: CARD_PADDING,
     borderRadius: 18,
     overflow: "hidden",
     borderWidth: 1,
-    borderColor: Colors.border,
-    shadowColor: Colors.black,
+    borderColor: LegacyColors.border,
+    shadowColor: LegacyColors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 8,
@@ -719,8 +719,8 @@ const styles = StyleSheet.create({
   authorRow: { flex: 1, flexDirection: "row", alignItems: "center", gap: 10 },
   authorInfo: { flex: 1, gap: 1 },
   authorNameRow: { flexDirection: "row", alignItems: "center" },
-  authorName: { fontSize: 14, fontWeight: "700", color: Colors.ink },
-  metaText: { fontSize: 12, color: Colors.inkSecondary },
+  authorName: { fontSize: 14, fontWeight: "700", color: LegacyColors.ink },
+  metaText: { fontSize: 12, color: LegacyColors.inkSecondary },
   moreBtn: { padding: 4 },
   // Body
   body: {
@@ -732,13 +732,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "600",
-    color: Colors.ink,
+    color: LegacyColors.ink,
     lineHeight: 22,
     letterSpacing: -0.1,
   },
   caption: {
     fontSize: 14,
-    color: Colors.inkSecondary,
+    color: LegacyColors.inkSecondary,
     lineHeight: 20,
   },
   totalRow: {
@@ -755,13 +755,13 @@ const styles = StyleSheet.create({
   },
   restaurantLinkText: {
     fontSize: 12,
-    color: Colors.inkSecondary,
+    color: LegacyColors.inkSecondary,
     flex: 1,
   },
   totalText: {
     fontSize: 13,
     fontWeight: "700",
-    color: Colors.ink,
+    color: LegacyColors.ink,
   },
   // Actions
   actions: {
@@ -771,6 +771,6 @@ const styles = StyleSheet.create({
     gap: 0,
     marginTop: 2,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: Colors.border,
+    borderTopColor: LegacyColors.border,
   },
 });

@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "@/services/supabase";
 import { useOrdersStore } from "@/features/orders/store";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { formatPrice } from "@/utils";
 import type { MenuItem, Restaurant } from "@/types";
 
@@ -46,7 +46,7 @@ export default function Step4ReviewScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
-        <Pressable onPress={() => router.back()} hitSlop={10}><Ionicons name="arrow-back" size={22} color={Colors.ink} /></Pressable>
+        <Pressable onPress={() => router.back()} hitSlop={10}><Ionicons name="arrow-back" size={22} color={LegacyColors.ink} /></Pressable>
         <View style={styles.headerCenter}>
           <Text style={styles.stepLabel}>Step 4 of 5</Text>
           <Text style={styles.title}>Review Order</Text>
@@ -89,7 +89,7 @@ export default function Step4ReviewScreen() {
         {/* Notes */}
         <View style={styles.card}>
           <Text style={styles.cardLabel}>Special instructions (optional)</Text>
-          <TextInput style={secStyles.notes} value={draft.notes ?? ""} onChangeText={setDraftNotes} placeholder="Allergy info, gate codes…" placeholderTextColor={Colors.inkDisabled} multiline numberOfLines={3} />
+          <TextInput style={secStyles.notes} value={draft.notes ?? ""} onChangeText={setDraftNotes} placeholder="Allergy info, gate codes…" placeholderTextColor={LegacyColors.inkDisabled} multiline numberOfLines={3} />
         </View>
 
         {/* Totals */}
@@ -115,7 +115,7 @@ export default function Step4ReviewScreen() {
       <View style={styles.footer}>
         <Pressable style={styles.nextBtn} onPress={handleNext}>
           <Text style={styles.nextBtnText}>Place Order · {formatPrice(total)}</Text>
-          <Ionicons name="arrow-forward" size={18} color={Colors.white} />
+          <Ionicons name="arrow-forward" size={18} color={LegacyColors.white} />
         </Pressable>
       </View>
     </SafeAreaView>
@@ -126,36 +126,36 @@ import React from "react";
 
 const secStyles = StyleSheet.create({
   row: { flexDirection: "row", justifyContent: "space-between", marginBottom: 8 },
-  label: { fontSize: 14, color: Colors.inkSecondary },
+  label: { fontSize: 14, color: LegacyColors.inkSecondary },
   itemRow: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 8 },
-  qtyBadge: { width: 28, height: 28, borderRadius: 7, backgroundColor: Colors.accentLight, alignItems: "center", justifyContent: "center" },
-  qtyText: { fontSize: 12, fontWeight: "700", color: Colors.accent },
-  itemName: { flex: 1, fontSize: 14, color: Colors.ink },
-  itemPrice: { fontSize: 14, fontWeight: "600", color: Colors.ink },
-  editLink: { fontSize: 13, color: Colors.accent, fontWeight: "600", marginTop: 4 },
-  address: { fontSize: 14, color: Colors.ink, lineHeight: 20 },
-  notes: { borderWidth: 1.5, borderColor: Colors.border, borderRadius: 10, padding: 10, fontSize: 14, color: Colors.ink, minHeight: 72, textAlignVertical: "top", backgroundColor: Colors.surface },
+  qtyBadge: { width: 28, height: 28, borderRadius: 7, backgroundColor: LegacyColors.accentLight, alignItems: "center", justifyContent: "center" },
+  qtyText: { fontSize: 12, fontWeight: "700", color: LegacyColors.accent },
+  itemName: { flex: 1, fontSize: 14, color: LegacyColors.ink },
+  itemPrice: { fontSize: 14, fontWeight: "600", color: LegacyColors.ink },
+  editLink: { fontSize: 13, color: LegacyColors.accent, fontWeight: "600", marginTop: 4 },
+  address: { fontSize: 14, color: LegacyColors.ink, lineHeight: 20 },
+  notes: { borderWidth: 1.5, borderColor: LegacyColors.border, borderRadius: 10, padding: 10, fontSize: 14, color: LegacyColors.ink, minHeight: 72, textAlignVertical: "top", backgroundColor: LegacyColors.surface },
   totalRow: { flexDirection: "row", justifyContent: "space-between", marginBottom: 8 },
-  totalLabel: { fontSize: 14, color: Colors.inkSecondary },
-  totalValue: { fontSize: 14, color: Colors.ink },
-  divider: { height: StyleSheet.hairlineWidth, backgroundColor: Colors.border, marginVertical: 6 },
-  grandLabel: { fontSize: 16, fontWeight: "800", color: Colors.ink },
-  grandValue: { fontSize: 16, fontWeight: "800", color: Colors.accent },
+  totalLabel: { fontSize: 14, color: LegacyColors.inkSecondary },
+  totalValue: { fontSize: 14, color: LegacyColors.ink },
+  divider: { height: StyleSheet.hairlineWidth, backgroundColor: LegacyColors.border, marginVertical: 6 },
+  grandLabel: { fontSize: 16, fontWeight: "800", color: LegacyColors.ink },
+  grandValue: { fontSize: 16, fontWeight: "800", color: LegacyColors.accent },
 });
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
   header: { flexDirection: "row", alignItems: "center", paddingHorizontal: 20, paddingVertical: 14, gap: 12 },
   headerCenter: { flex: 1 },
-  stepLabel: { fontSize: 12, fontWeight: "700", color: Colors.accent, textTransform: "uppercase", letterSpacing: 0.6 },
-  title: { fontSize: 20, fontWeight: "800", color: Colors.ink },
-  progressTrack: { height: 4, backgroundColor: Colors.border, marginHorizontal: 20, borderRadius: 2, marginBottom: 8, overflow: "hidden" },
-  progressFill: { height: 4, backgroundColor: Colors.accent, borderRadius: 2 },
+  stepLabel: { fontSize: 12, fontWeight: "700", color: LegacyColors.accent, textTransform: "uppercase", letterSpacing: 0.6 },
+  title: { fontSize: 20, fontWeight: "800", color: LegacyColors.ink },
+  progressTrack: { height: 4, backgroundColor: LegacyColors.border, marginHorizontal: 20, borderRadius: 2, marginBottom: 8, overflow: "hidden" },
+  progressFill: { height: 4, backgroundColor: LegacyColors.accent, borderRadius: 2 },
   scroll: { padding: 16, gap: 12, paddingBottom: 120 },
-  card: { backgroundColor: Colors.card, borderRadius: 16, padding: 16, borderWidth: 1, borderColor: Colors.border, gap: 10 },
-  cardLabel: { fontSize: 11, fontWeight: "700", color: Colors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.6 },
-  restaurantName: { fontSize: 16, fontWeight: "700", color: Colors.ink },
-  footer: { position: "absolute", bottom: 0, left: 0, right: 0, padding: 16, paddingBottom: 32, backgroundColor: Colors.card, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.border },
-  nextBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 54, backgroundColor: Colors.accent, borderRadius: 14, gap: 8, shadowColor: Colors.accent, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.28, shadowRadius: 8, elevation: 4 },
-  nextBtnText: { color: Colors.white, fontSize: 16, fontWeight: "700" },
+  card: { backgroundColor: LegacyColors.card, borderRadius: 16, padding: 16, borderWidth: 1, borderColor: LegacyColors.border, gap: 10 },
+  cardLabel: { fontSize: 11, fontWeight: "700", color: LegacyColors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.6 },
+  restaurantName: { fontSize: 16, fontWeight: "700", color: LegacyColors.ink },
+  footer: { position: "absolute", bottom: 0, left: 0, right: 0, padding: 16, paddingBottom: 32, backgroundColor: LegacyColors.card, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: LegacyColors.border },
+  nextBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 54, backgroundColor: LegacyColors.accent, borderRadius: 14, gap: 8, shadowColor: LegacyColors.accent, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.28, shadowRadius: 8, elevation: 4 },
+  nextBtnText: { color: LegacyColors.white, fontSize: 16, fontWeight: "700" },
 });

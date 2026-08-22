@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from "@/services/supabase";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 export default function SignInScreen() {
   const router = useRouter();
@@ -103,15 +103,15 @@ export default function SignInScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
   container: { flex: 1, justifyContent: "center", paddingHorizontal: 24 },
   header: { alignItems: "center", marginBottom: 40 },
-  logo: { fontSize: 32, fontWeight: "800", color: Colors.accent },
-  subtitle: { fontSize: 16, color: Colors.inkSecondary, marginTop: 8 },
+  logo: { fontSize: 32, fontWeight: "800", color: LegacyColors.accent },
+  subtitle: { fontSize: 16, color: LegacyColors.inkSecondary, marginTop: 8 },
   form: { gap: 12 },
   error: {
-    backgroundColor: Colors.accentLight,
-    color: Colors.danger,
+    backgroundColor: LegacyColors.accentLight,
+    color: LegacyColors.danger,
     padding: 12,
     borderRadius: 8,
     fontSize: 14,
@@ -119,25 +119,25 @@ const styles = StyleSheet.create({
   input: {
     height: 52,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     borderRadius: 12,
     paddingHorizontal: 16,
     fontSize: 16,
-    color: Colors.ink,
-    backgroundColor: Colors.card,
+    color: LegacyColors.ink,
+    backgroundColor: LegacyColors.card,
   },
-  forgot: { alignSelf: "flex-end", color: Colors.accent, fontSize: 14 },
+  forgot: { alignSelf: "flex-end", color: LegacyColors.accent, fontSize: 14 },
   btn: {
     height: 52,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 8,
   },
   btnDisabled: { opacity: 0.6 },
-  btnText: { color: Colors.white, fontSize: 16, fontWeight: "700" },
+  btnText: { color: LegacyColors.white, fontSize: 16, fontWeight: "700" },
   footer: { flexDirection: "row", justifyContent: "center", marginTop: 32 },
-  footerText: { color: Colors.inkSecondary, fontSize: 15 },
-  footerLink: { color: Colors.accent, fontSize: 15, fontWeight: "600" },
+  footerText: { color: LegacyColors.inkSecondary, fontSize: 15 },
+  footerLink: { color: LegacyColors.accent, fontSize: 15, fontWeight: "600" },
 });

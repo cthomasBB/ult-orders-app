@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 export type BadgeVariant = "default" | "success" | "warning" | "danger" | "info" | "accent";
 
 const META: Record<BadgeVariant, { bg: string; text: string }> = {
-  default: { bg: Colors.surface,          text: Colors.inkSecondary },
-  success: { bg: Colors.saveGreenLight,   text: Colors.saveGreen    },
+  default: { bg: LegacyColors.surface,          text: LegacyColors.inkSecondary },
+  success: { bg: LegacyColors.saveGreenLight,   text: LegacyColors.saveGreen    },
   warning: { bg: "#FFF8E1",               text: "#F57C00"           },
-  danger:  { bg: Colors.accentLight,      text: Colors.danger       },
+  danger:  { bg: LegacyColors.accentLight,      text: LegacyColors.danger       },
   info:    { bg: "#E3F2FD",               text: "#1565C0"           },
-  accent:  { bg: Colors.accentLight,      text: Colors.accent       },
+  accent:  { bg: LegacyColors.accentLight,      text: LegacyColors.accent       },
 };
 
 type Props = {

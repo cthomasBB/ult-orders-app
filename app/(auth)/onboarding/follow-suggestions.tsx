@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 // ─── Suggested users data ─────────────────────────────────────────────────────
 
@@ -109,7 +109,7 @@ function UserRow({
         accessibilityLabel={isFollowing ? `Unfollow ${user.display_name}` : `Follow ${user.display_name}`}
       >
         {isFollowing ? (
-          <Ionicons name="checkmark" size={16} color={Colors.accent} />
+          <Ionicons name="checkmark" size={16} color={LegacyColors.accent} />
         ) : null}
         <Text
           style={[
@@ -131,32 +131,32 @@ const rowStyles = StyleSheet.create({
     paddingVertical: 14,
     gap: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.border,
+    borderBottomColor: LegacyColors.border,
   },
   avatar: {
     width: 52,
     height: 52,
     borderRadius: 26,
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
   },
   avatarEmoji: { fontSize: 24 },
   info: { flex: 1, gap: 2 },
-  displayName: { fontSize: 15, fontWeight: "700", color: Colors.ink },
-  username: { fontSize: 12, color: Colors.inkSecondary },
-  bio: { fontSize: 13, color: Colors.inkSecondary, marginTop: 2 },
+  displayName: { fontSize: 15, fontWeight: "700", color: LegacyColors.ink },
+  username: { fontSize: 12, color: LegacyColors.inkSecondary },
+  bio: { fontSize: 13, color: LegacyColors.inkSecondary, marginTop: 2 },
   tags: { flexDirection: "row", gap: 4, marginTop: 4, flexWrap: "wrap" },
   tag: {
-    backgroundColor: Colors.surface,
+    backgroundColor: LegacyColors.surface,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     borderRadius: 6,
     paddingHorizontal: 6,
     paddingVertical: 2,
   },
-  tagText: { fontSize: 11, color: Colors.inkSecondary, fontWeight: "500" },
+  tagText: { fontSize: 11, color: LegacyColors.inkSecondary, fontWeight: "500" },
   followBtn: {
     flexDirection: "row",
     alignItems: "center",
@@ -165,17 +165,17 @@ const rowStyles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 20,
     borderWidth: 1.5,
-    borderColor: Colors.accent,
-    backgroundColor: Colors.accent,
+    borderColor: LegacyColors.accent,
+    backgroundColor: LegacyColors.accent,
     flexShrink: 0,
   },
   followBtnActive: {
-    backgroundColor: Colors.card,
-    borderColor: Colors.border,
+    backgroundColor: LegacyColors.card,
+    borderColor: LegacyColors.border,
   },
   followBtnPressed: { opacity: 0.75 },
-  followBtnText: { fontSize: 13, fontWeight: "700", color: Colors.white },
-  followBtnTextActive: { color: Colors.inkSecondary },
+  followBtnText: { fontSize: 13, fontWeight: "700", color: LegacyColors.white },
+  followBtnTextActive: { color: LegacyColors.inkSecondary },
 });
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
@@ -239,7 +239,7 @@ export default function FollowSuggestionsScreen() {
             <Text style={styles.doneBtnText}>
               {`Done · Following ${following.size}`}
             </Text>
-            <Ionicons name="arrow-forward" size={18} color={Colors.white} />
+            <Ionicons name="arrow-forward" size={18} color={LegacyColors.white} />
           </Pressable>
         ) : (
           <Pressable
@@ -250,7 +250,7 @@ export default function FollowSuggestionsScreen() {
             onPress={handleFinish}
           >
             <Text style={styles.doneBtnText}>Let's go</Text>
-            <Ionicons name="arrow-forward" size={18} color={Colors.white} />
+            <Ionicons name="arrow-forward" size={18} color={LegacyColors.white} />
           </Pressable>
         )}
 
@@ -263,7 +263,7 @@ export default function FollowSuggestionsScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
   header: {
     paddingHorizontal: 24,
     paddingTop: 20,
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   step: {
     fontSize: 12,
     fontWeight: "700",
-    color: Colors.accent,
+    color: LegacyColors.accent,
     textTransform: "uppercase",
     letterSpacing: 0.8,
     marginBottom: 4,
@@ -281,20 +281,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: "800",
-    color: Colors.ink,
+    color: LegacyColors.ink,
     letterSpacing: -0.3,
   },
-  subtitle: { fontSize: 14, color: Colors.inkSecondary, lineHeight: 20 },
+  subtitle: { fontSize: 14, color: LegacyColors.inkSecondary, lineHeight: 20 },
   progressTrack: {
     height: 4,
-    backgroundColor: Colors.border,
+    backgroundColor: LegacyColors.border,
     borderRadius: 2,
     marginTop: 12,
     overflow: "hidden",
   },
   progressFill: {
     height: 4,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     borderRadius: 2,
   },
   scroll: {
@@ -308,8 +308,8 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     gap: 8,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: Colors.border,
-    backgroundColor: Colors.surface,
+    borderTopColor: LegacyColors.border,
+    backgroundColor: LegacyColors.surface,
   },
   doneBtn: {
     flexDirection: "row",
@@ -317,20 +317,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 54,
     borderRadius: 14,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     gap: 8,
-    shadowColor: Colors.accent,
+    shadowColor: LegacyColors.accent,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.28,
     shadowRadius: 8,
     elevation: 4,
   },
-  doneBtnPressed: { backgroundColor: Colors.accentDark },
-  doneBtnText: { fontSize: 16, fontWeight: "700", color: Colors.white },
+  doneBtnPressed: { backgroundColor: LegacyColors.accentDark },
+  doneBtnText: { fontSize: 16, fontWeight: "700", color: LegacyColors.white },
   skipBtn: {
     height: 44,
     alignItems: "center",
     justifyContent: "center",
   },
-  skipText: { fontSize: 14, color: Colors.inkSecondary, fontWeight: "500" },
+  skipText: { fontSize: 14, color: LegacyColors.inkSecondary, fontWeight: "500" },
 });

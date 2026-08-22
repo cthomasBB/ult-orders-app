@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 /**
  * Auth group layout.
@@ -11,7 +11,7 @@ export default function AuthLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        contentStyle: { backgroundColor: Colors.surface },
+        contentStyle: { backgroundColor: LegacyColors.surface },
         animation: "slide_from_right",
       }}
     >

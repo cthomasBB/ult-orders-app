@@ -1,6 +1,6 @@
 import { SectionList, StyleSheet, Text, View } from "react-native";
 import { MenuItemCard } from "./MenuItemCard";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import type { MenuItem } from "@/types";
 
 type Section = { title: string; data: MenuItem[] };
@@ -25,6 +25,6 @@ export function MenuSection({ sections, restaurantId }: Props) {
 
 const styles = StyleSheet.create({
   list: { paddingBottom: 120 },
-  header: { backgroundColor: Colors.surface, paddingHorizontal: 20, paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border },
-  title: { fontSize: 17, fontWeight: "800", color: Colors.ink },
+  header: { backgroundColor: LegacyColors.surface, paddingHorizontal: 20, paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: LegacyColors.border },
+  title: { fontSize: 17, fontWeight: "800", color: LegacyColors.ink },
 });

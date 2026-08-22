@@ -12,7 +12,7 @@ import { WebView } from "react-native-webview";
 import * as WebBrowser from "expo-web-browser";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
@@ -25,7 +25,7 @@ const PRIVACY_POLICY_URL =
 function WebViewLoader() {
   return (
     <View style={styles.loader}>
-      <ActivityIndicator color={Colors.accent} size="large" />
+      <ActivityIndicator color={LegacyColors.accent} size="large" />
     </View>
   );
 }
@@ -35,7 +35,7 @@ function WebViewLoader() {
 function WebViewError({ onRetry, onOpenExternal }: { onRetry: () => void; onOpenExternal: () => void }) {
   return (
     <View style={styles.errorState}>
-      <Ionicons name="cloud-offline-outline" size={48} color={Colors.inkDisabled} />
+      <Ionicons name="cloud-offline-outline" size={48} color={LegacyColors.inkDisabled} />
       <Text style={styles.errorTitle}>Couldn't load policy</Text>
       <Text style={styles.errorSub}>Check your connection and try again.</Text>
       <View style={styles.errorActions}>
@@ -49,7 +49,7 @@ function WebViewError({ onRetry, onOpenExternal }: { onRetry: () => void; onOpen
           style={({ pressed }) => [styles.externalBtn, pressed && styles.externalBtnPressed]}
           onPress={onOpenExternal}
         >
-          <Ionicons name="open-outline" size={15} color={Colors.accent} />
+          <Ionicons name="open-outline" size={15} color={LegacyColors.accent} />
           <Text style={styles.externalBtnText}>Open in browser</Text>
         </Pressable>
       </View>
@@ -100,13 +100,13 @@ export default function PrivacyPolicyScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.card },
-  webview: { flex: 1, backgroundColor: Colors.card },
+  safe: { flex: 1, backgroundColor: LegacyColors.card },
+  webview: { flex: 1, backgroundColor: LegacyColors.card },
   loader: {
     ...StyleSheet.absoluteFillObject,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
   },
   errorState: {
     flex: 1,
@@ -114,19 +114,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 12,
     padding: 40,
-    backgroundColor: Colors.surface,
+    backgroundColor: LegacyColors.surface,
   },
-  errorTitle: { fontSize: 18, fontWeight: "700", color: Colors.ink },
-  errorSub: { fontSize: 14, color: Colors.inkSecondary, textAlign: "center" },
+  errorTitle: { fontSize: 18, fontWeight: "700", color: LegacyColors.ink },
+  errorSub: { fontSize: 14, color: LegacyColors.inkSecondary, textAlign: "center" },
   errorActions: { flexDirection: "row", gap: 10, marginTop: 8 },
   retryBtn: {
     paddingHorizontal: 22,
     paddingVertical: 10,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     borderRadius: 10,
   },
-  retryBtnPressed: { backgroundColor: Colors.accentDark },
-  retryBtnText: { fontSize: 14, fontWeight: "700", color: Colors.white },
+  retryBtnPressed: { backgroundColor: LegacyColors.accentDark },
+  retryBtnText: { fontSize: 14, fontWeight: "700", color: LegacyColors.white },
   externalBtn: {
     flexDirection: "row",
     alignItems: "center",
@@ -134,10 +134,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderWidth: 1.5,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     borderRadius: 10,
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
   },
-  externalBtnPressed: { backgroundColor: Colors.surface },
-  externalBtnText: { fontSize: 14, fontWeight: "600", color: Colors.accent },
+  externalBtnPressed: { backgroundColor: LegacyColors.surface },
+  externalBtnText: { fontSize: 14, fontWeight: "600", color: LegacyColors.accent },
 });

@@ -3,7 +3,7 @@ import { Image, FlatList, Pressable, ScrollView, StyleSheet, Text, TextInput, Vi
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { MOCK_FEED_ITEMS, MOCK_SAVED_ITEMS } from "@/features/feed/mockData";
 
 const ALL_POSTS = [...MOCK_FEED_ITEMS, ...MOCK_SAVED_ITEMS];
@@ -65,19 +65,19 @@ export default function FindScreen() {
 
       {/* Search bar */}
       <View style={styles.searchBar}>
-        <Ionicons name="search" size={18} color={Colors.inkSecondary} />
+        <Ionicons name="search" size={18} color={LegacyColors.inkSecondary} />
         <TextInput
           style={styles.searchInput}
           value={query}
           onChangeText={setQuery}
           placeholder="Search orders, restaurants, creators..."
-          placeholderTextColor={Colors.inkDisabled}
+          placeholderTextColor={LegacyColors.inkDisabled}
           returnKeyType="search"
           autoCorrect={false}
         />
         {query.length > 0 && (
           <Pressable onPress={() => setQuery("")}>
-            <Ionicons name="close-circle" size={18} color={Colors.inkDisabled} />
+            <Ionicons name="close-circle" size={18} color={LegacyColors.inkDisabled} />
           </Pressable>
         )}
       </View>
@@ -109,7 +109,7 @@ export default function FindScreen() {
           <View style={styles.trendingRow}>
             {TRENDING_SEARCHES.map((t) => (
               <Pressable key={t} style={styles.trendingChip} onPress={() => setQuery(t)}>
-                <Ionicons name="trending-up" size={12} color={Colors.accent} />
+                <Ionicons name="trending-up" size={12} color={LegacyColors.accent} />
                 <Text style={styles.trendingText}>{t}</Text>
               </Pressable>
             ))}
@@ -132,7 +132,7 @@ export default function FindScreen() {
                   {restaurant.cuisine_type.slice(0, 2).join(" · ")} · ⭐ {restaurant.average_rating.toFixed(1)}
                 </Text>
               </View>
-              <Ionicons name="chevron-forward" size={16} color={Colors.inkDisabled} />
+              <Ionicons name="chevron-forward" size={16} color={LegacyColors.inkDisabled} />
             </Pressable>
           ))}
 
@@ -156,7 +156,7 @@ export default function FindScreen() {
                 <Text style={styles.orderMeta}>{post.restaurant.name}</Text>
               </View>
               <View style={styles.saveCount}>
-                <Ionicons name="bookmark" size={12} color={Colors.saveGreen} />
+                <Ionicons name="bookmark" size={12} color={LegacyColors.saveGreen} />
                 <Text style={styles.saveCountText}>{post.save_count}</Text>
               </View>
             </Pressable>
@@ -191,7 +191,7 @@ export default function FindScreen() {
                 <Text style={styles.orderAuthor}>@{item.author.username}</Text>
               </View>
               <View style={styles.saveCount}>
-                <Ionicons name="bookmark" size={12} color={Colors.saveGreen} />
+                <Ionicons name="bookmark" size={12} color={LegacyColors.saveGreen} />
                 <Text style={styles.saveCountText}>{item.save_count}</Text>
               </View>
             </Pressable>
@@ -210,38 +210,38 @@ export default function FindScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
-  searchBar: { flexDirection: "row", alignItems: "center", gap: 10, margin: 16, marginBottom: 8, paddingHorizontal: 14, height: 48, borderRadius: 14, backgroundColor: Colors.card, borderWidth: 1.5, borderColor: Colors.border },
-  searchInput: { flex: 1, fontSize: 15, color: Colors.ink },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
+  searchBar: { flexDirection: "row", alignItems: "center", gap: 10, margin: 16, marginBottom: 8, paddingHorizontal: 14, height: 48, borderRadius: 14, backgroundColor: LegacyColors.card, borderWidth: 1.5, borderColor: LegacyColors.border },
+  searchInput: { flex: 1, fontSize: 15, color: LegacyColors.ink },
   filterRow: { paddingHorizontal: 16, paddingBottom: 12, gap: 8 },
-  filterChip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface, height: 34, alignItems: "center", justifyContent: "center" },
-  filterChipActive: { backgroundColor: Colors.accentLight, borderColor: Colors.accent },
-  filterChipText: { fontSize: 13, color: Colors.ink, fontWeight: "500" },
-  filterChipTextActive: { color: Colors.accent, fontWeight: "700" },
+  filterChip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20, borderWidth: 1, borderColor: LegacyColors.border, backgroundColor: LegacyColors.surface, height: 34, alignItems: "center", justifyContent: "center" },
+  filterChipActive: { backgroundColor: LegacyColors.accentLight, borderColor: LegacyColors.accent },
+  filterChipText: { fontSize: 13, color: LegacyColors.ink, fontWeight: "500" },
+  filterChipTextActive: { color: LegacyColors.accent, fontWeight: "700" },
   emptyScroll: { paddingHorizontal: 16, paddingBottom: 40 },
-  sectionTitle: { fontSize: 16, fontWeight: "700", color: Colors.ink, marginTop: 20, marginBottom: 12 },
+  sectionTitle: { fontSize: 16, fontWeight: "700", color: LegacyColors.ink, marginTop: 20, marginBottom: 12 },
   trendingRow: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
-  trendingChip: { flexDirection: "row", alignItems: "center", gap: 5, paddingHorizontal: 12, paddingVertical: 7, borderRadius: 20, backgroundColor: Colors.card, borderWidth: 1, borderColor: Colors.border },
-  trendingText: { fontSize: 13, color: Colors.ink, fontWeight: "500" },
-  restaurantRow: { flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border },
-  restaurantThumb: { width: 48, height: 48, borderRadius: 12, backgroundColor: Colors.accentLight, alignItems: "center", justifyContent: "center" },
+  trendingChip: { flexDirection: "row", alignItems: "center", gap: 5, paddingHorizontal: 12, paddingVertical: 7, borderRadius: 20, backgroundColor: LegacyColors.card, borderWidth: 1, borderColor: LegacyColors.border },
+  trendingText: { fontSize: 13, color: LegacyColors.ink, fontWeight: "500" },
+  restaurantRow: { flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: LegacyColors.border },
+  restaurantThumb: { width: 48, height: 48, borderRadius: 12, backgroundColor: LegacyColors.accentLight, alignItems: "center", justifyContent: "center" },
   thumbEmoji: { fontSize: 22 },
   restaurantInfo: { flex: 1 },
-  restaurantName: { fontSize: 15, fontWeight: "700", color: Colors.ink },
-  restaurantMeta: { fontSize: 13, color: Colors.inkSecondary, marginTop: 2 },
-  orderRow: { flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border },
-  orderThumb: { width: 52, height: 52, borderRadius: 12, backgroundColor: Colors.accentLight, alignItems: "center", justifyContent: "center", overflow: "hidden" },
+  restaurantName: { fontSize: 15, fontWeight: "700", color: LegacyColors.ink },
+  restaurantMeta: { fontSize: 13, color: LegacyColors.inkSecondary, marginTop: 2 },
+  orderRow: { flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: LegacyColors.border },
+  orderThumb: { width: 52, height: 52, borderRadius: 12, backgroundColor: LegacyColors.accentLight, alignItems: "center", justifyContent: "center", overflow: "hidden" },
   orderThumbImg: { width: 52, height: 52 },
   orderInfo: { flex: 1 },
-  orderTitle: { fontSize: 14, fontWeight: "700", color: Colors.ink, flexShrink: 1 },
-  orderMeta: { fontSize: 12, color: Colors.inkSecondary, marginTop: 2 },
-  orderAuthor: { fontSize: 12, color: Colors.accent, marginTop: 2 },
+  orderTitle: { fontSize: 14, fontWeight: "700", color: LegacyColors.ink, flexShrink: 1 },
+  orderMeta: { fontSize: 12, color: LegacyColors.inkSecondary, marginTop: 2 },
+  orderAuthor: { fontSize: 12, color: LegacyColors.accent, marginTop: 2 },
   saveCount: { flexDirection: "row", alignItems: "center", gap: 3 },
-  saveCountText: { fontSize: 12, fontWeight: "600", color: Colors.inkSecondary },
+  saveCountText: { fontSize: 12, fontWeight: "600", color: LegacyColors.inkSecondary },
   resultsList: { paddingHorizontal: 16, paddingBottom: 40 },
-  resultCount: { fontSize: 12, color: Colors.inkSecondary, fontWeight: "600", paddingVertical: 8, textTransform: "uppercase", letterSpacing: 0.5 },
+  resultCount: { fontSize: 12, color: LegacyColors.inkSecondary, fontWeight: "600", paddingVertical: 8, textTransform: "uppercase", letterSpacing: 0.5 },
   noResults: { alignItems: "center", paddingTop: 60, gap: 8 },
   noResultsEmoji: { fontSize: 40 },
-  noResultsTitle: { fontSize: 18, fontWeight: "700", color: Colors.ink },
-  noResultsSub: { fontSize: 14, color: Colors.inkSecondary },
+  noResultsTitle: { fontSize: 18, fontWeight: "700", color: LegacyColors.ink },
+  noResultsSub: { fontSize: 14, color: LegacyColors.inkSecondary },
 });

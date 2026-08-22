@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Animated, Dimensions, StyleSheet, View } from "react-native";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 const { width: SCREEN_W } = Dimensions.get("window");
 const CARD_PADDING = 16;
@@ -104,14 +104,14 @@ export function FeedSkeletonList({ count = 3 }: { count?: number }) {
 
 const skeletonStyles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     marginHorizontal: CARD_PADDING,
     borderRadius: 18,
     overflow: "hidden",
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
   },
-  bone: { backgroundColor: Colors.border },
+  bone: { backgroundColor: LegacyColors.border },
   header: {
     flexDirection: "row",
     alignItems: "center",

@@ -13,7 +13,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { authResetPassword } from "@/services/supabase";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 export default function ForgotPasswordScreen() {
   const router = useRouter();
@@ -45,12 +45,12 @@ export default function ForgotPasswordScreen() {
         <View style={styles.container}>
           {/* Close / back */}
           <Pressable style={styles.closeBtn} onPress={() => router.back()}>
-            <Ionicons name="close" size={22} color={Colors.ink} />
+            <Ionicons name="close" size={22} color={LegacyColors.ink} />
           </Pressable>
 
           <View style={styles.content}>
             <View style={styles.iconWrap}>
-              <Ionicons name="lock-closed" size={28} color={Colors.accent} />
+              <Ionicons name="lock-closed" size={28} color={LegacyColors.accent} />
             </View>
             <Text style={styles.title}>Forgot password?</Text>
             <Text style={styles.description}>
@@ -60,7 +60,7 @@ export default function ForgotPasswordScreen() {
             {sent ? (
               /* ── Success state ── */
               <View style={styles.successBox}>
-                <Ionicons name="mail-outline" size={24} color={Colors.saveGreen} />
+                <Ionicons name="mail-outline" size={24} color={LegacyColors.saveGreen} />
                 <View style={styles.successText}>
                   <Text style={styles.successTitle}>Check your email</Text>
                   <Text style={styles.successBody}>
@@ -73,7 +73,7 @@ export default function ForgotPasswordScreen() {
               <View style={styles.form}>
                 {error && (
                   <View style={styles.errorBanner}>
-                    <Ionicons name="alert-circle" size={15} color={Colors.danger} />
+                    <Ionicons name="alert-circle" size={15} color={LegacyColors.danger} />
                     <Text style={styles.errorText}>{error}</Text>
                   </View>
                 )}
@@ -84,7 +84,7 @@ export default function ForgotPasswordScreen() {
                     value={email}
                     onChangeText={setEmail}
                     placeholder="you@example.com"
-                    placeholderTextColor={Colors.inkDisabled}
+                    placeholderTextColor={LegacyColors.inkDisabled}
                     keyboardType="email-address"
                     autoCapitalize="none"
                     autoComplete="email"
@@ -100,7 +100,7 @@ export default function ForgotPasswordScreen() {
                   disabled={isLoading}
                 >
                   {isLoading
-                    ? <ActivityIndicator color={Colors.white} />
+                    ? <ActivityIndicator color={LegacyColors.white} />
                     : <Text style={styles.submitBtnText}>Send Reset Link</Text>
                   }
                 </Pressable>
@@ -109,7 +109,7 @@ export default function ForgotPasswordScreen() {
 
             {/* Back to sign in */}
             <Pressable style={styles.backLink} onPress={() => router.back()}>
-              <Ionicons name="arrow-back" size={14} color={Colors.accent} />
+              <Ionicons name="arrow-back" size={14} color={LegacyColors.accent} />
               <Text style={styles.backLinkText}>Back to Sign In</Text>
             </Pressable>
           </View>
@@ -120,7 +120,7 @@ export default function ForgotPasswordScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
   flex: { flex: 1 },
   container: { flex: 1, paddingHorizontal: 24, paddingTop: 16 },
   closeBtn: {
@@ -128,9 +128,9 @@ const styles = StyleSheet.create({
     width: 38,
     height: 38,
     borderRadius: 10,
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -139,63 +139,63 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 18,
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "flex-start",
   },
-  title: { fontSize: 28, fontWeight: "800", color: Colors.ink, letterSpacing: -0.3 },
-  description: { fontSize: 15, color: Colors.inkSecondary, lineHeight: 22, marginTop: -8 },
+  title: { fontSize: 28, fontWeight: "800", color: LegacyColors.ink, letterSpacing: -0.3 },
+  description: { fontSize: 15, color: LegacyColors.inkSecondary, lineHeight: 22, marginTop: -8 },
   successBox: {
     flexDirection: "row",
     alignItems: "flex-start",
     gap: 14,
-    backgroundColor: Colors.saveGreenLight,
+    backgroundColor: LegacyColors.saveGreenLight,
     borderRadius: 14,
     padding: 16,
     borderWidth: 1,
-    borderColor: Colors.saveGreen + "40",
+    borderColor: LegacyColors.saveGreen + "40",
   },
   successText: { flex: 1, gap: 4 },
-  successTitle: { fontSize: 15, fontWeight: "700", color: Colors.saveGreen },
-  successBody: { fontSize: 14, color: Colors.inkSecondary, lineHeight: 20 },
+  successTitle: { fontSize: 15, fontWeight: "700", color: LegacyColors.saveGreen },
+  successBody: { fontSize: 14, color: LegacyColors.inkSecondary, lineHeight: 20 },
   form: { gap: 14 },
   errorBanner: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     borderRadius: 10,
     padding: 12,
   },
-  errorText: { flex: 1, fontSize: 13, color: Colors.danger },
+  errorText: { flex: 1, fontSize: 13, color: LegacyColors.danger },
   fieldGroup: { gap: 6 },
-  fieldLabel: { fontSize: 13, fontWeight: "600", color: Colors.inkSecondary },
+  fieldLabel: { fontSize: 13, fontWeight: "600", color: LegacyColors.inkSecondary },
   input: {
     height: 52,
     borderWidth: 1.5,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     borderRadius: 12,
     paddingHorizontal: 14,
     fontSize: 15,
-    color: Colors.ink,
-    backgroundColor: Colors.card,
+    color: LegacyColors.ink,
+    backgroundColor: LegacyColors.card,
   },
-  inputError: { borderColor: Colors.danger },
+  inputError: { borderColor: LegacyColors.danger },
   submitBtn: {
     height: 54,
     borderRadius: 14,
-    backgroundColor: Colors.accent,
+    backgroundColor: LegacyColors.accent,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: Colors.accent,
+    shadowColor: LegacyColors.accent,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.28,
     shadowRadius: 8,
     elevation: 4,
   },
-  submitBtnPressed: { backgroundColor: Colors.accentDark },
-  submitBtnText: { fontSize: 16, fontWeight: "700", color: Colors.white },
+  submitBtnPressed: { backgroundColor: LegacyColors.accentDark },
+  submitBtnText: { fontSize: 16, fontWeight: "700", color: LegacyColors.white },
   backLink: {
     flexDirection: "row",
     alignItems: "center",
@@ -203,5 +203,5 @@ const styles = StyleSheet.create({
     gap: 6,
     paddingVertical: 4,
   },
-  backLinkText: { fontSize: 14, color: Colors.accent, fontWeight: "600" },
+  backLinkText: { fontSize: 14, color: LegacyColors.accent, fontWeight: "600" },
 });

@@ -9,7 +9,7 @@ import { router, useFocusEffect } from "expo-router";
 import { useAuthStore } from "@/features/auth/authStore";
 import { useUserProfile } from "@/features/profile/useProfile";
 import { supabase } from "@/services/supabase";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 const TABS = ["Deck", "Orders", "Saved"];
 
@@ -121,7 +121,7 @@ function OrderCard({ post, onPress, onDeckToggle }: { post: any; onPress: () => 
             <Ionicons
               name={post.is_deck ? "albums" : "albums-outline"}
               size={13}
-              color={post.is_deck ? Colors.white : Colors.accent}
+              color={post.is_deck ? LegacyColors.white : LegacyColors.accent}
             />
             <Text style={[styles.deckToggleText, post.is_deck && styles.deckToggleTextActive]}>
               {post.is_deck ? "On Deck" : "Add to Deck"}
@@ -225,7 +225,7 @@ export default function ProfileScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingWrap}>
-          <ActivityIndicator size="large" color={Colors.accent} />
+          <ActivityIndicator size="large" color={LegacyColors.accent} />
         </View>
       </SafeAreaView>
     );
@@ -252,11 +252,11 @@ export default function ProfileScreen() {
               style={styles.editBtn}
               onPress={openEdit}
             >
-              <Ionicons name="pencil-outline" size={13} color={Colors.accent} />
+              <Ionicons name="pencil-outline" size={13} color={LegacyColors.accent} />
               <Text style={styles.editBtnText}>Edit</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.signOutBtn} onPress={handleSignOut}>
-              <Ionicons name="log-out-outline" size={18} color={Colors.inkSecondary} />
+              <Ionicons name="log-out-outline" size={18} color={LegacyColors.inkSecondary} />
             </TouchableOpacity>
           </View>
         </View>
@@ -353,7 +353,7 @@ export default function ProfileScreen() {
                         style={[styles.cardSmall, styles.cardAdd]}
                         onPress={() => router.push("/create/restaurant" as any)}
                       >
-                        <Ionicons name="add" size={28} color={Colors.accent} />
+                        <Ionicons name="add" size={28} color={LegacyColors.accent} />
                         <Text style={styles.addText}>Add Order</Text>
                       </TouchableOpacity>
                     )}
@@ -383,7 +383,7 @@ export default function ProfileScreen() {
                           style={[styles.cardSmall, styles.cardAdd]}
                           onPress={() => router.push("/create/restaurant" as any)}
                         >
-                          <Ionicons name="add" size={28} color={Colors.accent} />
+                          <Ionicons name="add" size={28} color={LegacyColors.accent} />
                           <Text style={styles.addText}>Add Order</Text>
                         </TouchableOpacity>
                       )}
@@ -451,7 +451,7 @@ export default function ProfileScreen() {
             value={editName}
             onChangeText={setEditName}
             placeholder="Your name"
-            placeholderTextColor={Colors.inkDisabled}
+            placeholderTextColor={LegacyColors.inkDisabled}
             maxLength={50}
             autoCorrect={false}
           />
@@ -461,7 +461,7 @@ export default function ProfileScreen() {
             value={editBio}
             onChangeText={setEditBio}
             placeholder="Tell people about your taste..."
-            placeholderTextColor={Colors.inkDisabled}
+            placeholderTextColor={LegacyColors.inkDisabled}
             maxLength={160}
             multiline
             autoCorrect={false}
@@ -473,7 +473,7 @@ export default function ProfileScreen() {
             disabled={isSaving}
           >
             {isSaving ? (
-              <ActivityIndicator color={Colors.white} />
+              <ActivityIndicator color={LegacyColors.white} />
             ) : (
               <Text style={editStyles.saveBtnText}>Save Profile</Text>
             )}
@@ -493,40 +493,40 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colors.surface },
+  container: { flex: 1, backgroundColor: LegacyColors.surface },
   loadingWrap: { flex: 1, alignItems: "center", justifyContent: "center" },
   header: { flexDirection: "row", alignItems: "center", paddingHorizontal: 16, paddingTop: 16, paddingBottom: 12 },
-  avatarWrap: { width: 64, height: 64, borderRadius: 32, backgroundColor: Colors.accent, alignItems: "center", justifyContent: "center", marginRight: 12 },
+  avatarWrap: { width: 64, height: 64, borderRadius: 32, backgroundColor: LegacyColors.accent, alignItems: "center", justifyContent: "center", marginRight: 12 },
   avatarImg: { width: 64, height: 64, borderRadius: 32 },
   avatarText: { fontSize: 28, fontWeight: "700", color: "#fff" },
   headerInfo: { flex: 1 },
-  displayName: { fontSize: 20, fontWeight: "700", color: Colors.ink },
-  handle: { fontSize: 13, color: Colors.inkSecondary, marginTop: 2 },
+  displayName: { fontSize: 20, fontWeight: "700", color: LegacyColors.ink },
+  handle: { fontSize: 13, color: LegacyColors.inkSecondary, marginTop: 2 },
   headerActions: { flexDirection: "row", alignItems: "center", gap: 8 },
-  editBtn: { flexDirection: "row", alignItems: "center", gap: 4, borderWidth: 1.5, borderColor: Colors.accent, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6 },
-  editBtnText: { color: Colors.accent, fontWeight: "600", fontSize: 12 },
+  editBtn: { flexDirection: "row", alignItems: "center", gap: 4, borderWidth: 1.5, borderColor: LegacyColors.accent, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6 },
+  editBtnText: { color: LegacyColors.accent, fontWeight: "600", fontSize: 12 },
   signOutBtn: { padding: 6 },
   bioWrap: { paddingHorizontal: 16, marginBottom: 12 },
-  bio: { fontSize: 14, color: Colors.inkSecondary, lineHeight: 20 },
+  bio: { fontSize: 14, color: LegacyColors.inkSecondary, lineHeight: 20 },
   tags: { flexDirection: "row", paddingHorizontal: 16, gap: 8, marginBottom: 16, flexWrap: "wrap" },
-  tag: { backgroundColor: Colors.accentLight, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 5 },
-  tagText: { fontSize: 12, color: Colors.accent, fontWeight: "600" },
-  statsRow: { flexDirection: "row", marginHorizontal: 16, backgroundColor: Colors.card, borderRadius: 16, paddingVertical: 16, marginBottom: 20, borderWidth: 1, borderColor: Colors.border },
+  tag: { backgroundColor: LegacyColors.accentLight, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 5 },
+  tagText: { fontSize: 12, color: LegacyColors.accent, fontWeight: "600" },
+  statsRow: { flexDirection: "row", marginHorizontal: 16, backgroundColor: LegacyColors.card, borderRadius: 16, paddingVertical: 16, marginBottom: 20, borderWidth: 1, borderColor: LegacyColors.border },
   stat: { flex: 1, alignItems: "center" },
-  statDivider: { width: 1, backgroundColor: Colors.border },
-  statNum: { fontSize: 20, fontWeight: "700", color: Colors.ink },
-  statLabel: { fontSize: 12, color: Colors.inkSecondary, marginTop: 2 },
-  tabRow: { flexDirection: "row", marginHorizontal: 16, marginBottom: 16, backgroundColor: Colors.border, borderRadius: 12, padding: 4 },
+  statDivider: { width: 1, backgroundColor: LegacyColors.border },
+  statNum: { fontSize: 20, fontWeight: "700", color: LegacyColors.ink },
+  statLabel: { fontSize: 12, color: LegacyColors.inkSecondary, marginTop: 2 },
+  tabRow: { flexDirection: "row", marginHorizontal: 16, marginBottom: 16, backgroundColor: LegacyColors.border, borderRadius: 12, padding: 4 },
   tabBtn: { flex: 1, paddingVertical: 8, alignItems: "center", borderRadius: 10 },
-  tabActive: { backgroundColor: Colors.card, shadowColor: "#000", shadowOpacity: 0.08, shadowRadius: 4, elevation: 2 },
-  tabText: { fontSize: 13, color: Colors.inkSecondary, fontWeight: "500" },
-  tabTextActive: { color: Colors.ink, fontWeight: "700" },
+  tabActive: { backgroundColor: LegacyColors.card, shadowColor: "#000", shadowOpacity: 0.08, shadowRadius: 4, elevation: 2 },
+  tabText: { fontSize: 13, color: LegacyColors.inkSecondary, fontWeight: "500" },
+  tabTextActive: { color: LegacyColors.ink, fontWeight: "700" },
   grid: { paddingHorizontal: 16, gap: 8, paddingBottom: 32 },
   gridRow: { flexDirection: "row", gap: 8, height: 160 },
   cardSmall: { flex: 1, height: 160, borderRadius: 16, padding: 12, justifyContent: "space-between" },
   cardWide: { height: 200, borderRadius: 16, padding: 12, justifyContent: "space-between" },
-  cardAdd: { backgroundColor: Colors.accentLight, alignItems: "center", justifyContent: "center" },
-  addText: { color: Colors.accent, fontWeight: "600", fontSize: 12, marginTop: 4 },
+  cardAdd: { backgroundColor: LegacyColors.accentLight, alignItems: "center", justifyContent: "center" },
+  addText: { color: LegacyColors.accent, fontWeight: "600", fontSize: 12, marginTop: 4 },
   cardOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.38)", borderRadius: 16 },
   likeBadge: { flexDirection: "row", alignItems: "center", backgroundColor: "rgba(0,0,0,0.35)", alignSelf: "flex-end", borderRadius: 20, paddingHorizontal: 8, paddingVertical: 3, gap: 3 },
   likeCount: { color: "#fff", fontSize: 11, fontWeight: "600" },
@@ -534,36 +534,36 @@ const styles = StyleSheet.create({
   cardRestaurant: { fontSize: 9, color: "rgba(255,255,255,0.8)", fontWeight: "600", letterSpacing: 0.5 },
   cardTitle: { fontSize: 13, color: "#fff", fontWeight: "700", lineHeight: 17 },
   postsList: { paddingHorizontal: 16, paddingBottom: 40 },
-  postCard: { backgroundColor: Colors.card, borderRadius: 16, padding: 16, marginBottom: 12, borderWidth: 1, borderColor: Colors.border },
+  postCard: { backgroundColor: LegacyColors.card, borderRadius: 16, padding: 16, marginBottom: 12, borderWidth: 1, borderColor: LegacyColors.border },
   postTop: { flexDirection: "row", justifyContent: "space-between", marginBottom: 6 },
-  postRestaurant: { fontSize: 13, color: Colors.accent, fontWeight: "700" },
-  postPrice: { fontSize: 13, fontWeight: "700", color: Colors.ink },
-  postTitle: { fontSize: 15, fontWeight: "700", color: Colors.ink, marginBottom: 6 },
-  postItem: { fontSize: 13, color: Colors.inkSecondary, marginBottom: 2 },
+  postRestaurant: { fontSize: 13, color: LegacyColors.accent, fontWeight: "700" },
+  postPrice: { fontSize: 13, fontWeight: "700", color: LegacyColors.ink },
+  postTitle: { fontSize: 15, fontWeight: "700", color: LegacyColors.ink, marginBottom: 6 },
+  postItem: { fontSize: 13, color: LegacyColors.inkSecondary, marginBottom: 2 },
   postStatsRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 10 },
   postStats: { flexDirection: "row", gap: 12 },
-  deckToggleBtn: { flexDirection: "row", alignItems: "center", gap: 4, borderWidth: 1.5, borderColor: Colors.accent, borderRadius: 20, paddingHorizontal: 10, paddingVertical: 4 },
-  deckToggleBtnActive: { backgroundColor: Colors.accent, borderColor: Colors.accent },
-  deckToggleText: { fontSize: 11, fontWeight: "700", color: Colors.accent },
-  deckToggleTextActive: { color: Colors.white },
-  postStat: { fontSize: 13, color: Colors.inkSecondary },
+  deckToggleBtn: { flexDirection: "row", alignItems: "center", gap: 4, borderWidth: 1.5, borderColor: LegacyColors.accent, borderRadius: 20, paddingHorizontal: 10, paddingVertical: 4 },
+  deckToggleBtnActive: { backgroundColor: LegacyColors.accent, borderColor: LegacyColors.accent },
+  deckToggleText: { fontSize: 11, fontWeight: "700", color: LegacyColors.accent },
+  deckToggleTextActive: { color: LegacyColors.white },
+  postStat: { fontSize: 13, color: LegacyColors.inkSecondary },
   emptyWrap: { alignItems: "center", paddingVertical: 40, gap: 16 },
-  empty: { textAlign: "center", color: Colors.inkSecondary, fontSize: 14, paddingVertical: 32 },
-  createBtn: { backgroundColor: Colors.accent, borderRadius: 12, paddingHorizontal: 20, paddingVertical: 12 },
+  empty: { textAlign: "center", color: LegacyColors.inkSecondary, fontSize: 14, paddingVertical: 32 },
+  createBtn: { backgroundColor: LegacyColors.accent, borderRadius: 12, paddingHorizontal: 20, paddingVertical: 12 },
   createBtnText: { color: "#fff", fontWeight: "700", fontSize: 14 },
-  emptySubDeck: { fontSize: 13, color: Colors.inkSecondary, textAlign: "center", paddingHorizontal: 20 },
+  emptySubDeck: { fontSize: 13, color: LegacyColors.inkSecondary, textAlign: "center", paddingHorizontal: 20 },
 });
 const editStyles = StyleSheet.create({
   overlay: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(0,0,0,0.45)" },
-  sheet: { backgroundColor: Colors.card, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 24, paddingBottom: 40, gap: 8 },
-  handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: Colors.border, alignSelf: "center", marginBottom: 16 },
-  title: { fontSize: 18, fontWeight: "700", color: Colors.ink, marginBottom: 8 },
-  label: { fontSize: 12, fontWeight: "600", color: Colors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.5, marginTop: 8 },
-  input: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: 12, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15, color: Colors.ink },
+  sheet: { backgroundColor: LegacyColors.card, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 24, paddingBottom: 40, gap: 8 },
+  handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: LegacyColors.border, alignSelf: "center", marginBottom: 16 },
+  title: { fontSize: 18, fontWeight: "700", color: LegacyColors.ink, marginBottom: 8 },
+  label: { fontSize: 12, fontWeight: "600", color: LegacyColors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.5, marginTop: 8 },
+  input: { backgroundColor: LegacyColors.surface, borderWidth: 1, borderColor: LegacyColors.border, borderRadius: 12, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15, color: LegacyColors.ink },
   bioInput: { height: 90, textAlignVertical: "top" },
-  charCount: { fontSize: 11, color: Colors.inkDisabled, textAlign: "right" },
-  saveBtn: { backgroundColor: Colors.accent, borderRadius: 14, paddingVertical: 14, alignItems: "center", marginTop: 8 },
-  saveBtnText: { fontSize: 16, fontWeight: "700", color: Colors.white },
+  charCount: { fontSize: 11, color: LegacyColors.inkDisabled, textAlign: "right" },
+  saveBtn: { backgroundColor: LegacyColors.accent, borderRadius: 14, paddingVertical: 14, alignItems: "center", marginTop: 8 },
+  saveBtnText: { fontSize: 16, fontWeight: "700", color: LegacyColors.white },
   cancelBtn: { paddingVertical: 12, alignItems: "center" },
-  cancelBtnText: { fontSize: 15, color: Colors.inkSecondary, fontWeight: "500" },
+  cancelBtnText: { fontSize: 15, color: LegacyColors.inkSecondary, fontWeight: "500" },
 });

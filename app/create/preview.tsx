@@ -23,7 +23,7 @@ import { analytics } from "@/services/analytics";
 import { supabase } from "@/services/supabase";
 import { resolveRestaurant } from "@/services/restaurant";
 import { useMyDeckOrders } from "@/features/profile/useProfile";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { FeedCard } from "@/components/feed/FeedCard";
 import type { UltOrderFeedItem } from "@/types/feed";
 import type { DeckOrder } from "@/types/profile";
@@ -33,11 +33,11 @@ const MAX_DECK_SIZE = 5;
 // ─── Confetti ─────────────────────────────────────────────────────────────────
 
 const CONFETTI_COLORS = [
-  Colors.accent,
-  Colors.saveGreen,
-  Colors.triedPurple,
-  Colors.confettiAmber,
-  Colors.confettiBlue,
+  LegacyColors.accent,
+  LegacyColors.saveGreen,
+  LegacyColors.triedPurple,
+  LegacyColors.confettiAmber,
+  LegacyColors.confettiBlue,
 ];
 
 type Particle = {
@@ -444,7 +444,7 @@ export default function Step5PreviewScreen() {
       {/* Header */}
       <View style={styles.header}>
         <Pressable style={styles.backBtn} onPress={handleBack} hitSlop={12} disabled={draft.isSubmitting}>
-          <Ionicons name="arrow-back" size={20} color={Colors.ink} />
+          <Ionicons name="arrow-back" size={20} color={LegacyColors.ink} />
         </Pressable>
         <Text style={styles.headerTitle}>Preview</Text>
         <View style={{ width: 38 }} />
@@ -452,7 +452,7 @@ export default function Step5PreviewScreen() {
 
       {/* Preview hint */}
       <View style={styles.hintBanner}>
-        <Ionicons name="eye-outline" size={14} color={Colors.inkSecondary} />
+        <Ionicons name="eye-outline" size={14} color={LegacyColors.inkSecondary} />
         <Text style={styles.hintText}>This is exactly how your ULT order will appear</Text>
       </View>
 
@@ -506,13 +506,13 @@ export default function Step5PreviewScreen() {
                 </Text>
               </View>
               {deckLoading ? (
-                <ActivityIndicator size="small" color={Colors.accent} />
+                <ActivityIndicator size="small" color={LegacyColors.accent} />
               ) : (
                 <Switch
                   value={addToDeck}
                   onValueChange={handleToggleDeck}
-                  trackColor={{ false: Colors.border, true: Colors.accentLight }}
-                  thumbColor={addToDeck ? Colors.accent : Colors.card}
+                  trackColor={{ false: LegacyColors.border, true: LegacyColors.accentLight }}
+                  thumbColor={addToDeck ? LegacyColors.accent : LegacyColors.card}
                 />
               )}
             </View>
@@ -520,7 +520,7 @@ export default function Step5PreviewScreen() {
             {/* Explicit swap notice — never a silent demotion */}
             {swapOutOrder && (
               <View style={styles.swapNotice}>
-                <Ionicons name="swap-horizontal" size={16} color={Colors.warning} />
+                <Ionicons name="swap-horizontal" size={16} color={LegacyColors.warning} />
                 <Text style={styles.swapNoticeText}>
                   <Text style={styles.swapNoticeBold}>
                     "{swapOutOrder.title || swapOutOrder.restaurant_name}"
@@ -540,13 +540,13 @@ export default function Step5PreviewScreen() {
       <View style={styles.footer}>
         {draft.isSubmitting ? (
           <View style={styles.submittingRow}>
-            <ActivityIndicator color={Colors.accent} />
+            <ActivityIndicator color={LegacyColors.accent} />
             <Text style={styles.submittingText}>{progressMsg || "Posting…"}</Text>
           </View>
         ) : posted ? (
           <View style={styles.successCol}>
             <View style={styles.successRow}>
-              <Ionicons name="checkmark-circle" size={22} color={Colors.saveGreen} />
+              <Ionicons name="checkmark-circle" size={22} color={LegacyColors.saveGreen} />
               <Text style={styles.successText}>Posted! Redirecting…</Text>
             </View>
             {postDeckWarning && (
@@ -561,7 +561,7 @@ export default function Step5PreviewScreen() {
             ]}
             onPress={handlePost}
           >
-            <Ionicons name="paper-plane" size={20} color={Colors.white} />
+            <Ionicons name="paper-plane" size={20} color={LegacyColors.white} />
             <Text style={styles.postBtnText}>Post ULT Order</Text>
           </Pressable>
         )}
@@ -606,7 +606,7 @@ export default function Step5PreviewScreen() {
                     {order.title || order.restaurant_name}
                   </Text>
                   <View style={swapStyles.saveRow}>
-                    <Ionicons name="bookmark" size={12} color={Colors.saveGreen} />
+                    <Ionicons name="bookmark" size={12} color={LegacyColors.saveGreen} />
                     <Text style={swapStyles.saveCount}>{order.save_count} saves</Text>
                   </View>
                 </View>
@@ -630,58 +630,58 @@ export default function Step5PreviewScreen() {
 }
 
 const styles = StyleSheet.create({
-  flex: { flex: 1, backgroundColor: Colors.surface },
-  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 16, paddingVertical: 13, backgroundColor: Colors.card, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border },
-  backBtn: { width: 38, height: 38, borderRadius: 10, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, alignItems: "center", justifyContent: "center" },
-  headerTitle: { fontSize: 17, fontWeight: "700", color: Colors.ink },
-  hintBanner: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: Colors.surface, paddingHorizontal: 16, paddingVertical: 8, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border },
-  hintText: { fontSize: 12, color: Colors.inkSecondary },
+  flex: { flex: 1, backgroundColor: LegacyColors.surface },
+  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 16, paddingVertical: 13, backgroundColor: LegacyColors.card, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: LegacyColors.border },
+  backBtn: { width: 38, height: 38, borderRadius: 10, backgroundColor: LegacyColors.surface, borderWidth: 1, borderColor: LegacyColors.border, alignItems: "center", justifyContent: "center" },
+  headerTitle: { fontSize: 17, fontWeight: "700", color: LegacyColors.ink },
+  hintBanner: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: LegacyColors.surface, paddingHorizontal: 16, paddingVertical: 8, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: LegacyColors.border },
+  hintText: { fontSize: 12, color: LegacyColors.inkSecondary },
   scroll: { paddingVertical: 16, paddingBottom: 24 },
-  metaCard: { marginHorizontal: 16, marginTop: 12, backgroundColor: Colors.card, borderRadius: 14, padding: 14, borderWidth: 1, borderColor: Colors.border, gap: 8 },
-  metaLabel: { fontSize: 11, fontWeight: "700", color: Colors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.5 },
+  metaCard: { marginHorizontal: 16, marginTop: 12, backgroundColor: LegacyColors.card, borderRadius: 14, padding: 14, borderWidth: 1, borderColor: LegacyColors.border, gap: 8 },
+  metaLabel: { fontSize: 11, fontWeight: "700", color: LegacyColors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.5 },
   metaRow: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
-  metaPill: { paddingHorizontal: 10, paddingVertical: 4, backgroundColor: Colors.accentLight, borderRadius: 20, borderWidth: 1, borderColor: Colors.accent },
-  metaPillText: { fontSize: 12, color: Colors.accent, fontWeight: "600" },
-  footer: { padding: 16, paddingBottom: Platform.OS === "ios" ? 32 : 16, backgroundColor: Colors.card, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.border },
-  postBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 56, backgroundColor: Colors.accent, borderRadius: 14, gap: 10, shadowColor: Colors.accent, shadowOffset: { width: 0, height: 5 }, shadowOpacity: 0.35, shadowRadius: 10, elevation: 5 },
-  postBtnPressed: { backgroundColor: Colors.accentDark },
-  postBtnText: { fontSize: 17, fontWeight: "800", color: Colors.white, letterSpacing: 0.2 },
+  metaPill: { paddingHorizontal: 10, paddingVertical: 4, backgroundColor: LegacyColors.accentLight, borderRadius: 20, borderWidth: 1, borderColor: LegacyColors.accent },
+  metaPillText: { fontSize: 12, color: LegacyColors.accent, fontWeight: "600" },
+  footer: { padding: 16, paddingBottom: Platform.OS === "ios" ? 32 : 16, backgroundColor: LegacyColors.card, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: LegacyColors.border },
+  postBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 56, backgroundColor: LegacyColors.accent, borderRadius: 14, gap: 10, shadowColor: LegacyColors.accent, shadowOffset: { width: 0, height: 5 }, shadowOpacity: 0.35, shadowRadius: 10, elevation: 5 },
+  postBtnPressed: { backgroundColor: LegacyColors.accentDark },
+  postBtnText: { fontSize: 17, fontWeight: "800", color: LegacyColors.white, letterSpacing: 0.2 },
   submittingRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 56, gap: 12 },
-  submittingText: { fontSize: 15, color: Colors.inkSecondary },
+  submittingText: { fontSize: 15, color: LegacyColors.inkSecondary },
   successCol: { alignItems: "center", justifyContent: "center", gap: 6, paddingVertical: 8 },
   successRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 56, gap: 10 },
-  successText: { fontSize: 16, fontWeight: "700", color: Colors.saveGreen },
-  postDeckWarningText: { fontSize: 12, color: Colors.warning, textAlign: "center", paddingHorizontal: 24, lineHeight: 17 },
+  successText: { fontSize: 16, fontWeight: "700", color: LegacyColors.saveGreen },
+  postDeckWarningText: { fontSize: 12, color: LegacyColors.warning, textAlign: "center", paddingHorizontal: 24, lineHeight: 17 },
   // Add to Deck
-  deckCard: { marginHorizontal: 16, marginTop: 12, backgroundColor: Colors.card, borderRadius: 14, padding: 14, borderWidth: 1, borderColor: Colors.border, gap: 10 },
+  deckCard: { marginHorizontal: 16, marginTop: 12, backgroundColor: LegacyColors.card, borderRadius: 14, padding: 14, borderWidth: 1, borderColor: LegacyColors.border, gap: 10 },
   deckRow: { flexDirection: "row", alignItems: "center", gap: 12 },
   deckRowText: { flex: 1, gap: 2 },
-  deckTitle: { fontSize: 15, fontWeight: "700", color: Colors.ink },
-  deckSubtitle: { fontSize: 12, color: Colors.inkSecondary },
+  deckTitle: { fontSize: 15, fontWeight: "700", color: LegacyColors.ink },
+  deckSubtitle: { fontSize: 12, color: LegacyColors.inkSecondary },
   swapNotice: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: "#FEF3E7", borderRadius: 10, padding: 10 },
-  swapNoticeText: { flex: 1, fontSize: 12, color: Colors.warning, lineHeight: 17 },
+  swapNoticeText: { flex: 1, fontSize: 12, color: LegacyColors.warning, lineHeight: 17 },
   swapNoticeBold: { fontWeight: "700" },
-  swapChangeLink: { fontSize: 12, fontWeight: "700", color: Colors.accent },
+  swapChangeLink: { fontSize: 12, fontWeight: "700", color: LegacyColors.accent },
 });
 
 const swapStyles = StyleSheet.create({
   overlay: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(0,0,0,0.45)" },
-  sheet: { backgroundColor: Colors.card, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 24, paddingBottom: Platform.OS === "ios" ? 40 : 24, gap: 12, maxHeight: "80%" },
-  handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: Colors.border, alignSelf: "center", marginBottom: 4 },
-  title: { fontSize: 18, fontWeight: "700", color: Colors.ink },
-  subtitle: { fontSize: 13, color: Colors.inkSecondary, lineHeight: 18, marginBottom: 4 },
-  row: { flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border },
-  rowPressed: { backgroundColor: Colors.surface },
+  sheet: { backgroundColor: LegacyColors.card, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 24, paddingBottom: Platform.OS === "ios" ? 40 : 24, gap: 12, maxHeight: "80%" },
+  handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: LegacyColors.border, alignSelf: "center", marginBottom: 4 },
+  title: { fontSize: 18, fontWeight: "700", color: LegacyColors.ink },
+  subtitle: { fontSize: 13, color: LegacyColors.inkSecondary, lineHeight: 18, marginBottom: 4 },
+  row: { flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: LegacyColors.border },
+  rowPressed: { backgroundColor: LegacyColors.surface },
   thumb: { width: 52, height: 52, borderRadius: 10 },
-  thumbPlaceholder: { backgroundColor: Colors.accentLight, alignItems: "center", justifyContent: "center" },
+  thumbPlaceholder: { backgroundColor: LegacyColors.accentLight, alignItems: "center", justifyContent: "center" },
   thumbEmoji: { fontSize: 20 },
   rowInfo: { flex: 1, gap: 2 },
-  rowRestaurant: { fontSize: 11, fontWeight: "700", color: Colors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.3 },
-  rowTitle: { fontSize: 14, fontWeight: "700", color: Colors.ink },
+  rowRestaurant: { fontSize: 11, fontWeight: "700", color: LegacyColors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.3 },
+  rowTitle: { fontSize: 14, fontWeight: "700", color: LegacyColors.ink },
   saveRow: { flexDirection: "row", alignItems: "center", gap: 4, marginTop: 2 },
-  saveCount: { fontSize: 12, color: Colors.inkSecondary },
-  swapOutBtn: { borderWidth: 1.5, borderColor: Colors.warning, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6 },
-  swapOutBtnText: { fontSize: 12, fontWeight: "700", color: Colors.warning },
+  saveCount: { fontSize: 12, color: LegacyColors.inkSecondary },
+  swapOutBtn: { borderWidth: 1.5, borderColor: LegacyColors.warning, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6 },
+  swapOutBtnText: { fontSize: 12, fontWeight: "700", color: LegacyColors.warning },
   cancelBtn: { paddingVertical: 12, alignItems: "center", marginTop: 4 },
-  cancelBtnText: { fontSize: 15, color: Colors.inkSecondary, fontWeight: "500" },
+  cancelBtnText: { fontSize: 15, color: LegacyColors.inkSecondary, fontWeight: "500" },
 });

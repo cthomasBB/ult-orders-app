@@ -87,19 +87,19 @@ export function FeedFilter() {
 }
 
 const styles = StyleSheet.create({
-  wrapper: { borderBottomWidth: 1, borderBottomColor: Colors.surface },
+  wrapper: { borderBottomWidth: 1, borderBottomColor: LegacyColors.surface },
   row: { paddingHorizontal: 16, paddingVertical: 10, gap: 8 },
   chip: {
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
-    backgroundColor: Colors.surface,
+    backgroundColor: LegacyColors.surface,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
   },
-  chipActive: { backgroundColor: Colors.accent, borderColor: Colors.accent },
-  chipText: { fontSize: 13, color: Colors.inkSecondary, fontWeight: "500" },
-  chipTextActive: { color: Colors.white },
+  chipActive: { backgroundColor: LegacyColors.accent, borderColor: LegacyColors.accent },
+  chipText: { fontSize: 13, color: LegacyColors.inkSecondary, fontWeight: "500" },
+  chipTextActive: { color: LegacyColors.white },
   resetChip: {
     paddingHorizontal: 12,
     paddingVertical: 6,
@@ -108,5 +108,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#FFD4B8",
   },
-  resetText: { fontSize: 13, color: Colors.accent, fontWeight: "600" },
+  resetText: { fontSize: 13, color: LegacyColors.accent, fontWeight: "600" },
 });

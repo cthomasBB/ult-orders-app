@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 type Stat = { label: string; value: string | number };
 type Props = { stats: Stat[] };
@@ -21,9 +21,9 @@ export function ProfileStats({ stats }: Props) {
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: "row", backgroundColor: Colors.accentLight, borderRadius: 16, padding: 16 },
+  row: { flexDirection: "row", backgroundColor: LegacyColors.accentLight, borderRadius: 16, padding: 16 },
   stat: { flex: 1, alignItems: "center" },
-  sep: { borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Colors.accent },
-  value: { fontSize: 22, fontWeight: "800", color: Colors.ink },
-  label: { fontSize: 12, color: Colors.inkSecondary, marginTop: 2 },
+  sep: { borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: LegacyColors.accent },
+  value: { fontSize: 22, fontWeight: "800", color: LegacyColors.ink },
+  label: { fontSize: 12, color: LegacyColors.inkSecondary, marginTop: 2 },
 });

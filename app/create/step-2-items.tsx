@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "@/services/supabase";
 import { useOrdersStore } from "@/features/orders/store";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { formatPrice } from "@/utils";
 import type { MenuItem } from "@/types";
 
@@ -25,7 +25,7 @@ export default function Step2ItemsScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
-        <Pressable onPress={() => router.back()} hitSlop={10}><Ionicons name="arrow-back" size={22} color={Colors.ink} /></Pressable>
+        <Pressable onPress={() => router.back()} hitSlop={10}><Ionicons name="arrow-back" size={22} color={LegacyColors.ink} /></Pressable>
         <View style={styles.headerCenter}>
           <Text style={styles.stepLabel}>Step 2 of 5</Text>
           <Text style={styles.title}>Choose Items</Text>
@@ -34,7 +34,7 @@ export default function Step2ItemsScreen() {
       </View>
       <View style={styles.progressTrack}><View style={[styles.progressFill, { width: "40%" }]} /></View>
 
-      {isLoading ? <ActivityIndicator color={Colors.accent} style={{ marginTop: 40 }} /> : (
+      {isLoading ? <ActivityIndicator color={LegacyColors.accent} style={{ marginTop: 40 }} /> : (
         <FlatList
           data={items}
           keyExtractor={(item) => item.id}
@@ -50,12 +50,12 @@ export default function Step2ItemsScreen() {
                 </View>
                 {qty > 0 ? (
                   <View style={styles.qtyRow}>
-                    <Pressable style={styles.qtyBtn} onPress={() => updateDraftItemQty(item.id, qty - 1)} hitSlop={8}><Ionicons name="remove" size={14} color={Colors.accent} /></Pressable>
+                    <Pressable style={styles.qtyBtn} onPress={() => updateDraftItemQty(item.id, qty - 1)} hitSlop={8}><Ionicons name="remove" size={14} color={LegacyColors.accent} /></Pressable>
                     <Text style={styles.qty}>{qty}</Text>
-                    <Pressable style={styles.qtyBtn} onPress={() => addDraftItem(item.id)} hitSlop={8}><Ionicons name="add" size={14} color={Colors.accent} /></Pressable>
+                    <Pressable style={styles.qtyBtn} onPress={() => addDraftItem(item.id)} hitSlop={8}><Ionicons name="add" size={14} color={LegacyColors.accent} /></Pressable>
                   </View>
                 ) : (
-                  <Pressable style={styles.addBtn} onPress={() => addDraftItem(item.id)}><Ionicons name="add" size={20} color={Colors.white} /></Pressable>
+                  <Pressable style={styles.addBtn} onPress={() => addDraftItem(item.id)}><Ionicons name="add" size={20} color={LegacyColors.white} /></Pressable>
                 )}
               </View>
             );
@@ -66,7 +66,7 @@ export default function Step2ItemsScreen() {
       <View style={styles.footer}>
         <Pressable style={[styles.nextBtn, !totalCount && styles.nextBtnDisabled]} onPress={handleNext} disabled={!totalCount}>
           <Text style={styles.nextBtnText}>{totalCount > 0 ? `Next · ${totalCount} item${totalCount > 1 ? "s" : ""}` : "Add items to continue"}</Text>
-          {totalCount > 0 && <Ionicons name="arrow-forward" size={18} color={Colors.white} />}
+          {totalCount > 0 && <Ionicons name="arrow-forward" size={18} color={LegacyColors.white} />}
         </Pressable>
       </View>
     </SafeAreaView>
@@ -74,25 +74,25 @@ export default function Step2ItemsScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
   header: { flexDirection: "row", alignItems: "center", paddingHorizontal: 20, paddingVertical: 14, gap: 12 },
   headerCenter: { flex: 1 },
-  stepLabel: { fontSize: 12, fontWeight: "700", color: Colors.accent, textTransform: "uppercase", letterSpacing: 0.6 },
-  title: { fontSize: 20, fontWeight: "800", color: Colors.ink },
-  progressTrack: { height: 4, backgroundColor: Colors.border, marginHorizontal: 20, borderRadius: 2, marginBottom: 8, overflow: "hidden" },
-  progressFill: { height: 4, backgroundColor: Colors.accent, borderRadius: 2 },
+  stepLabel: { fontSize: 12, fontWeight: "700", color: LegacyColors.accent, textTransform: "uppercase", letterSpacing: 0.6 },
+  title: { fontSize: 20, fontWeight: "800", color: LegacyColors.ink },
+  progressTrack: { height: 4, backgroundColor: LegacyColors.border, marginHorizontal: 20, borderRadius: 2, marginBottom: 8, overflow: "hidden" },
+  progressFill: { height: 4, backgroundColor: LegacyColors.accent, borderRadius: 2 },
   list: { paddingHorizontal: 16, paddingBottom: 120 },
-  itemRow: { flexDirection: "row", alignItems: "center", paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border, gap: 12 },
+  itemRow: { flexDirection: "row", alignItems: "center", paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: LegacyColors.border, gap: 12 },
   itemInfo: { flex: 1 },
-  itemName: { fontSize: 15, fontWeight: "600", color: Colors.ink },
-  itemDesc: { fontSize: 13, color: Colors.inkSecondary, marginTop: 2 },
-  itemPrice: { fontSize: 14, fontWeight: "700", color: Colors.accent, marginTop: 4 },
+  itemName: { fontSize: 15, fontWeight: "600", color: LegacyColors.ink },
+  itemDesc: { fontSize: 13, color: LegacyColors.inkSecondary, marginTop: 2 },
+  itemPrice: { fontSize: 14, fontWeight: "700", color: LegacyColors.accent, marginTop: 4 },
   qtyRow: { flexDirection: "row", alignItems: "center", gap: 8 },
-  qtyBtn: { width: 30, height: 30, borderRadius: 15, backgroundColor: Colors.accentLight, alignItems: "center", justifyContent: "center" },
-  qty: { fontSize: 16, fontWeight: "800", color: Colors.ink, minWidth: 20, textAlign: "center" },
-  addBtn: { width: 36, height: 36, borderRadius: 18, backgroundColor: Colors.accent, alignItems: "center", justifyContent: "center" },
-  footer: { position: "absolute", bottom: 0, left: 0, right: 0, padding: 16, paddingBottom: 32, backgroundColor: Colors.card, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.border },
-  nextBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 54, backgroundColor: Colors.accent, borderRadius: 14, gap: 8, shadowColor: Colors.accent, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.28, shadowRadius: 8, elevation: 4 },
-  nextBtnDisabled: { backgroundColor: Colors.inkDisabled, shadowOpacity: 0, elevation: 0 },
-  nextBtnText: { color: Colors.white, fontSize: 16, fontWeight: "700" },
+  qtyBtn: { width: 30, height: 30, borderRadius: 15, backgroundColor: LegacyColors.accentLight, alignItems: "center", justifyContent: "center" },
+  qty: { fontSize: 16, fontWeight: "800", color: LegacyColors.ink, minWidth: 20, textAlign: "center" },
+  addBtn: { width: 36, height: 36, borderRadius: 18, backgroundColor: LegacyColors.accent, alignItems: "center", justifyContent: "center" },
+  footer: { position: "absolute", bottom: 0, left: 0, right: 0, padding: 16, paddingBottom: 32, backgroundColor: LegacyColors.card, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: LegacyColors.border },
+  nextBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 54, backgroundColor: LegacyColors.accent, borderRadius: 14, gap: 8, shadowColor: LegacyColors.accent, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.28, shadowRadius: 8, elevation: 4 },
+  nextBtnDisabled: { backgroundColor: LegacyColors.inkDisabled, shadowOpacity: 0, elevation: 0 },
+  nextBtnText: { color: LegacyColors.white, fontSize: 16, fontWeight: "700" },
 });

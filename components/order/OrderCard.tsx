@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { formatPrice, formatDate } from "@/utils";
 import type { Order, OrderStatus } from "@/types";
 
@@ -9,10 +9,10 @@ const STATUS_META: Record<OrderStatus, { label: string; color: string; bg: strin
   pending:   { label: "Placed",    color: "#F57C00",        bg: "#FFF8E1"             },
   confirmed: { label: "Confirmed", color: "#1565C0",        bg: "#E3F2FD"             },
   preparing: { label: "Preparing", color: "#6A1B9A",        bg: "#F3E5F5"             },
-  ready:     { label: "Ready",     color: Colors.saveGreen, bg: Colors.saveGreenLight },
+  ready:     { label: "Ready",     color: LegacyColors.saveGreen, bg: LegacyColors.saveGreenLight },
   picked_up: { label: "Picked up", color: "#00695C",        bg: "#E0F2F1"             },
-  delivered: { label: "Delivered", color: Colors.saveGreen, bg: Colors.saveGreenLight },
-  cancelled: { label: "Cancelled", color: Colors.danger,    bg: Colors.accentLight    },
+  delivered: { label: "Delivered", color: LegacyColors.saveGreen, bg: LegacyColors.saveGreenLight },
+  cancelled: { label: "Cancelled", color: LegacyColors.danger,    bg: LegacyColors.accentLight    },
 };
 
 export function OrderCard({ order }: { order: Order }) {
@@ -39,14 +39,14 @@ export function OrderCard({ order }: { order: Order }) {
 }
 
 const styles = StyleSheet.create({
-  card: { backgroundColor: Colors.card, borderRadius: 16, padding: 16, borderWidth: 1, borderColor: Colors.border, gap: 5, shadowColor: Colors.black, shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 4, elevation: 1 },
-  cardPressed: { backgroundColor: Colors.surface },
+  card: { backgroundColor: LegacyColors.card, borderRadius: 16, padding: 16, borderWidth: 1, borderColor: LegacyColors.border, gap: 5, shadowColor: LegacyColors.black, shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 4, elevation: 1 },
+  cardPressed: { backgroundColor: LegacyColors.surface },
   top: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  name: { fontSize: 16, fontWeight: "700", color: Colors.ink, flex: 1, marginRight: 8 },
+  name: { fontSize: 16, fontWeight: "700", color: LegacyColors.ink, flex: 1, marginRight: 8 },
   badge: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: 20 },
   badgeText: { fontSize: 12, fontWeight: "600" },
-  date: { fontSize: 13, color: Colors.inkSecondary },
+  date: { fontSize: 13, color: LegacyColors.inkSecondary },
   bottom: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 4 },
-  items: { fontSize: 14, color: Colors.inkSecondary },
-  total: { fontSize: 16, fontWeight: "700", color: Colors.ink },
+  items: { fontSize: 14, color: LegacyColors.inkSecondary },
+  total: { fontSize: 16, fontWeight: "700", color: LegacyColors.ink },
 });

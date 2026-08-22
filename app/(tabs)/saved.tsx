@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from "expo-router";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 import { FeedCard } from "@/components/feed/FeedCard";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/services/supabase";
@@ -75,7 +75,7 @@ export default function SavedScreen() {
       </View>
       {isLoading ? (
         <View style={styles.loadingWrap}>
-          <ActivityIndicator size="large" color={Colors.accent} />
+          <ActivityIndicator size="large" color={LegacyColors.accent} />
         </View>
       ) : (
         <FlatList
@@ -110,15 +110,15 @@ export default function SavedScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.surface },
-  header: { flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 20, paddingTop: 16, paddingBottom: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border },
-  title: { fontSize: 28, fontWeight: "800", color: Colors.ink, letterSpacing: -0.3 },
-  countBadge: { backgroundColor: Colors.accent, paddingHorizontal: 8, paddingVertical: 2, borderRadius: 10 },
-  countText: { fontSize: 14, fontWeight: "700", color: Colors.white },
+  safe: { flex: 1, backgroundColor: LegacyColors.surface },
+  header: { flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 20, paddingTop: 16, paddingBottom: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: LegacyColors.border },
+  title: { fontSize: 28, fontWeight: "800", color: LegacyColors.ink, letterSpacing: -0.3 },
+  countBadge: { backgroundColor: LegacyColors.accent, paddingHorizontal: 8, paddingVertical: 2, borderRadius: 10 },
+  countText: { fontSize: 14, fontWeight: "700", color: LegacyColors.white },
   list: { paddingVertical: 12, paddingBottom: 40 },
   loadingWrap: { flex: 1, alignItems: "center", justifyContent: "center" },
   empty: { alignItems: "center", paddingTop: 80, paddingHorizontal: 40, gap: 10 },
   emptyIcon: { fontSize: 48 },
-  emptyTitle: { fontSize: 20, fontWeight: "800", color: Colors.ink },
-  emptySub: { fontSize: 14, color: Colors.inkSecondary, textAlign: "center", lineHeight: 20 },
+  emptyTitle: { fontSize: 20, fontWeight: "800", color: LegacyColors.ink },
+  emptySub: { fontSize: 14, color: LegacyColors.inkSecondary, textAlign: "center", lineHeight: 20 },
 });

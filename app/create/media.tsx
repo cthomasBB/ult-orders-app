@@ -15,7 +15,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useCreateOrderStore, makeDraftMedia } from "@/features/orders/createOrderStore";
 import { pickImages, pickVideo, takePhoto } from "@/services/storage";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 const { width: SCREEN_W } = Dimensions.get("window");
 const THUMB_SIZE = 100;
@@ -39,7 +39,7 @@ function FilmStrip() {
             <Image source={{ uri: m.localUri }} style={filmStyles.thumbImg} />
             {m.type === "video" && (
               <View style={filmStyles.videoOverlay}>
-                <Ionicons name="play" size={18} color={Colors.white} />
+                <Ionicons name="play" size={18} color={LegacyColors.white} />
               </View>
             )}
             <Pressable
@@ -47,7 +47,7 @@ function FilmStrip() {
               onPress={() => removeMedia(m.id)}
               hitSlop={6}
             >
-              <Ionicons name="close-circle" size={20} color={Colors.white} />
+              <Ionicons name="close-circle" size={20} color={LegacyColors.white} />
             </Pressable>
           </View>
         ))}
@@ -55,7 +55,7 @@ function FilmStrip() {
         {/* Ghost slot showing remaining capacity */}
         {draft.media.length < MAX_PHOTOS && !draft.media.some((m) => m.type === "video") && (
           <View style={filmStyles.ghost}>
-            <Ionicons name="add" size={22} color={Colors.inkDisabled} />
+            <Ionicons name="add" size={22} color={LegacyColors.inkDisabled} />
           </View>
         )}
       </ScrollView>
@@ -66,8 +66,8 @@ function FilmStrip() {
 const filmStyles = StyleSheet.create({
   wrap: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.border,
-    backgroundColor: Colors.card,
+    borderBottomColor: LegacyColors.border,
+    backgroundColor: LegacyColors.card,
     paddingVertical: 14,
   },
   row: { paddingHorizontal: 16, gap: 10 },
@@ -76,7 +76,7 @@ const filmStyles = StyleSheet.create({
     height: THUMB_SIZE,
     borderRadius: 12,
     overflow: "hidden",
-    backgroundColor: Colors.border,
+    backgroundColor: LegacyColors.border,
     position: "relative",
   },
   thumbImg: { width: "100%", height: "100%" },
@@ -98,7 +98,7 @@ const filmStyles = StyleSheet.create({
     height: THUMB_SIZE,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: Colors.border,
+    borderColor: LegacyColors.border,
     borderStyle: "dashed",
     alignItems: "center",
     justifyContent: "center",
@@ -134,7 +134,7 @@ function OptionTile({
         <Ionicons
           name={icon}
           size={28}
-          color={disabled ? Colors.inkDisabled : Colors.accent}
+          color={disabled ? LegacyColors.inkDisabled : LegacyColors.accent}
         />
       </View>
       <Text style={[tileStyles.title, disabled && tileStyles.textDisabled]}>
@@ -148,32 +148,32 @@ function OptionTile({
 const tileStyles = StyleSheet.create({
   tile: {
     flex: 1,
-    backgroundColor: Colors.card,
+    backgroundColor: LegacyColors.card,
     borderRadius: 16,
     padding: 18,
     alignItems: "center",
     gap: 8,
     borderWidth: 1,
-    borderColor: Colors.border,
-    shadowColor: Colors.black,
+    borderColor: LegacyColors.border,
+    shadowColor: LegacyColors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
     elevation: 1,
   },
-  tilePressed: { backgroundColor: Colors.accentLight, borderColor: Colors.accent },
+  tilePressed: { backgroundColor: LegacyColors.accentLight, borderColor: LegacyColors.accent },
   tileDisabled: { opacity: 0.4 },
   iconWrap: {
     width: 54,
     height: 54,
     borderRadius: 16,
-    backgroundColor: Colors.accentLight,
+    backgroundColor: LegacyColors.accentLight,
     alignItems: "center",
     justifyContent: "center",
   },
-  title: { fontSize: 14, fontWeight: "700", color: Colors.ink },
-  sub: { fontSize: 11, color: Colors.inkSecondary, textAlign: "center" },
-  textDisabled: { color: Colors.inkDisabled },
+  title: { fontSize: 14, fontWeight: "700", color: LegacyColors.ink },
+  sub: { fontSize: 11, color: LegacyColors.inkSecondary, textAlign: "center" },
+  textDisabled: { color: LegacyColors.inkDisabled },
 });
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
@@ -257,7 +257,7 @@ export default function Step3MediaScreen() {
       {/* Header */}
       <View style={styles.header}>
         <Pressable style={styles.backBtn} onPress={handleBack} hitSlop={12}>
-          <Ionicons name="arrow-back" size={20} color={Colors.ink} />
+          <Ionicons name="arrow-back" size={20} color={LegacyColors.ink} />
         </Pressable>
         <Text style={styles.headerTitle}>Add Media</Text>
         <View style={{ width: 38 }} />
@@ -271,12 +271,12 @@ export default function Step3MediaScreen() {
         {/* Status banner */}
         {hasVideo ? (
           <View style={styles.infoBanner}>
-            <Ionicons name="videocam" size={15} color={Colors.accent} />
+            <Ionicons name="videocam" size={15} color={LegacyColors.accent} />
             <Text style={styles.infoText}>1 video added (max 15 sec)</Text>
           </View>
         ) : photoCount > 0 ? (
           <View style={styles.infoBanner}>
-            <Ionicons name="images" size={15} color={Colors.accent} />
+            <Ionicons name="images" size={15} color={LegacyColors.accent} />
             <Text style={styles.infoText}>
               {photoCount} of {MAX_PHOTOS} photos · {atPhotoMax ? "Maximum reached" : `${MAX_PHOTOS - photoCount} more allowed`}
             </Text>
@@ -317,10 +317,10 @@ export default function Step3MediaScreen() {
           disabled={hasVideo || atPhotoMax || isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator size="small" color={Colors.accent} />
+            <ActivityIndicator size="small" color={LegacyColors.accent} />
           ) : (
             <>
-              <Ionicons name="camera-outline" size={20} color={Colors.accent} />
+              <Ionicons name="camera-outline" size={20} color={LegacyColors.accent} />
               <Text style={styles.cameraBtnText}>Open Camera</Text>
             </>
           )}
@@ -338,7 +338,7 @@ export default function Step3MediaScreen() {
           <Text style={styles.nextBtnText}>
             {hasAnyMedia ? "Next: Details" : "Skip to Details"}
           </Text>
-          <Ionicons name="arrow-forward" size={18} color={Colors.white} />
+          <Ionicons name="arrow-forward" size={18} color={LegacyColors.white} />
         </Pressable>
       </View>
     </View>
@@ -346,21 +346,21 @@ export default function Step3MediaScreen() {
 }
 
 const styles = StyleSheet.create({
-  flex: { flex: 1, backgroundColor: Colors.surface },
-  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 16, paddingVertical: 13, backgroundColor: Colors.card, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border },
-  backBtn: { width: 38, height: 38, borderRadius: 10, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, alignItems: "center", justifyContent: "center" },
-  headerTitle: { fontSize: 17, fontWeight: "700", color: Colors.ink },
+  flex: { flex: 1, backgroundColor: LegacyColors.surface },
+  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 16, paddingVertical: 13, backgroundColor: LegacyColors.card, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: LegacyColors.border },
+  backBtn: { width: 38, height: 38, borderRadius: 10, backgroundColor: LegacyColors.surface, borderWidth: 1, borderColor: LegacyColors.border, alignItems: "center", justifyContent: "center" },
+  headerTitle: { fontSize: 17, fontWeight: "700", color: LegacyColors.ink },
   content: { padding: 20, gap: 18 },
-  infoBanner: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: Colors.accentLight, borderRadius: 10, padding: 12 },
-  infoText: { fontSize: 13, color: Colors.accent, fontWeight: "600" },
-  hint: { fontSize: 14, color: Colors.inkSecondary, lineHeight: 20, textAlign: "center" },
+  infoBanner: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: LegacyColors.accentLight, borderRadius: 10, padding: 12 },
+  infoText: { fontSize: 13, color: LegacyColors.accent, fontWeight: "600" },
+  hint: { fontSize: 14, color: LegacyColors.inkSecondary, lineHeight: 20, textAlign: "center" },
   tilesRow: { flexDirection: "row", gap: 12 },
-  cameraBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, height: 52, borderRadius: 14, borderWidth: 1.5, borderColor: Colors.accentLight, backgroundColor: Colors.card },
-  cameraBtnPressed: { backgroundColor: Colors.accentLight },
+  cameraBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, height: 52, borderRadius: 14, borderWidth: 1.5, borderColor: LegacyColors.accentLight, backgroundColor: LegacyColors.card },
+  cameraBtnPressed: { backgroundColor: LegacyColors.accentLight },
   cameraBtnDisabled: { opacity: 0.4 },
-  cameraBtnText: { fontSize: 15, fontWeight: "600", color: Colors.accent },
-  skipNote: { textAlign: "center", fontSize: 12, color: Colors.inkDisabled },
-  footer: { padding: 16, paddingBottom: Platform.OS === "ios" ? 32 : 16, backgroundColor: Colors.card, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.border },
-  nextBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 54, backgroundColor: Colors.accent, borderRadius: 14, gap: 8, shadowColor: Colors.accent, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.28, shadowRadius: 8, elevation: 4 },
-  nextBtnText: { fontSize: 16, fontWeight: "700", color: Colors.white },
+  cameraBtnText: { fontSize: 15, fontWeight: "600", color: LegacyColors.accent },
+  skipNote: { textAlign: "center", fontSize: 12, color: LegacyColors.inkDisabled },
+  footer: { padding: 16, paddingBottom: Platform.OS === "ios" ? 32 : 16, backgroundColor: LegacyColors.card, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: LegacyColors.border },
+  nextBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 54, backgroundColor: LegacyColors.accent, borderRadius: 14, gap: 8, shadowColor: LegacyColors.accent, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.28, shadowRadius: 8, elevation: 4 },
+  nextBtnText: { fontSize: 16, fontWeight: "700", color: LegacyColors.white },
 });

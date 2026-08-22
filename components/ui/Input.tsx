@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TextInput, type TextInputProps, View } from "react-native";
-import { Colors } from "@/constants/colors";
+import { LegacyColors } from "@/constants/colors";
 
 type Props = TextInputProps & {
   label?: string;
@@ -17,7 +17,7 @@ export function Input({ label, error, hint, leftIcon, rightIcon, style, ...rest 
         {leftIcon && <View style={styles.icon}>{leftIcon}</View>}
         <TextInput
           style={[styles.input, style]}
-          placeholderTextColor={Colors.inkDisabled}
+          placeholderTextColor={LegacyColors.inkDisabled}
           {...rest}
         />
         {rightIcon && <View style={styles.icon}>{rightIcon}</View>}
@@ -30,12 +30,12 @@ export function Input({ label, error, hint, leftIcon, rightIcon, style, ...rest 
 
 const styles = StyleSheet.create({
   wrapper: { gap: 4 },
-  label:   { fontSize: 13, fontWeight: "600", color: Colors.inkSecondary, marginBottom: 2 },
-  row:     { flexDirection: "row", alignItems: "center", height: 50, borderWidth: 1.5, borderRadius: 12, paddingHorizontal: 14, backgroundColor: Colors.card, gap: 8 },
-  rowNormal: { borderColor: Colors.border },
-  rowError:  { borderColor: Colors.danger, backgroundColor: Colors.accentLight },
-  input:   { flex: 1, fontSize: 15, color: Colors.ink },
+  label:   { fontSize: 13, fontWeight: "600", color: LegacyColors.inkSecondary, marginBottom: 2 },
+  row:     { flexDirection: "row", alignItems: "center", height: 50, borderWidth: 1.5, borderRadius: 12, paddingHorizontal: 14, backgroundColor: LegacyColors.card, gap: 8 },
+  rowNormal: { borderColor: LegacyColors.border },
+  rowError:  { borderColor: LegacyColors.danger, backgroundColor: LegacyColors.accentLight },
+  input:   { flex: 1, fontSize: 15, color: LegacyColors.ink },
   icon:    { justifyContent: "center" },
-  error:   { fontSize: 12, color: Colors.danger },
-  hint:    { fontSize: 12, color: Colors.inkDisabled },
+  error:   { fontSize: 12, color: LegacyColors.danger },
+  hint:    { fontSize: 12, color: LegacyColors.inkDisabled },
 });
