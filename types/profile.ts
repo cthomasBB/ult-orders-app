@@ -56,6 +56,16 @@ export type UserBadge = {
   awarded_at: string;
 };
 
+// ─── Deck order (a published ult_order currently on the user's is_deck=true Deck) ──
+
+export type DeckOrder = {
+  id: string;
+  title: string | null;
+  save_count: number;
+  restaurant_name: string;
+  cover_url: string | null;
+};
+
 // ─── Orders grouped by restaurant ────────────────────────────────────────────
 
 export type RestaurantOrderGroup = {

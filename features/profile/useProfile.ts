@@ -6,6 +6,7 @@ import { getStatusLevel } from "@/types/profile";
 import type {
   UserProfile,
   UserBadge,
+  DeckOrder,
   ViewerRelation,
 } from "@/types/profile";
 
@@ -106,6 +107,42 @@ export function useUserBadges(userId: string | undefined) {
     queryFn: () => fetchUserBadges(userId!),
     enabled: !!userId,
     staleTime: 1000 * 60 * 10,
+  });
+}
+
+async function fetchMyDeckOrders(userId: string): Promise<DeckOrder[]> {
+  const { data } = await supabase
+    .from("ult_orders")
+    .select(`
+      id, title, save_count,
+      restaurant:restaurants!restaurant_id (name),
+      media:ult_order_media (url, sort_order)
+    `)
+    .eq("user_id", userId)
+    .eq("is_deck", true)
+    .eq("status", "published")
+    .order("published_at", { ascending: false });
+
+  return (data ?? []).map((row: any) => ({
+    id: row.id,
+    title: row.title ?? null,
+    save_count: row.save_count ?? 0,
+    restaurant_name: row.restaurant?.name ?? "Restaurant",
+    cover_url:
+      (row.media ?? [])
+        .sort((a: any, b: any) => a.sort_order - b.sort_order)[0]
+        ?.url ?? null,
+  }));
+}
+
+/** The signed-in user's current Signature Deck (is_deck=true orders). Used to
+ *  check for room before publishing and to power the swap picker. */
+export function useMyDeckOrders(userId: string | undefined) {
+  return useQuery({
+    queryKey: ["my-deck-orders", userId],
+    queryFn: () => fetchMyDeckOrders(userId!),
+    enabled: !!userId,
+    staleTime: 1000 * 30,
   });
 }
 

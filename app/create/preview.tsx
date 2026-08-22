@@ -5,10 +5,13 @@ import {
   ActivityIndicator,
   Alert,
   Animated,
+  Image,
+  Modal,
   Platform,
   Pressable,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   View,
 } from "react-native";
@@ -19,9 +22,13 @@ import { uploadMedia, BUCKETS } from "@/services/storage";
 import { analytics } from "@/services/analytics";
 import { supabase } from "@/services/supabase";
 import { resolveRestaurant } from "@/services/restaurant";
+import { useMyDeckOrders } from "@/features/profile/useProfile";
 import { Colors } from "@/constants/colors";
 import { FeedCard } from "@/components/feed/FeedCard";
 import type { UltOrderFeedItem } from "@/types/feed";
+import type { DeckOrder } from "@/types/profile";
+
+const MAX_DECK_SIZE = 5;
 
 // ─── Confetti ─────────────────────────────────────────────────────────────────
 
@@ -199,8 +206,9 @@ function buildPreviewItem(
 async function submitUltOrder(
   draft: ReturnType<typeof useCreateOrderStore>["draft"],
   userId: string,
+  deckChoice: { addToDeck: boolean; swapOutId: string | null },
   onProgress?: (msg: string) => void
-): Promise<string> {
+): Promise<{ id: string; deckWarning: string | null }> {
   // 0. Refresh session to ensure JWT is valid
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) throw new Error("Not logged in. Please sign in and try again.");
@@ -300,8 +308,31 @@ async function submitUltOrder(
     }
   }
 
+  // 6. Add to Signature Deck (best-effort — must never block the post itself)
+  let deckWarning: string | null = null;
+  if (deckChoice.addToDeck) {
+    onProgress?.("Updating your Deck…");
+    try {
+      if (deckChoice.swapOutId) {
+        const { error: swapErr } = await supabase
+          .from("ult_orders")
+          .update({ is_deck: false })
+          .eq("id", deckChoice.swapOutId);
+        if (swapErr) throw swapErr;
+      }
+      const { error: pinErr } = await supabase
+        .from("ult_orders")
+        .update({ is_deck: true })
+        .eq("id", ultOrderId);
+      if (pinErr) throw pinErr;
+    } catch (e: any) {
+      deckWarning =
+        "Posted, but your Deck already had 5 orders, so this one wasn't added. Add it from your profile.";
+    }
+  }
+
   onProgress?.("Done!");
-  return ultOrderId;
+  return { id: ultOrderId, deckWarning };
 }
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
@@ -316,6 +347,34 @@ export default function Step5PreviewScreen() {
   const [progressMsg, setProgressMsg] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [posted, setPosted] = useState(false);
+  const [postDeckWarning, setPostDeckWarning] = useState<string | null>(null);
+
+  // ── Add to Deck ──────────────────────────────────────────────────────────
+  const { data: deckOrders = [], isLoading: deckLoading } = useMyDeckOrders(user?.id);
+  const [addToDeck, setAddToDeckLocal] = useState(false);
+  const [swapOutOrder, setSwapOutOrder] = useState<DeckOrder | null>(null);
+  const [showSwapPicker, setShowSwapPicker] = useState(false);
+
+  const deckIsFull = deckOrders.length >= MAX_DECK_SIZE;
+
+  const handleToggleDeck = (next: boolean) => {
+    if (!next) {
+      setAddToDeckLocal(false);
+      setSwapOutOrder(null);
+      return;
+    }
+    if (deckIsFull) {
+      setShowSwapPicker(true);
+      return;
+    }
+    setAddToDeckLocal(true);
+  };
+
+  const handleChooseSwap = (order: DeckOrder) => {
+    setSwapOutOrder(order);
+    setAddToDeckLocal(true);
+    setShowSwapPicker(false);
+  };
 
   const previewItem = buildPreviewItem(draft, publicUser);
 
@@ -338,7 +397,12 @@ export default function Step5PreviewScreen() {
         return;
       }
 
-      const id = await submitUltOrder(draft, user.id, setProgressMsg);
+      const { id, deckWarning } = await submitUltOrder(
+        draft,
+        user.id,
+        { addToDeck, swapOutId: swapOutOrder?.id ?? null },
+        setProgressMsg
+      );
       setSubmittedId(id);
       analytics.capture("order_posted", {
         ult_order_id: id,
@@ -346,18 +410,21 @@ export default function Step5PreviewScreen() {
         item_count: draft.items.filter((i) => i.name.trim()).length,
         has_media: draft.media.length > 0,
         tag_count: draft.tags.length,
+        added_to_deck: addToDeck && !deckWarning,
       });
       queryClient.invalidateQueries({ queryKey: ["feed", "following"] });
       queryClient.invalidateQueries({ queryKey: ["feed", "trending"] });
       queryClient.invalidateQueries({ queryKey: ["feed", "nearby"] });
+      queryClient.invalidateQueries({ queryKey: ["my-deck-orders", user.id] });
       setShowConfetti(true);
       setPosted(true);
+      setPostDeckWarning(deckWarning);
 
       setTimeout(() => {
         reset();
         router.dismissAll();
         router.push(`/(tabs)/` as any);
-      }, 2200);
+      }, deckWarning ? 3400 : 2200);
     } catch (e: any) {
       setSubmitError(e.message ?? "Something went wrong.");
       Alert.alert("Error", e.message ?? "Failed to post. Please try again.");
@@ -423,6 +490,50 @@ export default function Step5PreviewScreen() {
             </View>
           </View>
         )}
+
+        {/* Add to Signature Deck */}
+        {user?.id && (
+          <View style={styles.deckCard}>
+            <View style={styles.deckRow}>
+              <View style={styles.deckRowText}>
+                <Text style={styles.deckTitle}>Add to Signature Deck</Text>
+                <Text style={styles.deckSubtitle}>
+                  {addToDeck
+                    ? swapOutOrder
+                      ? "Swapping into your Deck on publish"
+                      : "Will be pinned to your Deck"
+                    : "Pin your best orders to your profile (5 max)"}
+                </Text>
+              </View>
+              {deckLoading ? (
+                <ActivityIndicator size="small" color={Colors.accent} />
+              ) : (
+                <Switch
+                  value={addToDeck}
+                  onValueChange={handleToggleDeck}
+                  trackColor={{ false: Colors.border, true: Colors.accentLight }}
+                  thumbColor={addToDeck ? Colors.accent : Colors.card}
+                />
+              )}
+            </View>
+
+            {/* Explicit swap notice — never a silent demotion */}
+            {swapOutOrder && (
+              <View style={styles.swapNotice}>
+                <Ionicons name="swap-horizontal" size={16} color={Colors.warning} />
+                <Text style={styles.swapNoticeText}>
+                  <Text style={styles.swapNoticeBold}>
+                    "{swapOutOrder.title || swapOutOrder.restaurant_name}"
+                  </Text>{" "}
+                  will move out of your Deck to make room.
+                </Text>
+                <Pressable onPress={() => setShowSwapPicker(true)} hitSlop={8}>
+                  <Text style={styles.swapChangeLink}>Change</Text>
+                </Pressable>
+              </View>
+            )}
+          </View>
+        )}
       </ScrollView>
 
       {/* Footer CTA */}
@@ -433,9 +544,14 @@ export default function Step5PreviewScreen() {
             <Text style={styles.submittingText}>{progressMsg || "Posting…"}</Text>
           </View>
         ) : posted ? (
-          <View style={styles.successRow}>
-            <Ionicons name="checkmark-circle" size={22} color={Colors.saveGreen} />
-            <Text style={styles.successText}>Posted! Redirecting…</Text>
+          <View style={styles.successCol}>
+            <View style={styles.successRow}>
+              <Ionicons name="checkmark-circle" size={22} color={Colors.saveGreen} />
+              <Text style={styles.successText}>Posted! Redirecting…</Text>
+            </View>
+            {postDeckWarning && (
+              <Text style={styles.postDeckWarningText}>{postDeckWarning}</Text>
+            )}
           </View>
         ) : (
           <Pressable
@@ -450,6 +566,65 @@ export default function Step5PreviewScreen() {
           </Pressable>
         )}
       </View>
+
+      {/* Swap picker — Deck is full, user must explicitly choose what to demote */}
+      <Modal
+        visible={showSwapPicker}
+        animationType="slide"
+        transparent
+        onRequestClose={() => setShowSwapPicker(false)}
+      >
+        <View style={swapStyles.overlay}>
+          <View style={swapStyles.sheet}>
+            <View style={swapStyles.handle} />
+            <Text style={swapStyles.title}>Your Deck is full</Text>
+            <Text style={swapStyles.subtitle}>
+              Choose an order to swap out. It'll stay on your profile — just off the Deck.
+            </Text>
+
+            {deckOrders.map((order) => (
+              <Pressable
+                key={order.id}
+                style={({ pressed }) => [
+                  swapStyles.row,
+                  pressed && swapStyles.rowPressed,
+                ]}
+                onPress={() => handleChooseSwap(order)}
+              >
+                {order.cover_url ? (
+                  <Image source={{ uri: order.cover_url }} style={swapStyles.thumb} />
+                ) : (
+                  <View style={[swapStyles.thumb, swapStyles.thumbPlaceholder]}>
+                    <Text style={swapStyles.thumbEmoji}>🍽️</Text>
+                  </View>
+                )}
+                <View style={swapStyles.rowInfo}>
+                  <Text style={swapStyles.rowRestaurant} numberOfLines={1}>
+                    {order.restaurant_name}
+                  </Text>
+                  <Text style={swapStyles.rowTitle} numberOfLines={1}>
+                    {order.title || order.restaurant_name}
+                  </Text>
+                  <View style={swapStyles.saveRow}>
+                    <Ionicons name="bookmark" size={12} color={Colors.saveGreen} />
+                    <Text style={swapStyles.saveCount}>{order.save_count} saves</Text>
+                  </View>
+                </View>
+                <View style={swapStyles.swapOutBtn}>
+                  <Text style={swapStyles.swapOutBtnText}>Swap Out</Text>
+                </View>
+              </Pressable>
+            ))}
+
+            <Pressable
+              style={swapStyles.cancelBtn}
+              onPress={() => setShowSwapPicker(false)}
+            >
+              <Text style={swapStyles.cancelBtnText}>Cancel</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -473,6 +648,40 @@ const styles = StyleSheet.create({
   postBtnText: { fontSize: 17, fontWeight: "800", color: Colors.white, letterSpacing: 0.2 },
   submittingRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 56, gap: 12 },
   submittingText: { fontSize: 15, color: Colors.inkSecondary },
+  successCol: { alignItems: "center", justifyContent: "center", gap: 6, paddingVertical: 8 },
   successRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", height: 56, gap: 10 },
   successText: { fontSize: 16, fontWeight: "700", color: Colors.saveGreen },
+  postDeckWarningText: { fontSize: 12, color: Colors.warning, textAlign: "center", paddingHorizontal: 24, lineHeight: 17 },
+  // Add to Deck
+  deckCard: { marginHorizontal: 16, marginTop: 12, backgroundColor: Colors.card, borderRadius: 14, padding: 14, borderWidth: 1, borderColor: Colors.border, gap: 10 },
+  deckRow: { flexDirection: "row", alignItems: "center", gap: 12 },
+  deckRowText: { flex: 1, gap: 2 },
+  deckTitle: { fontSize: 15, fontWeight: "700", color: Colors.ink },
+  deckSubtitle: { fontSize: 12, color: Colors.inkSecondary },
+  swapNotice: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: "#FEF3E7", borderRadius: 10, padding: 10 },
+  swapNoticeText: { flex: 1, fontSize: 12, color: Colors.warning, lineHeight: 17 },
+  swapNoticeBold: { fontWeight: "700" },
+  swapChangeLink: { fontSize: 12, fontWeight: "700", color: Colors.accent },
+});
+
+const swapStyles = StyleSheet.create({
+  overlay: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(0,0,0,0.45)" },
+  sheet: { backgroundColor: Colors.card, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 24, paddingBottom: Platform.OS === "ios" ? 40 : 24, gap: 12, maxHeight: "80%" },
+  handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: Colors.border, alignSelf: "center", marginBottom: 4 },
+  title: { fontSize: 18, fontWeight: "700", color: Colors.ink },
+  subtitle: { fontSize: 13, color: Colors.inkSecondary, lineHeight: 18, marginBottom: 4 },
+  row: { flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border },
+  rowPressed: { backgroundColor: Colors.surface },
+  thumb: { width: 52, height: 52, borderRadius: 10 },
+  thumbPlaceholder: { backgroundColor: Colors.accentLight, alignItems: "center", justifyContent: "center" },
+  thumbEmoji: { fontSize: 20 },
+  rowInfo: { flex: 1, gap: 2 },
+  rowRestaurant: { fontSize: 11, fontWeight: "700", color: Colors.inkSecondary, textTransform: "uppercase", letterSpacing: 0.3 },
+  rowTitle: { fontSize: 14, fontWeight: "700", color: Colors.ink },
+  saveRow: { flexDirection: "row", alignItems: "center", gap: 4, marginTop: 2 },
+  saveCount: { fontSize: 12, color: Colors.inkSecondary },
+  swapOutBtn: { borderWidth: 1.5, borderColor: Colors.warning, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6 },
+  swapOutBtnText: { fontSize: 12, fontWeight: "700", color: Colors.warning },
+  cancelBtn: { paddingVertical: 12, alignItems: "center", marginTop: 4 },
+  cancelBtnText: { fontSize: 15, color: Colors.inkSecondary, fontWeight: "500" },
 });

@@ -94,7 +94,7 @@ export function initSentry() {
 
 export type AnalyticsEvent =
   // Orders
-  | { event: "order_posted";     props: { ult_order_id: string; restaurant_id: string | null; item_count: number; has_media: boolean; tag_count: number } }
+  | { event: "order_posted";     props: { ult_order_id: string; restaurant_id: string | null; item_count: number; has_media: boolean; tag_count: number; added_to_deck: boolean } }
   | { event: "order_viewed";     props: { ult_order_id: string; source: "feed" | "profile" | "search" | "direct" } }
   | { event: "order_liked";      props: { ult_order_id: string; restaurant_id: string } }
   | { event: "order_unliked";    props: { ult_order_id: string } }
