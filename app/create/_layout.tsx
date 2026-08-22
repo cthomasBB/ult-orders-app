@@ -1,5 +1,5 @@
 import { Stack, usePathname } from "expo-router";
-import { Animated, Platform, StyleSheet, Text, View, useRef } from "react-native";
+import { Animated, Platform, StyleSheet, Text, View } from "react-native";
 import { useEffect, useRef as useReactRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LegacyColors } from "@/constants/colors";

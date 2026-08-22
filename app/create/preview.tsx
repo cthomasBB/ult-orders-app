@@ -18,6 +18,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useAuthStore } from "@/features/auth/authStore";
 import { useCreateOrderStore } from "@/features/orders/createOrderStore";
+import type { CreateOrderDraft } from "@/features/orders/createOrderStore";
 import { uploadMedia, BUCKETS } from "@/services/storage";
 import { analytics } from "@/services/analytics";
 import { supabase } from "@/services/supabase";
@@ -133,7 +134,7 @@ const confStyles = StyleSheet.create({
 // ─── Draft → FeedItem adapter ─────────────────────────────────────────────────
 
 function buildPreviewItem(
-  draft: ReturnType<typeof useCreateOrderStore>["draft"],
+  draft: CreateOrderDraft,
   publicUser: any
 ): UltOrderFeedItem {
   return {
@@ -204,7 +205,7 @@ function buildPreviewItem(
 // ─── Submit function ──────────────────────────────────────────────────────────
 
 async function submitUltOrder(
-  draft: ReturnType<typeof useCreateOrderStore>["draft"],
+  draft: CreateOrderDraft,
   userId: string,
   deckChoice: { addToDeck: boolean; swapOutId: string | null },
   onProgress?: (msg: string) => void

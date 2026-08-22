@@ -137,6 +137,7 @@ type CreateOrderStore = {
   removeItem: (id: string) => void;
   updateItemName: (id: string, name: string) => void;
   updateItemMods: (id: string, mods: string) => void;
+  updateItemPrice: (id: string, price: string) => void;
   reorderItems: (fromIndex: number, toIndex: number) => void;
 
   // Step 3 — Media
