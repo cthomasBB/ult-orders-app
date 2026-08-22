@@ -3,7 +3,7 @@ import { Animated, StyleSheet, type ViewStyle } from "react-native";
 import { LegacyColors } from "@/constants/colors";
 
 type Props = {
-  width?: number | \`\${number}%\`;
+  width?: number | `${number}%`;
   height?: number;
   borderRadius?: number;
   style?: ViewStyle;
